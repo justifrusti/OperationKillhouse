@@ -1,23 +1,69 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gun
 {
+    [Serializable]
     public class GunManager : MonoBehaviour
     {
         public GunProperties gunProperties = new GunProperties();
+
+        [System.Serializable]
+        public class Clip
+        {
+            public int ammountOfBullets;
+
+            public bool isEmpty;
+        }
+
+        [Header("Manager Properties")]
+        [Tooltip("Set this to True if you want the player to start with X ammount of Clips")]public bool hasBaseClips = true;
+        [ConditionalHide("hasBaseClips")] public int ammountOfBaseClips = 3;
+        [Space]
+        [Tooltip("Enable this if you want the player to keep his magazine with X ammount of bullets on early reload")]public bool hasPartialClips = false;
+        [ConditionalHide("hasPartialClips")] public List<Clip> currentClips;
+
+        [Header("Animation Properties")]
+        public bool manualAnimTrigger = false;
+        [Space]
+        [ConditionalHide("manualAnimTrigger")]public Animator anim;
+        [ConditionalHide("manualAnimTrigger")]public string animTriggerName;
+
+        [Header("Debug")]
+        public bool testFireFunc = false;
+
+        private void Start()
+        {
+            if(hasBaseClips)
+            {
+                gunProperties.SetClipAmmo(gunProperties.clipSize * ammountOfBaseClips);
+            }
+            else
+            {
+                gunProperties.SetClipAmmo(gunProperties.clipSize);
+            }
+        }
+
+        private void Update()
+        {
+            if(testFireFunc)
+            {
+                testFireFunc = false;
+
+                Fire();
+            }
+        }
 
         public void Fire()
         {
             if(gunProperties.GetCurrentAmmo() > 0)
             {
-                //Fire Animation!
-
-                //Implement Ammo Consumption
+                gunProperties.SetUsedClipAmmo(gunProperties.ammoConsumptionPerTick);
             }else
             {
-                //Implement Reload
+                gunProperties.SetCurrentAmmo();
             }
         }
     }
@@ -32,9 +78,12 @@ namespace Gun
         [Tooltip("The Gun damage, used for doing damage and Stat displays")]public int gunDamage;
         [Tooltip("The Gun clip size, used to determine how many bullets a gun can hold before reload")]public int clipSize;
 
+        [Tooltip("The ammount of bullets the gun should use per Fire tick")]public int ammoConsumptionPerTick = 1;
+
         //s_Info (DO NOT CHANGE IN CODE!)
-        [Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
-        [Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE")]private int s_ClipAmmo;
+        [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
+        [SerializeField][Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_ClipAmmo;
+      
 
         /// <summary>
         /// Returns the current ammo that the gun has!
@@ -64,7 +113,7 @@ namespace Gun
                 ammoToReturn = clipSize - newAmmo;
             }
 
-            return ammoToReturn;
+            return s_currentAmmo = ammoToReturn;
         }
 
         /// <summary>
@@ -80,7 +129,15 @@ namespace Gun
         /// </summary>
         public int SetClipAmmo(int ammoToAdd)
         {
-            return s_ClipAmmo + ammoToAdd;
+            return s_ClipAmmo = s_ClipAmmo + ammoToAdd;
+        }
+
+        /// <summary>
+        /// Depletes ammo upon shooting!
+        /// </summary>
+        public int SetUsedClipAmmo(int ammoToSubtract)
+        {
+            return s_currentAmmo = s_currentAmmo - ammoToSubtract;
         }
     }
 }

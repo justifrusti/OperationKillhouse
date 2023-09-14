@@ -3,28 +3,38 @@ using UnityEngine;
 
 namespace Player
 {
+    [Serializable]
     public class playerController : MonoBehaviour
     {
         public Inputmanager inputmanager;
-
         public Rigidbody rb;
-        public Collider collider;
+        public Animation walk;
 
         [Header("Movement Values")]
         [Tooltip("The walking speed of the player")] public float walkSpeed;
         [Tooltip("The running speed of the player")] public float runspeed;
         [Tooltip("The acceleration of the player when moving")] public float accel;
         [Tooltip("The force added to the player when jumping")]public int jumpforce;
-        [Tooltip("The heigt of the player when crouching 1 is normal hieght")]public float crouchHeight;
         float currentRunspeed;
         bool isGrounded;
         float speed;
 
+        [Header("Crouching values")]
+        [Tooltip("Allows the player to crouch")]public bool canCrouch;
+        [ConditionalHide("canCrouch")][Tooltip("The heigt of the player when crouching 1 is normal hieght")]public float crouchHeight;
+        private float normalHeight;
+
         [Header("Leaning values")]
-        [Tooltip("The speed you lean at")]public float leanSpeed;
-        [Tooltip("The distance you lean to the side")]public float leanDistance;
-        [Tooltip("The height of the camera when you lean")]public float leanHight;
+        [Tooltip("Allows the player to lean")]public bool canLean;
+        [ConditionalHide("canLean")][Tooltip("The speed you lean at")]public float leanSpeed;
+        [ConditionalHide("canLean")][Tooltip("The distance you lean to the side")]public float leanDistance;
+        [ConditionalHide("canLean")][Tooltip("The height of the camera when you lean")]public float leanHight;
+        [ConditionalHide("canLean")][Tooltip("The amount the camera rotates leave 0 if you dont want to rotate the camera when leaning")]public float leanAngle;
         private Vector3 targetLeanPos;
+        private float currentLeanAngle;
+        private float targetLeanAngle;
+        private float leanInput;
+        private float baseHight;
 
         [Header("Camera sensetivity")]
         [Tooltip("The sensetivity of the camera")]public float sens;
@@ -36,7 +46,11 @@ namespace Player
         {
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
             Cursor.lockState = CursorLockMode.Locked;
+
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+
+            baseHight = cam.transform.localPosition.y;
+            normalHeight = GetComponent<CapsuleCollider>().height;
         }
         
         private void Update()
@@ -46,25 +60,26 @@ namespace Player
             Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
 
             if (speed <= walkSpeed && forwardBackward != 0 | leftRight != 0)
+            {
                 speed += accel;
-            else if(speed >= 0) speed -= accel;
+                //walk.Play();
+            }
+            else if(speed >= 0)
+            {
+                speed -= accel;
+            }//else
+                //walk.Stop();
 
             if (currentRunspeed <= runspeed && inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 1 && forwardBackward != 0 | leftRight != 0)
+            {
                 currentRunspeed += accel * 2;
-            else if(currentRunspeed >= 0) currentRunspeed -= accel;
+            }
+            else if(currentRunspeed >= 0)
+            {
+                currentRunspeed -= accel;
+            }
 
             move *= inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 0 ? speed : currentRunspeed;
-            if(inputmanager.inputMaster.Movement.Crouch.ReadValue<float>() == 1)
-            {
-                float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, crouchHeight, Time.deltaTime * leanSpeed);
-                GetComponent<CapsuleCollider>().height = newHeight;
-            }
-            else
-            {
-                float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, 2, Time.deltaTime * leanSpeed);
-                GetComponent<CapsuleCollider>().height = newHeight;
-            }
-            //transform.localScale = new Vector3(x: 1, y: inputmanager.inputMaster.Movement.Crouch.ReadValue<float>() == 0 ? 1f : crouchHeight, z: 1);
 
             rb.velocity = new Vector3(move.x,rb.velocity.y, move.z);
 
@@ -76,25 +91,39 @@ namespace Player
             cam.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             transform.Rotate(Vector3.up * mouseV2.x);
 
-            if (inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
+            if (canLean && inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
             {
                 targetLeanPos.x = -leanDistance;
                 targetLeanPos.y = leanHight;
+                leanInput = 1f;
                 Leaning();
             }
-            else if (inputmanager.inputMaster.Leaning.LeanRight.ReadValue<float>() == 1)
+            else if (canLean && inputmanager.inputMaster.Leaning.LeanRight.ReadValue<float>() == 1)
             {
                 targetLeanPos.x = leanDistance;
                 targetLeanPos.y = leanHight;
+                leanInput = -1f;
                 Leaning();
             }
             else
             {
                 targetLeanPos.x = 0;
-                targetLeanPos.y = 1.75f;
+                targetLeanPos.y = baseHight;
+                leanInput = 0f;
                 Leaning();
             }
-                
+
+            if (canCrouch && inputmanager.inputMaster.Movement.Crouch.ReadValue<float>() == 1)
+            {
+                float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, crouchHeight, Time.deltaTime * leanSpeed);
+                GetComponent<CapsuleCollider>().height = newHeight;
+            }
+            else
+            {
+                float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, normalHeight, Time.deltaTime * leanSpeed);
+                GetComponent<CapsuleCollider>().height = newHeight;
+            }
+
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -117,9 +146,12 @@ namespace Player
 
         void Leaning()
         {
+            targetLeanAngle = leanInput * leanAngle;
+            currentLeanAngle = Mathf.Lerp(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
+
+            cam.localRotation = Quaternion.Euler(xRotation, cam.localRotation.y, currentLeanAngle);
             cam.localPosition = Vector3.Lerp(cam.localPosition, targetLeanPos, Time.deltaTime * leanSpeed);
 
         }
     }
-
 }

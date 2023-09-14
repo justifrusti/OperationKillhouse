@@ -13,9 +13,13 @@ namespace Gun
         [Header("Manager Properties")]
         [Tooltip("Set this to True if you want the player to start with X ammount of Clips")]public bool hasBaseClips = true;
         [ConditionalHide("hasBaseClips")] public int ammountOfBaseClips = 3;
+        [Space]
+        [Tooltip("Set this to True to enable recoil on the weapon")]public bool useRecoil = true;
+        [Space]
+        [Tooltip("Set this to True to enable weaponsway on the weapon")] public bool useWeaponSway = true;
 
         [Header("Animation Properties")]
-        public bool manualAnimTrigger = false;
+        [Tooltip("Set this to True if you don't use animation events to fire")] public bool manualAnimTrigger = false;
         [Space]
         [ConditionalHide("manualAnimTrigger")]public Animator anim;
         [ConditionalHide("manualAnimTrigger")]public string animTriggerName;
@@ -90,15 +94,19 @@ namespace Gun
         [Header("Info")]
         [Tooltip("The Gun name, used for Stat displays")]public string gunName;
         [Tooltip("The Gun description, used for Stat displays")]public string gunDescription;
-
+        [Space]
         [Tooltip("The Gun damage, used for doing damage and Stat displays")]public int gunDamage;
         [Tooltip("The Gun clip size, used to determine how many bullets a gun can hold before reload")]public int clipSize;
-
+        [Space]
         [Tooltip("The ammount of bullets the gun should use per Fire tick")]public int ammoConsumptionPerTick = 1;
-
+        [Space]
         [Tooltip("Enable this if you want the player to keep his magazine with X ammount of bullets on early reload")] public bool hasPartialClips = false;
+        [Space]
+        [ConditionalHide("useRecoil")][Tooltip("The value that determines the strenght of the recoil")]public float ammountOfRecoil;
+        [Space]
+        [ConditionalHide("useWeaponSway")][Tooltip("The value that determines the intensity of the weapon sway")] public float weaponSwayIntensity;
 
-        //s_Info (DO NOT CHANGE IN CODE!)
+        [Header("Private Info, DO NOT TOUCH!")]
         [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
         [SerializeField][Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_ClipAmmo;
         [SerializeField][Tooltip("The ammount of partial clips the player has (clips that are not full), DO NOT CHANGE THIS LIST DIRECTLY IN CODE!")]private List<Clip> s_currentClips;
@@ -136,10 +144,12 @@ namespace Gun
                     }
                 }else if(s_ClipAmmo <= 0 && s_currentClips.Count > 0 && hasPartialClips)
                 {
-                    for (int i = s_currentClips.Count; i > 0; i--)
+                    for (int i = s_currentClips.Count; i-- > 0;)
                     {
                         ammoToReturn = s_currentClips[i].ammountOfBullets;
                         s_currentClips.Remove(s_currentClips[i]);
+
+                        break;
                     }
                 }else
                 {
@@ -150,7 +160,22 @@ namespace Gun
                 SwapClip(s_currentClips);
             }else
             {
-                Debug.Log("No partial clips enabled!");
+                if(s_ClipAmmo > 0)
+                {
+                    int newAmmo = clipSize - s_currentAmmo;
+
+                    if(newAmmo <= s_ClipAmmo)
+                    {
+                        s_ClipAmmo -= newAmmo;
+                        ammoToReturn = s_currentAmmo + newAmmo;
+                    }else
+                    {
+                        Debug.Log("Yet to be implemented but my mentally insane brain can't calculate right now!");
+                    }
+                }else
+                {
+                    Debug.Log("Out of Ammo!");
+                }
             }
 
             return s_currentAmmo = ammoToReturn;

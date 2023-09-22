@@ -5,5 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    public string leaderboardEntries;
+    public string names;
+    public string time;
 }

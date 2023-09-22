@@ -20,6 +20,7 @@ public class PlayerInfo
 public class Leaderboard : MonoBehaviour
 {
     public TMP_InputField userName;
+    public TMP_InputField time;
     public TMP_InputField display;
 
     public string score;
@@ -70,15 +71,17 @@ public class Leaderboard : MonoBehaviour
 
     void UpdatePlayerPrefabString()
     {
-        string stats = "";
+        string names = "";
+        string time = "";
 
         for (int i = 0; i < leaderboardEntries.Count; i++)
         {
-            stats += leaderboardEntries[i].name + ",";
-            stats += leaderboardEntries[i].score + ",";
+            names += leaderboardEntries[i].name + ",";
+            time += leaderboardEntries[i].score + ",";
         }
 
-        saveData.leaderboardEntries = stats;
+        saveData.names = names;
+        saveData.time = time;
 
         UpdateLeaderboardVisual();
     }
@@ -86,10 +89,12 @@ public class Leaderboard : MonoBehaviour
     void UpdateLeaderboardVisual()
     {
         display.text = "";
+        time.text = "";
 
         for (int i = 0; i <= leaderboardEntries.Count - 1; i++)
         {
-            display.text += leaderboardEntries[i].name + ": " + leaderboardEntries[i].score + "\n";
+            display.text += leaderboardEntries[i].name + "\n";
+            time.text += leaderboardEntries[i].score + "\n";
         }
 
         SaveManager.Save(saveData);
@@ -97,13 +102,15 @@ public class Leaderboard : MonoBehaviour
 
     void LoadLeaderBoard()
     {
-        string stats = saveData.leaderboardEntries;
+        string name = saveData.names;
+        string time = saveData.time;
 
-        string[] stats2 = stats.Split(',');
+        string[] name2 = name.Split(',');
+        string[] time2 = time.Split(",");
 
-        for (int i = 0; i < stats2.Length - 2; i += 2)
+        for (int i = 0; i < name2.Length - 1; i++)
         {
-            PlayerInfo loadedInfo = new PlayerInfo(stats2[i], score, scoreInSeconds);
+            PlayerInfo loadedInfo = new PlayerInfo(name2[i], time2[i], scoreInSeconds);
 
             leaderboardEntries.Add(loadedInfo);
 
@@ -116,5 +123,6 @@ public class Leaderboard : MonoBehaviour
         SaveManager.DeleteData();
 
         display.text = "";
+        time.text = "";
     }
 }

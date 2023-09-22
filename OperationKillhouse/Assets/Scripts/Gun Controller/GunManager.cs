@@ -97,27 +97,107 @@ namespace Gun
 
                             if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetForeGripID())
                             {
-                                attatchementControllers[i].CheckForeGrip();
+                                attatchementControllers[i].CheckAttatcment();
                             }
                             else
                             {
-                                attatchementControllers[i].DisableForeGrip();
+                                attatchementControllers[i].DisableAttatchment();
+                            }
+                        }
+                        break;
+
+                    case Attatchement.AttatchmentType.Optics:
+                        if (gunProperties.weaponAttatchments.optic != gunProperties.weaponAttatchments.GetOptics())
+                        {
+                            gunProperties.weaponAttatchments.SetOptic(gunProperties.weaponAttatchments.optic);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetOpticsID())
+                            {
+                                attatchementControllers[i].CheckAttatcment();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableAttatchment();
                             }
                         }
                         break;
 
                     case Attatchement.AttatchmentType.BackupOptics:
-                        if (gunProperties.weaponAttatchments.foreGrip != gunProperties.weaponAttatchments.GetForeGrip())
+                        if (gunProperties.weaponAttatchments.backupOptics != gunProperties.weaponAttatchments.GetBackupOptics())
                         {
-                            gunProperties.weaponAttatchments.SetForeGrip(gunProperties.weaponAttatchments.foreGrip);
+                            gunProperties.weaponAttatchments.SetBackupOptics(gunProperties.weaponAttatchments.backupOptics);
 
-                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetForeGripID())
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetBackupOpticsID())
                             {
-                                attatchementControllers[i].CheckForeGrip();
+                                attatchementControllers[i].CheckAttatcment();
                             }
                             else
                             {
-                                attatchementControllers[i].DisableForeGrip();
+                                attatchementControllers[i].DisableAttatchment();
+                            }
+                        }
+                        break;
+
+                    case Attatchement.AttatchmentType.MuzzleDevice:
+                        if (gunProperties.weaponAttatchments.muzzleDevices != gunProperties.weaponAttatchments.GetMuzzleDevices())
+                        {
+                            gunProperties.weaponAttatchments.SetMuzzleDevices(gunProperties.weaponAttatchments.muzzleDevices);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetMuzzleDevicesID())
+                            {
+                                attatchementControllers[i].CheckAttatcment();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableAttatchment();
+                            }
+                        }
+                        break;
+
+                    case Attatchement.AttatchmentType.Flashlight:
+                        if (gunProperties.weaponAttatchments.flashlights != gunProperties.weaponAttatchments.GetFlashlights())
+                        {
+                            gunProperties.weaponAttatchments.SetFlashlights(gunProperties.weaponAttatchments.flashlights);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetFlashlightsID())
+                            {
+                                attatchementControllers[i].CheckAttatcment();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableAttatchment();
+                            }
+                        }
+                        break;
+
+                    case Attatchement.AttatchmentType.Lasersight:
+                        if (gunProperties.weaponAttatchments.laserSights != gunProperties.weaponAttatchments.GetLaserSights())
+                        {
+                            gunProperties.weaponAttatchments.SetLaserSights(gunProperties.weaponAttatchments.laserSights);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetLaserSightsID())
+                            {
+                                attatchementControllers[i].CheckAttatcment();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableAttatchment();
+                            }
+                        }
+                        break;
+
+                    case Attatchement.AttatchmentType.Buttstock:
+                        if (gunProperties.weaponAttatchments.buttstocks != gunProperties.weaponAttatchments.GetButtstocks())
+                        {
+                            gunProperties.weaponAttatchments.SetButtstocks(gunProperties.weaponAttatchments.buttstocks);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetButtStocksID())
+                            {
+                                attatchementControllers[i].CheckAttatcment();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableAttatchment();
                             }
                         }
                         break;
@@ -160,12 +240,12 @@ namespace Gun
             [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public Buttstocks buttstocks;
 
             [SerializeField]private ForeGrips s_foreGrip;
-            private Optics s_optic;
-            private BackupOptics s_backupOptics;
-            private MuzzleDevices s_muzzleDevices;
-            private Flashlights s_flashlights;
-            private LaserSights s_laserSights;
-            private Buttstocks s_buttstocks;
+            [SerializeField]private Optics s_optic;
+            [SerializeField]private BackupOptics s_backupOptics;
+            [SerializeField]private MuzzleDevices s_muzzleDevices;
+            [SerializeField]private Flashlights s_flashlights;
+            [SerializeField]private LaserSights s_laserSights;
+            [SerializeField] private Buttstocks s_buttstocks;
 
             //ID Returners
             public int GetForeGripID(){ int attatchmentID = 0; attatchmentID = (int)foreGrip; return attatchmentID; }
@@ -180,7 +260,17 @@ namespace Gun
             public ForeGrips GetForeGrip() { return s_foreGrip; }
             public void SetForeGrip(ForeGrips grip) { s_foreGrip = grip; }
             public Optics GetOptics() { return s_optic; }
-            public void SetOptic(Optics grip) { s_optic = grip; }
+            public void SetOptic(Optics optic) { s_optic = optic; }
+            public BackupOptics GetBackupOptics() { return s_backupOptics; }
+            public void SetBackupOptics(BackupOptics bOptics) { s_backupOptics = bOptics; }
+            public MuzzleDevices GetMuzzleDevices() {  return s_muzzleDevices; }
+            public void SetMuzzleDevices(MuzzleDevices muzzle) { s_muzzleDevices = muzzle; }
+            public Flashlights GetFlashlights() { return s_flashlights; }
+            public void SetFlashlights(Flashlights flashlight) { s_flashlights = flashlight; }
+            public LaserSights GetLaserSights() { return s_laserSights; }
+            public void SetLaserSights(LaserSights laserSight) { s_laserSights = laserSight; }
+            public Buttstocks GetButtstocks() { return s_buttstocks; }
+            public void SetButtstocks(Buttstocks buttstock) { s_buttstocks = buttstock; }
         }
 
         [Header("Info")]

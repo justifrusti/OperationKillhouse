@@ -9,6 +9,7 @@ namespace Gun
     public class GunManager : MonoBehaviour
     {
         public GunProperties gunProperties = new GunProperties();
+        [Tooltip("List with attatchment controllers for this gun!")]public List<Attatchement> attatchementControllers;
 
         [Header("Manager Properties")]
         [Tooltip("Set this to True if you want the player to start with X ammount of Clips")]public bool hasBaseClips = true;
@@ -17,6 +18,8 @@ namespace Gun
         [Tooltip("Set this to True to enable recoil on the weapon")]public bool useRecoil = true;
         [Space]
         [Tooltip("Set this to True to enable weaponsway on the weapon")] public bool useWeaponSway = true;
+        [Space]
+        [Tooltip("Set this to True to enable weapon attatchments")]public bool hasAttatchments = true;
 
         [Header("Animation Properties")]
         [Tooltip("Set this to True if you don't use animation events to fire")] public bool manualAnimTrigger = false;
@@ -55,6 +58,8 @@ namespace Gun
 
                 SwapClip();
             }
+
+            CheckAttatchments();
         }
 
         /// <summary>
@@ -78,6 +83,47 @@ namespace Gun
         {
             gunProperties.SetCurrentAmmo();
         }
+
+        public void CheckAttatchments()
+        {
+            for (int i = 0; i < attatchementControllers.Count; i++)
+            {
+                switch(attatchementControllers[i].type)
+                {
+                    case Attatchement.AttatchmentType.ForeGrip:
+                        if (gunProperties.weaponAttatchments.foreGrip != gunProperties.weaponAttatchments.GetForeGrip())
+                        {
+                            gunProperties.weaponAttatchments.SetForeGrip(gunProperties.weaponAttatchments.foreGrip);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetForeGripID())
+                            {
+                                attatchementControllers[i].CheckForeGrip();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableForeGrip();
+                            }
+                        }
+                        break;
+
+                    case Attatchement.AttatchmentType.BackupOptics:
+                        if (gunProperties.weaponAttatchments.foreGrip != gunProperties.weaponAttatchments.GetForeGrip())
+                        {
+                            gunProperties.weaponAttatchments.SetForeGrip(gunProperties.weaponAttatchments.foreGrip);
+
+                            if (attatchementControllers[i].attatchementID == gunProperties.weaponAttatchments.GetForeGripID())
+                            {
+                                attatchementControllers[i].CheckForeGrip();
+                            }
+                            else
+                            {
+                                attatchementControllers[i].DisableForeGrip();
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     [System.Serializable]
@@ -89,6 +135,52 @@ namespace Gun
             public int ammountOfBullets;
 
             public bool isEmpty;
+        }
+
+        /// <summary>
+        /// Add attatchments to these lists if they are not in here!
+        /// </summary>
+        [System.Serializable]
+        public class Attatchements
+        {
+            public enum ForeGrips { None, ForeGrip_1, ForeGrip_2, ForeGrip_3 };
+            public enum BackupOptics { None, BackupOptics_1, BackupOptics_2, BackupOptics_3 };
+            public enum Optics { None, Optics_1, Optics_2, Optics_3 };
+            public enum MuzzleDevices { None, MuzzleDevices_1, MuzzleDevices_2, MuzzleDevices_3 };
+            public enum Flashlights { None, Flashlights_1, Flashlights_2, Flashlights_3 };
+            public enum LaserSights { None, LaserSights_1, LaserSights_2, LaserSights_3 };
+            public enum Buttstocks { None, Buttstocks_1, Buttstocks_2, Buttstocks_3 };
+
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public ForeGrips foreGrip;
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public Optics optic;
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public BackupOptics backupOptics;
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public MuzzleDevices muzzleDevices;
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public Flashlights flashlights;
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public LaserSights laserSights;
+            [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public Buttstocks buttstocks;
+
+            [SerializeField]private ForeGrips s_foreGrip;
+            private Optics s_optic;
+            private BackupOptics s_backupOptics;
+            private MuzzleDevices s_muzzleDevices;
+            private Flashlights s_flashlights;
+            private LaserSights s_laserSights;
+            private Buttstocks s_buttstocks;
+
+            //ID Returners
+            public int GetForeGripID(){ int attatchmentID = 0; attatchmentID = (int)foreGrip; return attatchmentID; }
+            public int GetOpticsID() { int attatchmentID = 0; attatchmentID = (int)optic; return attatchmentID; }
+            public int GetBackupOpticsID() { int attatchmentID = 0; attatchmentID = (int)backupOptics; return attatchmentID; }
+            public int GetMuzzleDevicesID() { int attatchmentID = 0; attatchmentID = (int)muzzleDevices; return attatchmentID; }
+            public int GetFlashlightsID() { int attatchmentID = 0; attatchmentID = (int)flashlights; return attatchmentID; }
+            public int GetLaserSightsID() { int attatchmentID = 0; attatchmentID = (int)laserSights; return attatchmentID; }
+            public int GetButtStocksID() { int attatchmentID = 0; attatchmentID = (int)buttstocks; return attatchmentID; }
+
+            //Getter and Setters
+            public ForeGrips GetForeGrip() { return s_foreGrip; }
+            public void SetForeGrip(ForeGrips grip) { s_foreGrip = grip; }
+            public Optics GetOptics() { return s_optic; }
+            public void SetOptic(Optics grip) { s_optic = grip; }
         }
 
         [Header("Info")]
@@ -105,6 +197,8 @@ namespace Gun
         [ConditionalHide("useRecoil")][Tooltip("The value that determines the strenght of the recoil")]public float ammountOfRecoil;
         [Space]
         [ConditionalHide("useWeaponSway")][Tooltip("The value that determines the intensity of the weapon sway")] public float weaponSwayIntensity;
+        [Space]
+        [ConditionalHide("hasAttatchments")]public Attatchements weaponAttatchments;
 
         [Header("Private Info, DO NOT TOUCH!")]
         [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;

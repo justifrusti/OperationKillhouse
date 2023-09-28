@@ -15,6 +15,7 @@ public class Generator : MonoBehaviour
     [HideInInspector]public int roomAmount = 0;
     [Space(10)]
     [Tooltip("The rooms you want to be used for generation")]public GameObject[] rooms;
+    public GameObject spawnedRoom;
 
     // Start is called before the first frame update
     void Start()

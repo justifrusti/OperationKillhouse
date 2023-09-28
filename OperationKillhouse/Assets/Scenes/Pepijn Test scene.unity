@@ -276,15 +276,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   easy: 0
   normal: 0
-  hard: 0
+  hard: 1
   easyRooms: 3
   normalRooms: 5
-  hardRooms: 7
+  hardRooms: 8
   roomAmount: 5
   rooms:
-  - {fileID: 2841985482650781252, guid: 818e2feedf8a41640bf87126f366bf8e, type: 3}
-  - {fileID: 6546945538325465221, guid: 50d810e49d7a3b74782ccca83478996b, type: 3}
-  - {fileID: 2219035626289825093, guid: a5756e0531edc9146a3976d41cc6d6be, type: 3}
+  - {fileID: 194214672253627767, guid: b82ba4ba1ab816849976d44b76efe92b, type: 3}
+  - {fileID: 3723129122555837584, guid: f7dc0794878f0994db0b8da10619d9ee, type: 3}
+  - {fileID: 3220009623195671288, guid: fcb424db72e5e084184df5d2105ca4f6, type: 3}
+  - {fileID: 6904784416763737710, guid: f1c26c753aa14574d8e006b690df8cf6, type: 3}
 --- !u!4 &379546048
 Transform:
   m_ObjectHideFlags: 0
@@ -292,7 +293,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379546046}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1516,7 +1517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1725199093
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1555,8 +1556,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725199091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -36.99}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.62, y: 2.86, z: -2.35}
+  m_LocalScale: {x: 1, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 455440587}
@@ -2002,14 +2003,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918298601693918286}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.5, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 352800971}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1711813855530123957
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2148,7 +2149,7 @@ GameObject:
   - component: {fileID: 8015440912216214428}
   m_Layer: 3
   m_Name: DoorPointBottom
-  m_TagString: Untagged
+  m_TagString: DoorPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2235,9 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814acf46684f5a74ea033f381f594e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 379546047}
   doorPoint: {fileID: 1292633948934843228}
-  debugging: 0
   roomSpawned: 0
   roomChecked: 0
   firstRoom: 1

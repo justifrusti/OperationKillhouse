@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class RoomBehavior : MonoBehaviour
 {
-    public Generator generator;
+    Generator generator;
     public Transform doorPoint;
-    public bool debugging;
     public bool roomSpawned;
     public bool roomChecked;
     public bool firstRoom;
@@ -72,8 +71,8 @@ public class RoomBehavior : MonoBehaviour
         if (doorPoints.Count == 2)
         {
             float dst = Vector3.Distance(doorPoints[0].transform.position, doorPoints[1].transform.position);
-           
-            if(dst < .075f)
+            print(dst);
+            if(dst < .1005f)
             {
                 roomChecked = true;
             }

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1209488119778709969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2110315915001606088}
+  m_Layer: 0
+  m_Name: OutSideCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2110315915001606088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209488119778709969}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8025358224170973841}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3946704172866075201
 GameObject:
   m_ObjectHideFlags: 0
@@ -46,15 +77,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorPoint: {fileID: 0}
-  roomSpawned: 0
-  roomChecked: 0
   firstRoom: 0
-  doorPoints: []
   doorPointLayer:
     serializedVersion: 2
     m_Bits: 8
   spawnedRoom: {fileID: 0}
   roomRotPoint: {fileID: 2536062721319435722}
+  doorPoints: []
+  roomSpawned: 0
+  roomChecked: 0
+  outSideChecked: 0
+  room:
+    roomType: 0
+    offset: {x: 0, y: 0, z: 0}
+  outSideCheck: {fileID: 2110315915001606088}
 --- !u!1001 &2522232321114453094
 PrefabInstance:
   m_ObjectHideFlags: 0

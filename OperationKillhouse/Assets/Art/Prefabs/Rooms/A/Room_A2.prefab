@@ -99,15 +99,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorPoint: {fileID: 0}
-  roomSpawned: 0
-  roomChecked: 0
   firstRoom: 0
-  doorPoints: []
   doorPointLayer:
     serializedVersion: 2
     m_Bits: 8
   spawnedRoom: {fileID: 0}
   roomRotPoint: {fileID: 5861206073835231084}
+  doorPoints: []
+  roomSpawned: 0
+  roomChecked: 0
+  outSideChecked: 0
+  room:
+    roomType: 0
+    offset: {x: 0, y: 0, z: 0}
+  outSideCheck: {fileID: 7317743341776900030}
+  checkOffset: {x: 0, y: 0, z: 7.5}
+--- !u!1 &5609645164478660113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7317743341776900030}
+  m_Layer: 0
+  m_Name: Out side Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7317743341776900030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609645164478660113}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 2.5, y: 0, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8898419269968912157}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &5629203291383474854
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +226,7 @@ Transform:
   - {fileID: 5419971151814553766}
   - {fileID: 2270590034532199129}
   - {fileID: 691737281563169185}
+  - {fileID: 7317743341776900030}
   m_Father: {fileID: 3723129122555837591}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

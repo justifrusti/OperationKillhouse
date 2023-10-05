@@ -250,6 +250,34 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Shooting"",
+            ""id"": ""7833f7ab-375b-4acf-9a3a-d7f695ced83c"",
+            ""actions"": [
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Value"",
+                    ""id"": ""7ce76d4c-20a1-46ce-ac0b-2e91c07852fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5fc36a45-b4e8-4c97-b6dc-144c1b87ae6c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -268,6 +296,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Leaning = asset.FindActionMap("Leaning", throwIfNotFound: true);
         m_Leaning_LeanLeft = m_Leaning.FindAction("LeanLeft", throwIfNotFound: true);
         m_Leaning_LeanRight = m_Leaning.FindAction("LeanRight", throwIfNotFound: true);
+        // Shooting
+        m_Shooting = asset.FindActionMap("Shooting", throwIfNotFound: true);
+        m_Shooting_Fire = m_Shooting.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -462,6 +493,39 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         }
     }
     public LeaningActions @Leaning => new LeaningActions(this);
+
+    // Shooting
+    private readonly InputActionMap m_Shooting;
+    private IShootingActions m_ShootingActionsCallbackInterface;
+    private readonly InputAction m_Shooting_Fire;
+    public struct ShootingActions
+    {
+        private @InputMaster m_Wrapper;
+        public ShootingActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Fire => m_Wrapper.m_Shooting_Fire;
+        public InputActionMap Get() { return m_Wrapper.m_Shooting; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ShootingActions set) { return set.Get(); }
+        public void SetCallbacks(IShootingActions instance)
+        {
+            if (m_Wrapper.m_ShootingActionsCallbackInterface != null)
+            {
+                @Fire.started -= m_Wrapper.m_ShootingActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_ShootingActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_ShootingActionsCallbackInterface.OnFire;
+            }
+            m_Wrapper.m_ShootingActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+            }
+        }
+    }
+    public ShootingActions @Shooting => new ShootingActions(this);
     public interface IMovementActions
     {
         void OnForwardBackward(InputAction.CallbackContext context);
@@ -478,5 +542,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     {
         void OnLeanLeft(InputAction.CallbackContext context);
         void OnLeanRight(InputAction.CallbackContext context);
+    }
+    public interface IShootingActions
+    {
+        void OnFire(InputAction.CallbackContext context);
     }
 }

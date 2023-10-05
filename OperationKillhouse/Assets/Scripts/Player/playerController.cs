@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Player
@@ -41,6 +42,9 @@ namespace Player
         Transform cam;
 
         private float xRotation = 0;
+
+        public GameObject hole;
+        public RaycastHit hit;
 
         private void Start()
         {
@@ -124,7 +128,16 @@ namespace Player
                 GetComponent<CapsuleCollider>().height = newHeight;
             }
 
+
+            if(inputmanager.inputMaster.Shooting.Fire.ReadValue<float>() == 1)
+            {
+                if (Physics.Raycast(cam.transform.position, cam.forward, out hit, Mathf.Infinity))
+                {
+                    
+                }
+            }
         }
+        
 
         private void OnCollisionEnter(Collision collision)
         {

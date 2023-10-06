@@ -6,6 +6,7 @@ public class EnemyStats : MonoBehaviour
 {
     public int health = 1;
     public Animation animationl;
+    public bool enemy, civilian;
     bool animPlayed;
 
     // Update is called once per frame

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    [Header("Dificulty select (ONLY SELECT ONE AT A TIME)")]
+    [Header("Dificulty select(hover over most variable names for tooltips)")]
     [Space(10)]
     public bool easy;
     public bool normal, hard;
@@ -17,13 +17,14 @@ public class Generator : MonoBehaviour
     [Header("Info for the generator")]
     [Space(10)]
     [Tooltip("The GameObject you want the generation to start from")]public GameObject firstRoom;
-    public GameObject lastRoom;
-    public int retryAmount;
+    [Tooltip("The last room you want to spawn in to close of the killHouse")]public GameObject lastRoom;
+    [Tooltip("The amount of time the generetor is allowed to retry the placement of a room (resets when successful)")]public int retryAmount;
+    [Tooltip("The rooms you want to be used for generation")]public GameObject[] cornerRooms;
+    [Tooltip("The rooms you want to be used for generation")] public GameObject[] straightRooms;
+    [Tooltip("If true a new dungeon will be generated")]public bool reset;
     [HideInInspector]public int currentRetryAmount;
-    [Tooltip("The rooms you want to be used for generation")]public GameObject[] rooms;
     [HideInInspector]public List<GameObject> killHouseRooms;
     [HideInInspector] public bool killHouseGenerationComplete;
-    [Tooltip("If true a new dungeon will be generated")]public bool reset;
     [HideInInspector]public bool removeLastRoom;
 
     // S4tart is called before the first frame update
@@ -37,15 +38,14 @@ public class Generator : MonoBehaviour
 
         if(hard)
             roomAmount = hardRooms;
+
         currentRetryAmount = retryAmount;
     }
 
     public void Update()
     {
         if (reset)
-        {
             ResetGenerator();
-        }
         
         if(removeLastRoom && currentRetryAmount > 0)
             RemoveLastRoom();
@@ -77,11 +77,7 @@ public class Generator : MonoBehaviour
 
         if(killHouseRooms.Count == 0)
         {
-            firstRoom.GetComponent<RoomBehavior>().spawnedRoom = null;
-            firstRoom.GetComponent<RoomBehavior>().roomChecked = false;
-            firstRoom.GetComponent<RoomBehavior>().roomSpawned = false;
-            firstRoom.GetComponent<RoomBehavior>().doorPoint.gameObject.SetActive(true);
-            firstRoom.GetComponent<RoomBehavior>().enabled = true;
+            firstRoom.GetComponent<RoomBehavior>().RoomReset();
 
             if (easy)
                 roomAmount = easyRooms;
@@ -91,8 +87,10 @@ public class Generator : MonoBehaviour
 
             if (hard)
                 roomAmount = hardRooms;
+
             currentRetryAmount = retryAmount;
             killHouseGenerationComplete = false;
+            firstRoom.GetComponent<RoomBehavior>().spawnedRoom = straightRooms[Random.Range(0, straightRooms.Length)].gameObject;
             reset = false;
         }
     }
@@ -100,11 +98,7 @@ public class Generator : MonoBehaviour
     public void RemoveLastRoom()
     {
         Destroy(killHouseRooms[killHouseRooms.Count -1]);
-        killHouseRooms[killHouseRooms.Count - 2].GetComponent<RoomBehavior>().spawnedRoom = null;
-        killHouseRooms[killHouseRooms.Count - 2].GetComponent<RoomBehavior>().roomChecked = false;
-        killHouseRooms[killHouseRooms.Count - 2].GetComponent<RoomBehavior>().roomSpawned = false;
-        killHouseRooms[killHouseRooms.Count - 2].GetComponent<RoomBehavior>().doorPoint.gameObject.SetActive(true);
-        killHouseRooms[killHouseRooms.Count - 2].GetComponent<RoomBehavior>().enabled = true;
+        killHouseRooms[killHouseRooms.Count - 2].GetComponent<RoomBehavior>().RoomReset();
         roomAmount++;
         currentRetryAmount--;
         removeLastRoom = false;
@@ -112,10 +106,19 @@ public class Generator : MonoBehaviour
 
     public void SpawnLastRoom()
     { 
-        Transform doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
-        GameObject theLastRoom = Instantiate<GameObject>(lastRoom, new Vector3(doorPoint.position.x, doorPoint.position.y, doorPoint.position.z), doorPoint.rotation);
-        doorPoint.gameObject.SetActive(false);
-        killHouseRooms.Add(theLastRoom);
-        killHouseGenerationComplete = true;
+        Collider[] collCheck = Physics.OverlapBox(killHouseRooms[killHouseRooms.Count -1].GetComponent<RoomBehavior>().outSideCheck.position, new Vector3(6,1,9.8f), killHouseRooms[killHouseRooms.Count - 1].GetComponent<RoomBehavior>().outSideCheck.rotation);
+        VisualiseBox.DisplayBox(killHouseRooms[killHouseRooms.Count - 1].GetComponent<RoomBehavior>().outSideCheck.position, new Vector3(6, 1, 9.8f), killHouseRooms[killHouseRooms.Count - 1].GetComponent<RoomBehavior>().outSideCheck.rotation);
+        if(collCheck.Length == 0)
+        {
+            Transform doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
+            GameObject theLastRoom = Instantiate<GameObject>(lastRoom, new Vector3(doorPoint.position.x, doorPoint.position.y, doorPoint.position.z), doorPoint.rotation);
+            doorPoint.gameObject.SetActive(false);
+            killHouseRooms.Add(theLastRoom);
+            killHouseGenerationComplete = true;
+        }
+        else
+        {
+            RemoveLastRoom();
+        }
     }
 }

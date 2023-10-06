@@ -4,55 +4,32 @@ using UnityEngine;
 public class RoomBehavior : MonoBehaviour  
 {                                          
     Generator generator;
-    public Transform doorPoint;
-    public bool firstRoom;
-    public LayerMask doorPointLayer;
+    private Transform doorPoint;
+    [Tooltip("Set to true if this is the start for the killhouse")]public bool firstRoom;
+    [Tooltip("The layer your doorPoints are on")]public LayerMask doorPointLayer;
                                             
-    public GameObject spawnedRoom;
-    public GameObject roomRotPoint;
-                                            
-    public  List<Transform> doorPoints;
-    public bool roomSpawned;
-    public bool roomChecked;
-    public bool outSideChecked;
+    [HideInInspector]public GameObject spawnedRoom;                                      
+    [HideInInspector]public List<Transform> doorPoints;
+    private bool roomSpawned;
+    private bool roomChecked;
+    private bool outSideChecked;
 
-    [Header("TestingStuf")]
-    public TypeRoom room;
-
- 
-    public Transform outSideCheck;
-    bool canSpawn = true;
-    public Vector3 checkOffset;
-
-    [System.Serializable]
-    public class TypeRoom
-    {
-        public enum Room
-        {
-            TypeA,
-            TypeB,
-            TypeC,
-            TypeD
-        }
-
-        public Room roomType;
-
-        public Vector3 offset;
-    }
-
-
+    [Header("misc info")]
+    [Tooltip("The centerpoint of the check if a room doesn't collide with annything when spawned")]public Transform outSideCheck;
+    [Tooltip("The offset of the outSideCheck")]public Vector3 offset;
+    private Vector3 checkOffset;
 
     private void Start()
     {
         generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
+        if(firstRoom)
+            spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
     }
 
     private void Update()
     {
         if(doorPoint == null)
-        {
             doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
-        }
     
         if (doorPoint != null && !roomSpawned)
         {
@@ -87,16 +64,28 @@ public class RoomBehavior : MonoBehaviour
                 spawnedRoom.GetComponent<RoomBehavior>().enabled = true;
             }
         }
+
         if (generator.roomAmount == 0 && !generator.killHouseGenerationComplete && doorPoints.Count == 1 && generator.killHouseRooms[generator.killHouseRooms.Count -1].GetComponent<RoomBehavior>().enabled == true)
-        {
             generator.SpawnLastRoom();
-        }
     }
 
     public void SpawnRoom()
     {
+
         if(spawnedRoom == null)
-            spawnedRoom = generator.rooms[Random.Range(0, generator.rooms.Length)].gameObject;
+        {
+            int roomSelect = Random.Range(0, 2);
+            Debug.Log(roomSelect);
+            if(roomSelect == 0)
+            {
+                spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
+            }
+
+            if(roomSelect == 1)
+            {
+                spawnedRoom = generator.cornerRooms[Random.Range(0, generator.cornerRooms.Length)].gameObject;
+            }
+        }
 
         if(outSideChecked)
         {
@@ -107,7 +96,6 @@ public class RoomBehavior : MonoBehaviour
             CheckForDoorPoints();
             roomSpawned = true;
         }
-
     }
 
     public void CheckRoom()
@@ -119,7 +107,6 @@ public class RoomBehavior : MonoBehaviour
             if(dst < .1005f)
                 roomChecked = true;
         }
-
     }
 
     public void CheckForDoorPoints()
@@ -139,12 +126,12 @@ public class RoomBehavior : MonoBehaviour
 
     public void checkColl()
     {
-        room.offset = spawnedRoom.GetComponent<RoomBehavior>().checkOffset;
-        Collider[] checkColl = Physics.OverlapBox(outSideCheck.position, new Vector3(17, 1, 9.5f),outSideCheck.rotation);
-        VisualiseBox.DisplayBox(outSideCheck.position, new Vector3(17,1,9.5f),outSideCheck.rotation);
+        offset = spawnedRoom.GetComponent<RoomBehavior>().checkOffset;
+        Collider[] checkColl = Physics.OverlapBox(outSideCheck.position, new Vector3(18, 1, 9.8f),outSideCheck.rotation);
+        VisualiseBox.DisplayBox(outSideCheck.position, new Vector3(17,1,9.8f),outSideCheck.rotation);
+
         if (checkColl.Length > 0)
         {
-            Debug.LogError("no Room to spawn");
             generator.removeLastRoom = true;
         }
 
@@ -155,4 +142,12 @@ public class RoomBehavior : MonoBehaviour
         }
     }
     
+    public void RoomReset()
+    {
+        spawnedRoom = null;
+        roomChecked = false;
+        roomSpawned = false;
+        doorPoint.gameObject.SetActive(true);
+        enabled = true;
+    }
 }

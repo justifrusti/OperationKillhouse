@@ -43,4 +43,9 @@ public class ScoreManager : MonoBehaviour
     {
         return seconds + (minutes * 60);
     }
+
+    public void AddPenalty(int penaltyScore)
+    {
+        seconds = (seconds + penaltyScore);
+    }
 }

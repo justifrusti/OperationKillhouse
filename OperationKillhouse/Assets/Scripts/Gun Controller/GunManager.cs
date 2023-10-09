@@ -1,7 +1,10 @@
+using Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Gun
 {
@@ -28,8 +31,17 @@ namespace Gun
         [ConditionalHide("manualAnimTrigger")]public string animTriggerName;
 
         [Header("Debug")]
-        public bool testFireFunc = false;
         public bool testEarlyReload = false;
+        public bool fire = false;
+        public bool shootingDebugRayActive = false;
+
+        //Privates
+        Vector3 s_RotationRecoil;
+        Vector3 s_PositionRecoil;
+        Vector3 s_Rot;
+
+        playerController s_Controller;
+        [SerializeField]bool aiming;
 
         private void Start()
         {
@@ -41,22 +53,34 @@ namespace Gun
             {
                 gunProperties.SetClipAmmo(gunProperties.clipSize);
             }
+
+            s_Controller = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
         }
 
         private void Update()
         {
-            if(testFireFunc)
-            {
-                testFireFunc = false;
-
-                Fire();
-            }
-
             if(testEarlyReload)
             {
                 testEarlyReload = false;
 
                 SwapClip();
+            }
+
+            if(fire)
+            {
+                fire = false;
+                Debug.Log("Fire!");
+                Fire();
+            }
+
+            if(useRecoil)
+            {
+                RecoilUpdate();
+            }
+
+            if(useWeaponSway)
+            {
+                WeaponSwayUpdate();
             }
 
             CheckAttatchments();
@@ -74,17 +98,55 @@ namespace Gun
             {
                 gunProperties.SetCurrentAmmo();
             }
+
+            if(aiming)
+            {
+                s_RotationRecoil += new Vector3(-gunProperties.recoilRotationAim.x, gunProperties.recoilRotationAim.y, gunProperties.recoilRotationAim.z);
+                s_PositionRecoil += new Vector3(gunProperties.recoilAmountAim.x, gunProperties.recoilAmountAim.y, gunProperties.recoilAmountAim.z);
+
+                switch(gunProperties.shootingType)
+                {
+                    case GunProperties.ShootingType.Raycast:
+                        if(shootingDebugRayActive)
+                        {
+                            Debug.DrawRay(GetRay().origin, GetRay().direction * 500f, Color.red);
+                        }
+
+                        RaycastHit hit;
+
+                        if(Physics.Raycast(GetRay(), out hit, 500f))
+                        {
+                            if(hit.collider.CompareTag("Red Target"))
+                            {
+                                Debug.Log("Back to school starter pack: Gun!");
+                                hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                            }else if(hit.collider.CompareTag("Blue Target"))
+                            {
+                                ScoreManager.instance.AddPenalty(10);
+                            }
+                        }
+                        break;
+
+                    case GunProperties.ShootingType.Physics:
+                        Debug.Log("Physics shooting system does not exsist (yet)");
+                        break;
+                }
+            }else
+            {
+                s_RotationRecoil += new Vector3(-gunProperties.recoilRot.x, Random.Range(-gunProperties.recoilRot.y, gunProperties.recoilRot.y), Random.Range(-gunProperties.recoilRot.z, gunProperties.recoilRot.z));
+                s_RotationRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
+            }
         }
 
         /// <summary>
         /// The reload/clip swap function, call this to stock a partially emptied clip or reload the gun!
         /// </summary>
-        public void SwapClip()
+        private void SwapClip()
         {
             gunProperties.SetCurrentAmmo();
         }
 
-        public void CheckAttatchments()
+        private void CheckAttatchments()
         {
             for (int i = 0; i < attatchementControllers.Count; i++)
             {
@@ -204,6 +266,46 @@ namespace Gun
                 }
             }
         }
+
+        private void RecoilUpdate()
+        {
+            s_RotationRecoil = Vector3.Lerp(s_RotationRecoil, Vector3.zero, gunProperties.rotReturnSpeed * Time.deltaTime);
+            s_PositionRecoil = Vector3.Lerp(s_PositionRecoil, Vector3.zero, gunProperties.posReturnSpeed * Time.deltaTime);
+
+            gunProperties.recoilPos.localPosition = Vector3.Slerp(gunProperties.recoilPos.localPosition, s_PositionRecoil, gunProperties.positionRecoilSpeed * Time.deltaTime);
+            s_Rot = Vector3.Slerp(s_Rot, s_RotationRecoil, gunProperties.rotationRecoilSpeed * Time.deltaTime);
+            gunProperties.recoilPos.localRotation = Quaternion.Euler(s_Rot);
+
+
+            if (Input.GetButtonDown("Fire2"))
+            {
+                aiming = true;
+            }else if(Input.GetButtonUp("Fire2"))
+            {
+                aiming = false;
+            }
+
+        }
+
+        private void WeaponSwayUpdate()
+        {
+            float x = Input.GetAxis("Horizontal") * (gunProperties.swayIntensity * s_Controller.sens);
+            float y = Input.GetAxis("Vertical") * (gunProperties.swayIntensity * s_Controller.sens);
+
+            Quaternion rotationX = Quaternion.AngleAxis(-y, Vector3.right);
+            Quaternion rotationY = Quaternion.AngleAxis(x, Vector3.up);
+
+            Quaternion target = rotationX * rotationY;
+
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, target, gunProperties.swaySmoothness * Time.deltaTime);
+        }
+
+        Ray GetRay()
+        {
+            Vector3 rayOrigin = new Vector3(.5f, .5f, 0f);
+
+            return Camera.main.ViewportPointToRay(rayOrigin);
+        }
     }
 
     [System.Serializable]
@@ -239,13 +341,13 @@ namespace Gun
             [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public LaserSights laserSights;
             [Tooltip("The number behind the attatchment is the ID of the Attatchment")]public Buttstocks buttstocks;
 
-            [SerializeField]private ForeGrips s_foreGrip;
-            [SerializeField]private Optics s_optic;
-            [SerializeField]private BackupOptics s_backupOptics;
-            [SerializeField]private MuzzleDevices s_muzzleDevices;
-            [SerializeField]private Flashlights s_flashlights;
-            [SerializeField]private LaserSights s_laserSights;
-            [SerializeField] private Buttstocks s_buttstocks;
+            private ForeGrips s_foreGrip;
+            private Optics s_optic;
+            private BackupOptics s_backupOptics;
+            private MuzzleDevices s_muzzleDevices;
+            private Flashlights s_flashlights;
+            private LaserSights s_laserSights;
+            private Buttstocks s_buttstocks;
 
             //ID Returners
             public int GetForeGripID(){ int attatchmentID = 0; attatchmentID = (int)foreGrip; return attatchmentID; }
@@ -273,7 +375,9 @@ namespace Gun
             public void SetButtstocks(Buttstocks buttstock) { s_buttstocks = buttstock; }
         }
 
+        public enum ShootingType { Raycast, Physics };
         [Header("Info")]
+        [Tooltip("The way the bullets 'Fire' from the gun")]public ShootingType shootingType;
         [Tooltip("The Gun name, used for Stat displays")]public string gunName;
         [Tooltip("The Gun description, used for Stat displays")]public string gunDescription;
         [Space]
@@ -284,16 +388,30 @@ namespace Gun
         [Space]
         [Tooltip("Enable this if you want the player to keep his magazine with X ammount of bullets on early reload")] public bool hasPartialClips = false;
         [Space]
-        [ConditionalHide("useRecoil")][Tooltip("The value that determines the strenght of the recoil")]public float ammountOfRecoil;
+        [ConditionalHide("useRecoil")][Tooltip("The transform point where the recoil gets applied from")]public Transform recoilPos;
+        [ConditionalHide("useRecoil")]public Vector3 recoilRot = new Vector3(10, 5, 7);
+        [ConditionalHide("useRecoil")][Tooltip("The value that determines the strenght of the recoil")]public Vector3 ammountOfRecoil;
+        [Space]
+        [ConditionalHide("useRecoil")]public float positionRecoilSpeed = 8f;
+        [ConditionalHide("useRecoil")]public float rotationRecoilSpeed = 8f;
+        [Space]
+        [ConditionalHide("useRecoil")]public float posReturnSpeed = 18f;
+        [ConditionalHide("useRecoil")]public float rotReturnSpeed = 38f;
+        [Space]
+        [ConditionalHide("useRecoil")]public Vector3 recoilRotationAim;
+        [ConditionalHide("useRecoil")]public Vector3 recoilAmountAim;
+        [Space]
+        [ConditionalHide("useWeaponSway")]public float swayIntensity;
+        [ConditionalHide("useWeaponSway")] public float swaySmoothness;
         [Space]
         [ConditionalHide("useWeaponSway")][Tooltip("The value that determines the intensity of the weapon sway")] public float weaponSwayIntensity;
         [Space]
         [ConditionalHide("hasAttatchments")]public Attatchements weaponAttatchments;
 
-        [Header("Private Info, DO NOT TOUCH!")]
-        [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
-        [SerializeField][Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_ClipAmmo;
-        [SerializeField][Tooltip("The ammount of partial clips the player has (clips that are not full), DO NOT CHANGE THIS LIST DIRECTLY IN CODE!")]private List<Clip> s_currentClips;
+        //[Header("Private Info, DO NOT TOUCH!")]
+        [Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
+        [Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_ClipAmmo;
+        [Tooltip("The ammount of partial clips the player has (clips that are not full), DO NOT CHANGE THIS LIST DIRECTLY IN CODE!")]private List<Clip> s_currentClips;
 
         /// <summary>
         /// Returns the current ammo that the gun has!

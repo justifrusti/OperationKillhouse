@@ -383,7 +383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &237446928
 Transform:
   m_ObjectHideFlags: 0
@@ -774,13 +774,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunProperties:
+    shootingType: 0
     gunName: Gun
     gunDescription: Gun goes Pew Pew
     gunDamage: 1
     clipSize: 12
     ammoConsumptionPerTick: 1
     hasPartialClips: 1
-    ammountOfRecoil: 0
+    recoilPos: {fileID: 1431800125}
+    recoilRot: {x: 10, y: 5, z: 7}
+    ammountOfRecoil: {x: 5, y: 5, z: 5}
+    positionRecoilSpeed: 8
+    rotationRecoilSpeed: 8
+    posReturnSpeed: 18
+    rotReturnSpeed: 38
+    recoilRotationAim: {x: 0, y: 0, z: 0}
+    recoilAmountAim: {x: 0, y: 0, z: 0}
+    swayIntensity: 10
+    swaySmoothness: 10
     weaponSwayIntensity: 0
     weaponAttatchments:
       foreGrip: 0
@@ -790,16 +801,6 @@ MonoBehaviour:
       flashlights: 0
       laserSights: 0
       buttstocks: 0
-      s_foreGrip: 0
-      s_optic: 0
-      s_backupOptics: 0
-      s_muzzleDevices: 0
-      s_flashlights: 0
-      s_laserSights: 0
-      s_buttstocks: 0
-    s_currentAmmo: 0
-    s_ClipAmmo: 0
-    s_currentClips: []
   attatchementControllers: []
   hasBaseClips: 1
   ammountOfBaseClips: 3
@@ -809,8 +810,10 @@ MonoBehaviour:
   manualAnimTrigger: 0
   anim: {fileID: 0}
   animTriggerName: 
-  testFireFunc: 0
   testEarlyReload: 0
+  fire: 0
+  shootingDebugRayActive: 0
+  aiming: 0
 --- !u!4 &335334440
 Transform:
   m_ObjectHideFlags: 0
@@ -822,7 +825,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1431800125}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1288,7 +1292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1020216404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,13 +1677,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunProperties:
+    shootingType: 0
     gunName: E
     gunDescription: E EEE EE EEEEEEE E
     gunDamage: 420
     clipSize: 69
     ammoConsumptionPerTick: 1
     hasPartialClips: 1
-    ammountOfRecoil: 0
+    recoilPos: {fileID: 0}
+    recoilRot: {x: 10, y: 5, z: 7}
+    ammountOfRecoil: {x: 0, y: 0, z: 0}
+    positionRecoilSpeed: 8
+    rotationRecoilSpeed: 8
+    posReturnSpeed: 18
+    rotReturnSpeed: 38
+    recoilRotationAim: {x: 0, y: 0, z: 0}
+    recoilAmountAim: {x: 0, y: 0, z: 0}
+    swayIntensity: 0
+    swaySmoothness: 0
     weaponSwayIntensity: 0
     weaponAttatchments:
       foreGrip: 0
@@ -1689,16 +1704,6 @@ MonoBehaviour:
       flashlights: 0
       laserSights: 0
       buttstocks: 0
-      s_foreGrip: 0
-      s_optic: 0
-      s_backupOptics: 0
-      s_muzzleDevices: 0
-      s_flashlights: 0
-      s_laserSights: 0
-      s_buttstocks: 0
-    s_currentAmmo: 0
-    s_ClipAmmo: 0
-    s_currentClips: []
   attatchementControllers:
   - {fileID: 101089847}
   - {fileID: 1022066320}
@@ -1715,8 +1720,10 @@ MonoBehaviour:
   manualAnimTrigger: 0
   anim: {fileID: 0}
   animTriggerName: 
-  testFireFunc: 0
   testEarlyReload: 0
+  fire: 0
+  shootingDebugRayActive: 0
+  aiming: 0
 --- !u!1 &1144465485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2468,6 +2475,134 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421939695}
   m_CullTransparentMesh: 1
+--- !u!1 &1428200523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1428200527}
+  - component: {fileID: 1428200526}
+  - component: {fileID: 1428200525}
+  - component: {fileID: 1428200524}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1428200524
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428200523}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1428200525
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428200523}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1428200526
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428200523}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1428200527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428200523}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1431800124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431800125}
+  m_Layer: 0
+  m_Name: Recoil Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1431800125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431800124}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 335334440}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449934426
 GameObject:
   m_ObjectHideFlags: 0

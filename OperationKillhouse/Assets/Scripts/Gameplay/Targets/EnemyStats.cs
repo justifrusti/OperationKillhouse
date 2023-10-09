@@ -6,14 +6,14 @@ public class EnemyStats : MonoBehaviour
 {
     public int health = 1;
     public Animation animationl;
-    public bool enemy, civilian;
     bool animPlayed;
 
-    // Update is called once per frame
-    void Update()
+    public void Damage(int damage)
     {
-        if(health <= 0 && !animPlayed)
+        if((health -= damage) <= 0)
+        {
             Death();
+        }
     }
 
     void Death()

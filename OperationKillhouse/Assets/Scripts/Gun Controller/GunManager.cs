@@ -408,6 +408,7 @@ namespace Gun
         [ConditionalHide("useWeaponSway")][Tooltip("The value that determines the intensity of the weapon sway")] public float weaponSwayIntensity;
         [Space]
         [ConditionalHide("hasAttatchments")]public Attatchements weaponAttatchments;
+        public Ammocounter ammoCounter;
 
         [Header("Private Info, DO NOT TOUCH!")]
         [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
@@ -527,6 +528,7 @@ namespace Gun
         /// </summary>
         public int SetUsedClipAmmo(int ammoToSubtract)
         {
+            ammoCounter.AnimPlay();
             return s_currentAmmo = s_currentAmmo - ammoToSubtract;
         }
     }

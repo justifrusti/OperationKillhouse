@@ -6,9 +6,9 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
 
-    private int minutes;
-    private int seconds;
-    private float fSeconds;
+    [SerializeField]int minutes;
+    [SerializeField]int seconds;
+    float fSeconds;
 
     private void Start()
     {

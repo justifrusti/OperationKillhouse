@@ -69,7 +69,6 @@ namespace Gun
             if(fire)
             {
                 fire = false;
-                Debug.Log("Fire!");
                 Fire();
             }
 
@@ -78,7 +77,7 @@ namespace Gun
                 RecoilUpdate();
             }
 
-            if(useWeaponSway)
+            if (useWeaponSway)
             {
                 WeaponSwayUpdate();
             }
@@ -91,45 +90,47 @@ namespace Gun
         /// </summary>
         public void Fire()
         {
-            if(gunProperties.GetCurrentAmmo() > 0)
-            {
-                gunProperties.SetUsedClipAmmo(gunProperties.ammoConsumptionPerTick);
-            }else
-            {
-                gunProperties.SetCurrentAmmo();
-            }
-
             if(aiming)
             {
-                s_RotationRecoil += new Vector3(-gunProperties.recoilRotationAim.x, gunProperties.recoilRotationAim.y, gunProperties.recoilRotationAim.z);
-                s_PositionRecoil += new Vector3(gunProperties.recoilAmountAim.x, gunProperties.recoilAmountAim.y, gunProperties.recoilAmountAim.z);
-
-                switch(gunProperties.shootingType)
+                if (gunProperties.GetCurrentAmmo() > 0)
                 {
-                    case GunProperties.ShootingType.Raycast:
-                        if(shootingDebugRayActive)
-                        {
-                            Debug.DrawRay(GetRay().origin, GetRay().direction * 500f, Color.red);
-                        }
+                    s_RotationRecoil += new Vector3(-gunProperties.recoilRotationAim.x, gunProperties.recoilRotationAim.y, gunProperties.recoilRotationAim.z);
+                    s_PositionRecoil += new Vector3(gunProperties.recoilAmountAim.x, gunProperties.recoilAmountAim.y, gunProperties.recoilAmountAim.z);
 
-                        RaycastHit hit;
-
-                        if(Physics.Raycast(GetRay(), out hit, 500f))
-                        {
-                            if(hit.collider.CompareTag("Red Target"))
+                    switch (gunProperties.shootingType)
+                    {
+                        case GunProperties.ShootingType.Raycast:
+                            if (shootingDebugRayActive)
                             {
-                                Debug.Log("Back to school starter pack: Gun!");
-                                hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
-                            }else if(hit.collider.CompareTag("Blue Target"))
-                            {
-                                ScoreManager.instance.AddPenalty(10);
+                                Debug.DrawRay(GetRay().origin, GetRay().direction * 500f, Color.red);
                             }
-                        }
-                        break;
 
-                    case GunProperties.ShootingType.Physics:
-                        Debug.Log("Physics shooting system does not exsist (yet)");
-                        break;
+                            RaycastHit hit;
+
+                            if (Physics.Raycast(GetRay(), out hit, 500f))
+                            {
+                                if (hit.collider.CompareTag("Red Target"))
+                                {
+                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                }
+                                else if (hit.collider.CompareTag("Blue Target"))
+                                {
+                                    ScoreManager.instance.AddPenalty(10);
+                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                }
+                            }
+                            break;
+
+                        case GunProperties.ShootingType.Physics:
+                            Debug.Log("Physics shooting system does not exsist (yet)");
+                            break;
+                    }
+
+                    gunProperties.SetUsedClipAmmo(gunProperties.ammoConsumptionPerTick);
+                }
+                else
+                {
+                    gunProperties.SetCurrentAmmo();
                 }
             }else
             {
@@ -408,10 +409,10 @@ namespace Gun
         [Space]
         [ConditionalHide("hasAttatchments")]public Attatchements weaponAttatchments;
 
-        //[Header("Private Info, DO NOT TOUCH!")]
-        [Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
-        [Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_ClipAmmo;
-        [Tooltip("The ammount of partial clips the player has (clips that are not full), DO NOT CHANGE THIS LIST DIRECTLY IN CODE!")]private List<Clip> s_currentClips;
+        [Header("Private Info, DO NOT TOUCH!")]
+        [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;
+        [SerializeField][Tooltip("The ammount of ammo the gun has left for reloading, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_ClipAmmo;
+        [SerializeField][Tooltip("The ammount of partial clips the player has (clips that are not full), DO NOT CHANGE THIS LIST DIRECTLY IN CODE!")]private List<Clip> s_currentClips;
 
         /// <summary>
         /// Returns the current ammo that the gun has!

@@ -115,7 +115,7 @@ namespace Gun
                                 }
                                 else if (hit.collider.CompareTag("Blue Target"))
                                 {
-                                    ScoreManager.instance.AddPenalty(10);
+                                    //ScoreManager.instance.AddPenalty(10);
                                     hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
                                 }
                             }
@@ -295,8 +295,8 @@ namespace Gun
 
         private void WeaponSwayUpdate()
         {
-            float x = Input.GetAxis("Horizontal") * (gunProperties.swayIntensity * s_Controller.sens);
-            float y = Input.GetAxis("Vertical") * (gunProperties.swayIntensity * s_Controller.sens);
+            float x = Input.GetAxis("Horizontal") * (gunProperties.swayIntensity * s_Controller.sensetivity);
+            float y = Input.GetAxis("Vertical") * (gunProperties.swayIntensity * s_Controller.sensetivity);
 
             Quaternion rotationX = Quaternion.AngleAxis(-y, Vector3.right);
             Quaternion rotationY = Quaternion.AngleAxis(x, Vector3.up);

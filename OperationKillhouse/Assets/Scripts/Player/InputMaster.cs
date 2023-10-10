@@ -257,7 +257,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Fire"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""7ce76d4c-20a1-46ce-ac0b-2e91c07852fe"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

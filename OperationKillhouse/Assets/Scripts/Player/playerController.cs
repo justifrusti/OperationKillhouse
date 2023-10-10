@@ -66,6 +66,8 @@ namespace Player
         public Inputmanager inputmanager;
         public Rigidbody rb;
         public Animation walk;
+        public bool inMenu;
+
 
         [Header("Movement Values")]
         [Tooltip("The walking speed of the player")] public float walkSpeed;
@@ -94,8 +96,12 @@ namespace Player
         private float baseHight;
 
         [Header("Camera sensetivity")]
-        [Tooltip("The sensetivity of the camera")]public float sens;
-        Transform cam;
+        [Tooltip("The sensetivity of the camera")]public float sensetivity;
+        public Transform cam;
+        public Transform cam2;
+        public GameObject button1;
+        public GameObject button2;
+        public GameObject button3;
 
         private float xRotation = 0;
 
@@ -105,10 +111,9 @@ namespace Player
         private void Start()
         {
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
-            Cursor.lockState = CursorLockMode.Locked;
 
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-
+            cam.gameObject.SetActive(false);
             baseHight = cam.transform.localPosition.y;
             normalHeight = GetComponent<CapsuleCollider>().height;
         }
@@ -118,6 +123,11 @@ namespace Player
             float forwardBackward = inputmanager.inputMaster.Movement.ForwardBackward.ReadValue<float>();
             float leftRight = inputmanager.inputMaster.Movement.RightLeft.ReadValue<float>();
             Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
+
+            if(!inMenu)
+                Cursor.lockState = CursorLockMode.Locked;
+            else
+                Cursor.lockState = CursorLockMode.None;
 
             if (speed <= walkSpeed && forwardBackward != 0 | leftRight != 0)
             {
@@ -143,7 +153,7 @@ namespace Player
 
             rb.velocity = new Vector3(move.x,rb.velocity.y, move.z);
 
-            Vector2 mouseV2 = inputmanager.inputMaster.CameraMovement.MouseX.ReadValue<Vector2>() * sens * Time.deltaTime;
+            Vector2 mouseV2 = inputmanager.inputMaster.CameraMovement.MouseX.ReadValue<Vector2>() * sensetivity * Time.deltaTime;
 
             xRotation -= mouseV2.y;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -226,6 +236,11 @@ namespace Player
             {
                 animEvent.HolsterWeapon();
             }
+
+            if( Input.GetKeyDown(KeyCode.P))
+            {
+                CamSwap();
+            }
         }
         
 
@@ -255,6 +270,16 @@ namespace Player
             cam.localRotation = Quaternion.Euler(xRotation, cam.localRotation.y, currentLeanAngle);
             cam.localPosition = Vector3.Lerp(cam.localPosition, targetLeanPos, Time.deltaTime * leanSpeed);
 
+        }
+
+        public void CamSwap()
+        {
+            cam2.gameObject.SetActive(false);
+            button1.SetActive(false);
+            button2.SetActive(false);
+            button3.SetActive(false);
+            inMenu = false;
+            cam.gameObject.SetActive(true);
         }
     }
 }

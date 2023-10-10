@@ -16,6 +16,7 @@ public class Generator : MonoBehaviour
 
     [Header("Info for the generator")]
     [Space(10)]
+    public bool canGenarate;
     [Tooltip("The GameObject you want the generation to start from")]public GameObject firstRoom;
     [Tooltip("The last room you want to spawn in to close of the killHouse")]public GameObject lastRoom;
     [Tooltip("The amount of time the generetor is allowed to retry the placement of a room (resets when successful)")]public int retryAmount;
@@ -61,6 +62,15 @@ public class Generator : MonoBehaviour
         if(currentRetryAmount <= 0)
         {
             reset = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            reset = true;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            startGeneration();
         }
     }
 
@@ -120,5 +130,34 @@ public class Generator : MonoBehaviour
         {
             RemoveLastRoom();
         }
+    }
+
+    public void DificultyEasy()
+    {
+        easy = true;
+        normal = false;
+        hard = false;
+        roomAmount = easyRooms;
+    }
+
+    public void DificultyNormal()
+    {
+        easy = false;
+        normal = true;
+        hard = false;
+        roomAmount = normalRooms;
+    }
+
+    public void DificultyHard()
+    {
+        easy = false;
+        normal = false;
+        hard = true;
+        roomAmount = hardRooms;
+    }
+
+    public void startGeneration()
+    {
+        canGenarate = true;
     }
 }

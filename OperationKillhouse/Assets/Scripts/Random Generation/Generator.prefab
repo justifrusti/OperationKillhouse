@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &102676913313151824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102676913313151790}
+  - component: {fileID: 102676913313151825}
+  m_Layer: 0
+  m_Name: Generator
+  m_TagString: Generator
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &102676913313151790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102676913313151824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &102676913313151825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102676913313151824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1cae82455ece141bf4d2ec81a644e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easy: 1
+  normal: 0
+  hard: 0
+  easyRooms: 3
+  normalRooms: 5
+  hardRooms: 10
+  roomAmount: 5
+  canGenarate: 0
+  firstRoom: {fileID: 0}
+  lastRoom: {fileID: 2644566497956696874, guid: a8b1c0722a862d34cb0849fbf27ffa62,
+    type: 3}
+  retryAmount: 10
+  cornerRooms:
+  - {fileID: 5277917028201602923, guid: fb51a46a7206cb24c949ea31cbd59d6b, type: 3}
+  - {fileID: 5966111445898412955, guid: c7fe76291fc935543af68bf79e9bc435, type: 3}
+  straightRooms:
+  - {fileID: 194214672253627767, guid: b82ba4ba1ab816849976d44b76efe92b, type: 3}
+  - {fileID: 3723129122555837584, guid: f7dc0794878f0994db0b8da10619d9ee, type: 3}
+  - {fileID: 3220009623195671288, guid: fcb424db72e5e084184df5d2105ca4f6, type: 3}
+  - {fileID: 6904784416763737710, guid: f1c26c753aa14574d8e006b690df8cf6, type: 3}
+  reset: 0
+  currentRetryAmount: 0
+  killHouseRooms: []
+  killHouseGenerationComplete: 0
+  removeLastRoom: 0

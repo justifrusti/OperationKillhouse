@@ -31,7 +31,7 @@ public class RoomBehavior : MonoBehaviour
         if(doorPoint == null)
             doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
     
-        if (doorPoint != null && !roomSpawned)
+        if (doorPoint != null && !roomSpawned && generator.canGenarate)
         {
             if (generator.roomAmount > 0 && doorPoints.Count > 0)
             {
@@ -75,7 +75,6 @@ public class RoomBehavior : MonoBehaviour
         if(spawnedRoom == null)
         {
             int roomSelect = Random.Range(0, 2);
-            Debug.Log(roomSelect);
             if(roomSelect == 0)
             {
                 spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;

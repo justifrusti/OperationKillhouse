@@ -1,3 +1,4 @@
+using Gun;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,6 +8,61 @@ namespace Player
     [Serializable]
     public class playerController : MonoBehaviour
     {
+        [Serializable]
+        public class AnimatorEvents
+        {
+            public GunManager gunManager;
+
+            public Animator armAnimator;
+            public Animator gunAnimator;
+
+            public void Fire()
+            {
+                gunManager.aiming = !gunManager.aiming;
+
+                bool a_BoolState = armAnimator.GetBool("Fire");
+                bool g_BoolState = gunAnimator.GetBool("Fire");
+
+                armAnimator.SetBool("Fire", !a_BoolState);
+                gunAnimator.SetBool("Fire", !g_BoolState);
+            }
+
+            public void Reload()
+            {
+                armAnimator.SetTrigger("Reload");
+                gunAnimator.SetTrigger("Reload");
+            }
+
+            public void IdleCheck()
+            {
+                armAnimator.SetTrigger("Check");
+                gunAnimator.SetTrigger("Check");
+            }
+
+            public void HolsterWeapon()
+            {
+                armAnimator.SetTrigger("Holster");
+                gunAnimator.SetTrigger("Holster");
+            }
+
+            public void EmptyMag()
+            {
+                if(gunManager.gunProperties.GetCurrentAmmo() <= 0)
+                {
+                    armAnimator.SetBool("Empty", true);
+                    gunAnimator.SetBool("Empty", true);
+                }else
+                {
+
+                    armAnimator.SetBool("Empty", false);
+                    gunAnimator.SetBool("Empty", false);
+
+                }
+            }
+        }
+
+        public AnimatorEvents animEvent;
+
         public Inputmanager inputmanager;
         public Rigidbody rb;
         public Animation walk;
@@ -129,12 +185,46 @@ namespace Player
             }
 
 
-            if(inputmanager.inputMaster.Shooting.Fire.ReadValue<float>() == 1)
+            /*if(inputmanager.inputMaster.Shooting.Fire.ReadValue<float>() == 1)
             {
-                if (Physics.Raycast(cam.transform.position, cam.forward, out hit, Mathf.Infinity))
+                if(gunManager.gunProperties.GetClipAmmo() > 0)
                 {
-                    
+                    animEvent.Fire();
+                }else
+                {
+                    animEvent.EmptyMag();
                 }
+            }*/
+
+            animEvent.EmptyMag();
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
+                {
+                    animEvent.Fire();
+                }
+            }else if(Input.GetButtonUp("Fire1"))
+            {
+                if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
+                {
+                    animEvent.Fire();
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                animEvent.Reload();
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                animEvent.IdleCheck();
+            }
+
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                animEvent.HolsterWeapon();
             }
         }
         

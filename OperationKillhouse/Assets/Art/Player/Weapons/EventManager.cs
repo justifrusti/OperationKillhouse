@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour {
 
-    public Ammocounter Ammocounter;
-    public GunManager GunManager;
+    public Ammocounter ammoCounter;
+    public GunManager gunManager;
 
     // Start is called before the first frame update
     void Start()
@@ -21,20 +21,18 @@ public class EventManager : MonoBehaviour {
     }
 
     public void MagBullet () {
-        Ammocounter.Mag();
+        ammoCounter.Mag();
     }
 
-    public void Cassing () {
-        
+    public void Casing () {
+        print("yeet");
     }
 
     public void Fire () {
-
+        gunManager.Fire();
     }
 
     public void Reload () {
-
+        gunManager.Reload();
     }
-
-
 }

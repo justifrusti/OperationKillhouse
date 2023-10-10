@@ -26,11 +26,13 @@ public class Ammocounter : MonoBehaviour {
     }
 
     public void Mag () {
-        ammo++;
-        actifMag.sprite = mags [ammo];
-        
+        if(ammo < mags.Length - 1)
+        {
+            ammo++;
+            actifMag.sprite = mags[ammo];
+        }else
+        {
+            Debug.Log("Implement Case Removal");
+        }
     }
-
-
-
 }

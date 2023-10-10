@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Gun
@@ -13,6 +12,8 @@ namespace Gun
     {
         public GunProperties gunProperties = new GunProperties();
         [Tooltip("List with attatchment controllers for this gun!")]public List<Attatchement> attatchementControllers;
+
+        public bool aiming;
 
         [Header("Manager Properties")]
         [Tooltip("Set this to True if you want the player to start with X ammount of Clips")]public bool hasBaseClips = true;
@@ -41,7 +42,6 @@ namespace Gun
         Vector3 s_Rot;
 
         playerController s_Controller;
-        [SerializeField]bool aiming;
 
         private void Start()
         {
@@ -137,6 +137,11 @@ namespace Gun
                 s_RotationRecoil += new Vector3(-gunProperties.recoilRot.x, Random.Range(-gunProperties.recoilRot.y, gunProperties.recoilRot.y), Random.Range(-gunProperties.recoilRot.z, gunProperties.recoilRot.z));
                 s_RotationRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
             }
+        }
+
+        public void Reload()
+        {
+            SwapClip();
         }
 
         /// <summary>

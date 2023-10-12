@@ -90,58 +90,71 @@ namespace Gun
         /// </summary>
         public void Fire()
         {
-            if(aiming)
+            if (gunProperties.GetCurrentAmmo() > 0)
             {
-                if (gunProperties.GetCurrentAmmo() > 0)
+                if (aiming)
                 {
                     s_RotationRecoil += new Vector3(-gunProperties.recoilRotationAim.x, gunProperties.recoilRotationAim.y, gunProperties.recoilRotationAim.z);
                     s_PositionRecoil += new Vector3(gunProperties.recoilAmountAim.x, gunProperties.recoilAmountAim.y, gunProperties.recoilAmountAim.z);
-
-                    switch (gunProperties.shootingType)
-                    {
-                        case GunProperties.ShootingType.Raycast:
-                            if (shootingDebugRayActive)
-                            {
-                                Debug.DrawRay(GetRay().origin, GetRay().direction * 500f, Color.red);
-                            }
-
-                            RaycastHit hit;
-
-                            if (Physics.Raycast(GetRay(), out hit, 500f))
-                            {
-                                if (hit.collider.CompareTag("Red Target"))
-                                {
-                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
-                                }
-                                else if (hit.collider.CompareTag("Blue Target"))
-                                {
-                                    ScoreManager.instance.AddPenalty(10);
-                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
-                                }
-                            }
-                            break;
-
-                        case GunProperties.ShootingType.Physics:
-                            Debug.Log("Physics shooting system does not exsist (yet)");
-                            break;
-                    }
-
-                    gunProperties.SetUsedClipAmmo(gunProperties.ammoConsumptionPerTick);
                 }
                 else
                 {
-                    gunProperties.SetCurrentAmmo();
+                    s_RotationRecoil += new Vector3(-gunProperties.recoilRot.x, Random.Range(-gunProperties.recoilRot.y, gunProperties.recoilRot.y), Random.Range(-gunProperties.recoilRot.z, gunProperties.recoilRot.z));
+                    s_RotationRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
                 }
-            }else
+
+                switch (gunProperties.shootingType)
+                {
+                    case GunProperties.ShootingType.Raycast:
+                        if (shootingDebugRayActive)
+                        {
+                            Debug.DrawRay(GetRay().origin, GetRay().direction * 500f, Color.red);
+                        }
+
+                        RaycastHit hit;
+
+                        if (Physics.Raycast(GetRay(), out hit, 500f))
+                        {
+                            if (hit.collider.CompareTag("Red Target"))
+                            {
+                                hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                            }
+                            else if (hit.collider.CompareTag("Blue Target"))
+                            {
+                                ScoreManager.instance.AddPenalty(10);
+                                hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                            }
+                        }
+                        break;
+
+                    case GunProperties.ShootingType.Physics:
+                        Debug.Log("Physics shooting system does not exsist (yet)");
+                        break;
+                }
+
+                gunProperties.SetUsedClipAmmo(gunProperties.ammoConsumptionPerTick);
+            }
+            else
             {
-                s_RotationRecoil += new Vector3(-gunProperties.recoilRot.x, Random.Range(-gunProperties.recoilRot.y, gunProperties.recoilRot.y), Random.Range(-gunProperties.recoilRot.z, gunProperties.recoilRot.z));
-                s_RotationRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
+                gunProperties.SetCurrentAmmo();
             }
         }
 
         public void Reload()
         {
+            int tempReloadAmmo = gunProperties.GetClipAmmo();
+
             SwapClip();
+
+            if(gunProperties.GetCurrentAmmo() <= 0)
+            {
+                gunProperties.SetCurrentClipAmmo();
+
+                if(tempReloadAmmo >= gunProperties.GetClipAmmo())
+                {
+                    gunProperties.SubtractClipAmmo(gunProperties.clipSize);
+                }
+            }
         }
 
         /// <summary>
@@ -295,15 +308,14 @@ namespace Gun
 
         private void WeaponSwayUpdate()
         {
-            float x = Input.GetAxis("Mouse X") * (gunProperties.swayIntensity * s_Controller.sensetivity);
-            float y = Input.GetAxis("Mouse Y") * (gunProperties.swayIntensity * s_Controller.sensetivity);
+            float x = Input.GetAxis("Mouse X");
+            float y = Input.GetAxis("Mouse Y");
 
-            Quaternion rotationX = Quaternion.AngleAxis(-y, Vector3.right);
-            Quaternion rotationY = Quaternion.AngleAxis(x, Vector3.up);
+            Quaternion xRot = Quaternion.AngleAxis(-gunProperties.swayIntensity * x, Vector3.up);
+            Quaternion yRot = Quaternion.AngleAxis(gunProperties.swayIntensity * y, Vector3.right);
+            Quaternion targetRot = transform.localRotation * xRot * yRot;
 
-            Quaternion target = rotationX * rotationY;
-
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, target, gunProperties.swaySmoothness * Time.deltaTime);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * gunProperties.swaySmoothness);
         }
 
         Ray GetRay()
@@ -526,6 +538,11 @@ namespace Gun
             return s_ClipAmmo = s_ClipAmmo + ammoToAdd;
         }
 
+        public int SubtractClipAmmo(int ammountToRemove)
+        {
+            return s_ClipAmmo = s_ClipAmmo - ammountToRemove;
+        }
+
         /// <summary>
         /// Depletes ammo upon shooting!
         /// </summary>
@@ -533,6 +550,11 @@ namespace Gun
         {
             ammoCounter.AnimPlay();
             return s_currentAmmo = s_currentAmmo - ammoToSubtract;
+        }
+
+        public int SetCurrentClipAmmo()
+        {
+            return s_currentAmmo = s_currentAmmo + clipSize;
         }
     }
 }

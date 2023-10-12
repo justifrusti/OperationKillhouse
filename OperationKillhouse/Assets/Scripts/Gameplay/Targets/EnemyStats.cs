@@ -6,22 +6,22 @@ public class EnemyStats : MonoBehaviour
 {
     public int health = 1;
     public Animation animationl;
-    bool animPlayed;
+    bool death;
 
     public void Damage(int damage)
     {
         if((health -= damage) <= 0)
         {
-            Death();
+            death = true;
         }
     }
 
-    void Death()
+    public void Update()
     {
-        animationl.Play();
-        //score shit for non ennemy
-        //and ennemy stuff
-        animPlayed = true;
+        if (death)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-90, transform.eulerAngles.y, transform.eulerAngles.z), Time.deltaTime * 3);
+        }
     }
 
 

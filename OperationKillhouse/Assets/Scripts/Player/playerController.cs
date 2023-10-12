@@ -98,10 +98,10 @@ namespace Player
         [Header("Camera sensetivity")]
         [Tooltip("The sensetivity of the camera")]public float sensetivity;
         public Transform cam;
-        public Transform cam2;
+        /*public Transform cam2;
         public GameObject button1;
         public GameObject button2;
-        public GameObject button3;
+        public GameObject button3;*/
 
         private float xRotation = 0;
 
@@ -113,7 +113,7 @@ namespace Player
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
 
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-            cam.gameObject.SetActive(false);
+            //cam.gameObject.SetActive(false);
             baseHight = cam.transform.localPosition.y;
             normalHeight = GetComponent<CapsuleCollider>().height;
         }
@@ -163,17 +163,43 @@ namespace Player
 
             if (canLean && inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
             {
-                targetLeanPos.x = -leanDistance;
-                targetLeanPos.y = leanHight;
-                leanInput = 1f;
-                Leaning();
+                if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
+                {
+                    if (hit.transform == null)
+                    {
+                        targetLeanPos.x = leanDistance;
+                        targetLeanPos.y = leanHight;
+                        leanInput = 1f;
+                        Leaning();
+                    }
+                }
+                else
+                {
+                    targetLeanPos.x = 0;
+                    targetLeanPos.y = baseHight;
+                    leanInput = 0f;
+                    Leaning();
+                }
             }
             else if (canLean && inputmanager.inputMaster.Leaning.LeanRight.ReadValue<float>() == 1)
             {
-                targetLeanPos.x = leanDistance;
-                targetLeanPos.y = leanHight;
-                leanInput = -1f;
-                Leaning();
+                if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
+                {
+                    if(hit.transform == null)
+                    {
+                        targetLeanPos.x = leanDistance;
+                        targetLeanPos.y = leanHight;
+                        leanInput = -1f;
+                        Leaning();
+                    }
+                }
+                else
+                {
+                    targetLeanPos.x = 0;
+                    targetLeanPos.y = baseHight;
+                    leanInput = 0f;
+                    Leaning();
+                }
             }
             else
             {
@@ -226,23 +252,23 @@ namespace Player
             {
                 animEvent.Reload();
             }
+            /*
+           if (Input.GetKeyDown(KeyCode.C))
+           {
+               animEvent.IdleCheck();
+           }
 
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                animEvent.IdleCheck();
-            }
+           if (Input.GetKeyDown(KeyCode.H))
+           {
+               animEvent.HolsterWeapon();
+           }
 
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                animEvent.HolsterWeapon();
-            }
-
-            if( Input.GetKeyDown(KeyCode.P))
-            {
-                CamSwap();
-            }
+           if( Input.GetKeyDown(KeyCode.P))
+           {
+               CamSwap();
+           }*/
         }
-        
+
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -259,7 +285,9 @@ namespace Player
         void Jump()
         {
             if (isGrounded)
-                rb.AddForce(Vector3.up * jumpforce);    
+            {
+                rb.AddForce(Vector3.up * jumpforce);
+            }
         }
 
         void Leaning()
@@ -272,7 +300,7 @@ namespace Player
 
         }
 
-        public void CamSwap()
+       /* public void CamSwap()
         {
             cam2.gameObject.SetActive(false);
             button1.SetActive(false);
@@ -280,6 +308,6 @@ namespace Player
             button3.SetActive(false);
             inMenu = false;
             cam.gameObject.SetActive(true);
-        }
+        }*/
     }
 }

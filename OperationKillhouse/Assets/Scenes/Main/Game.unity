@@ -3008,6 +3008,11 @@ PrefabInstance:
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
       propertyPath: useRecoil
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: useWeaponSway
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
@@ -3022,18 +3027,58 @@ PrefabInstance:
       objectReference: {fileID: 1622105741}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
-      propertyPath: gunProperties.ammountOfRecoil.x
+      propertyPath: gunProperties.swayIntensity
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.swaySmoothness
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.ammountOfRecoil.x
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
       propertyPath: gunProperties.ammountOfRecoil.y
-      value: 10
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
       propertyPath: gunProperties.ammountOfRecoil.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.recoilAmountAim.x
+      value: 0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.recoilAmountAim.y
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.recoilAmountAim.z
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.recoilRotationAim.x
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.recoilRotationAim.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
+      propertyPath: gunProperties.recoilRotationAim.z
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6902548378393222862, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
@@ -3158,7 +3203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -38.930054}
+  m_AnchoredPosition: {x: 0, y: -38.930176}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1855437101
@@ -3804,6 +3849,52 @@ RectTransform:
   m_AnchoredPosition: {x: 195.6, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2092817533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092817535}
+  - component: {fileID: 2092817534}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2092817534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092817533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d3197b51ab80746994394ea1c0d620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minutes: 0
+  seconds: 0
+--- !u!4 &2092817535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092817533}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2130335775
 GameObject:
   m_ObjectHideFlags: 0

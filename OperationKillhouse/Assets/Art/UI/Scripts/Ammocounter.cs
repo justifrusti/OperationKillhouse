@@ -1,3 +1,4 @@
+using Gun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,26 +10,21 @@ public class Ammocounter : MonoBehaviour {
     public Sprite[] mags;
     int ammo = 0;
     public Animation bullet;
+    public GunManager manager;
 
-    void Start() {
-        
-
-    }
-
-    
-    void Update() {
-
-
+    void Update() 
+    {
+        ammo = manager.gunProperties.GetCurrentAmmo();
     }
     
     public void AnimPlay() {
         bullet.Play();
     }
 
-    public void Mag () {
+    public void Mag () 
+    {
         if(ammo < mags.Length - 1)
         {
-            ammo++;
             actifMag.sprite = mags[ammo];
         }else
         {

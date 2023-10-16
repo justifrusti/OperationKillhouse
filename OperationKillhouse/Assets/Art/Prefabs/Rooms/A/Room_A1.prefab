@@ -50,12 +50,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814acf46684f5a74ea033f381f594e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generator: {fileID: 0}
+  roomRotPoint: {fileID: 5900050830178638469}
   firstRoom: 0
   doorPointLayer:
     serializedVersion: 2
     m_Bits: 8
   spawnedRoom: {fileID: 0}
   doorPoints: []
+  roomSpawned: 0
+  roomChecked: 0
+  outSideChecked: 0
   outSideCheck: {fileID: 4218161842467452529}
   offset: {x: 0, y: 0, z: 0}
 --- !u!1 &5104028033937674162
@@ -108,6 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4269813957757124914}
   - component: {fileID: 3876433129854434454}
+  - component: {fileID: 8034494927775236003}
   m_Layer: 3
   m_Name: DoorPoint Bottom
   m_TagString: DoorPoint
@@ -143,6 +149,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8034494927775236003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6483752574157623167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1cf7c905cbcbb649aa6230104d71e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomManager: {fileID: 8063439473357404629}
+  otherDoorPoint: {fileID: 0}
 --- !u!1 &7521933210728792132
 GameObject:
   m_ObjectHideFlags: 0

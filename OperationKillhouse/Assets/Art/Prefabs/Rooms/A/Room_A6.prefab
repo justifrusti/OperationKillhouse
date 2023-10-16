@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3520646802032522138}
   - component: {fileID: 8500758520114960515}
+  - component: {fileID: 1543536988875382213}
   m_Layer: 3
   m_Name: DoorPointBottom
   m_TagString: DoorPoint
@@ -160,6 +161,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1543536988875382213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296778111277760486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1cf7c905cbcbb649aa6230104d71e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomManager: {fileID: 4128823094663881605}
+  otherDoorPoint: {fileID: 0}
 --- !u!1 &5692404510299444272
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,12 +272,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814acf46684f5a74ea033f381f594e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generator: {fileID: 0}
+  roomRotPoint: {fileID: 666963469837274353}
   firstRoom: 0
   doorPointLayer:
     serializedVersion: 2
     m_Bits: 8
   spawnedRoom: {fileID: 0}
   doorPoints: []
+  roomSpawned: 0
+  roomChecked: 0
+  outSideChecked: 0
   outSideCheck: {fileID: 1763988418405001781}
   offset: {x: 0, y: 0, z: 0}
 --- !u!1 &7726600225904468244

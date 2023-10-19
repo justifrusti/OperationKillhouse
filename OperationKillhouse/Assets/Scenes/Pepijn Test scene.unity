@@ -146,13 +146,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49686640}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 12.68, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 0.17281905, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 835393259}
-  m_RootOrder: 2
+  m_Father: {fileID: 944202643}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &154359801
 GameObject:
@@ -280,7 +280,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 835393259}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35}
 --- !u!1 &377932840
 GameObject:
@@ -292,7 +292,6 @@ GameObject:
   m_Component:
   - component: {fileID: 377932841}
   - component: {fileID: 377932844}
-  - component: {fileID: 377932843}
   - component: {fileID: 377932842}
   m_Layer: 0
   m_Name: Weapon-Camera
@@ -349,14 +348,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &377932843
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377932840}
-  m_Enabled: 1
 --- !u!20 &377932844
 Camera:
   m_ObjectHideFlags: 0
@@ -429,9 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1cae82455ece141bf4d2ec81a644e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easy: 0
-  normal: 0
-  hard: 1
+  difficulty: 0
   easyRooms: 3
   normalRooms: 5
   hardRooms: 10
@@ -451,8 +440,8 @@ MonoBehaviour:
   - {fileID: 6904784416763737710, guid: f1c26c753aa14574d8e006b690df8cf6, type: 3}
   reset: 0
   currentRetryAmount: 0
-  killHouseRooms: []
-  killHouseGenerationComplete: 0
+  dungeonRooms: []
+  dungeonGenerationComplete: 0
   removeLastRoom: 0
 --- !u!4 &379546048
 Transform:
@@ -799,10 +788,13 @@ MonoBehaviour:
   doorPointLayer:
     serializedVersion: 2
     m_Bits: 8
-  spawnedRoom: {fileID: 0}
   doorPoints: []
+  roomRotPoint: {fileID: 835393257}
+  generator: {fileID: 0}
+  spawnedRoom: {fileID: 0}
   outSideCheck: {fileID: 49686641}
-  offset: {x: 0, y: 0, z: 0}
+  spawingDone: 0
+  spawnDoorPoint: {fileID: 0}
 --- !u!4 &835393259
 Transform:
   m_ObjectHideFlags: 0
@@ -811,13 +803,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835393257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.28, y: 1.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 321424068}
   - {fileID: 944202643}
-  - {fileID: 49686641}
+  - {fileID: 321424068}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -830,6 +821,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 944202643}
+  - component: {fileID: 944202644}
+  - component: {fileID: 944202645}
   m_Layer: 3
   m_Name: DoorPoint
   m_TagString: DoorPoint
@@ -845,13 +838,46 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944202642}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.3, y: -1.75, z: 0}
+  m_LocalPosition: {x: 2.3, y: 0, z: 0}
   m_LocalScale: {x: 5.7864, y: 0.10000001, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 49686641}
   m_Father: {fileID: 835393259}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &944202644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944202642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1cf7c905cbcbb649aa6230104d71e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherDoorPoint: {fileID: 0}
+  roomManager: {fileID: 0}
+  generator: {fileID: 0}
+  outSideCheck: {fileID: 49686641}
+  roomSpawned: 0
+  roomChecked: 0
+  outSideChecked: 0
+--- !u!65 &944202645
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944202642}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &952942289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,7 +1509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632660784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -5.11, y: -1.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

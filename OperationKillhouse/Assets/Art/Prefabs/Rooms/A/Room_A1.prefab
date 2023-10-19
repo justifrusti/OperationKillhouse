@@ -50,19 +50,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814acf46684f5a74ea033f381f594e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 0}
-  roomRotPoint: {fileID: 5900050830178638469}
   firstRoom: 0
   doorPointLayer:
     serializedVersion: 2
     m_Bits: 8
-  spawnedRoom: {fileID: 0}
   doorPoints: []
-  roomSpawned: 0
-  roomChecked: 0
-  outSideChecked: 0
+  roomRotPoint: {fileID: 5104028033937674162}
+  generator: {fileID: 0}
+  spawnedRoom: {fileID: 0}
   outSideCheck: {fileID: 4218161842467452529}
-  offset: {x: 0, y: 0, z: 0}
+  spawnDoorPoint: {fileID: 0}
 --- !u!1 &5104028033937674162
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,8 +158,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1cf7c905cbcbb649aa6230104d71e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomManager: {fileID: 8063439473357404629}
   otherDoorPoint: {fileID: 0}
+  roomManager: {fileID: 8063439473357404629}
+  generator: {fileID: 0}
+  outSideCheck: {fileID: 0}
+  roomSpawned: 0
+  roomChecked: 0
+  outSideChecked: 0
 --- !u!1 &7521933210728792132
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,10 +98,6 @@ namespace Player
         [Header("Camera sensetivity")]
         [Tooltip("The sensetivity of the camera")]public float sensetivity;
         public Transform cam;
-        /*public Transform cam2;
-        public GameObject button1;
-        public GameObject button2;
-        public GameObject button3;*/
 
         private float xRotation = 0;
 
@@ -113,7 +109,6 @@ namespace Player
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
 
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-            //cam.gameObject.SetActive(false);
             baseHight = cam.transform.localPosition.y;
             normalHeight = GetComponent<CapsuleCollider>().height;
         }
@@ -220,18 +215,6 @@ namespace Player
                 GetComponent<CapsuleCollider>().height = newHeight;
             }
 
-
-            /*if(inputmanager.inputMaster.Shooting.Fire.ReadValue<float>() == 1)
-            {
-                if(gunManager.gunProperties.GetClipAmmo() > 0)
-                {
-                    animEvent.Fire();
-                }else
-                {
-                    animEvent.EmptyMag();
-                }
-            }*/
-
             animEvent.EmptyMag();
 
             if (Input.GetButtonDown("Fire1"))
@@ -252,21 +235,6 @@ namespace Player
             {
                 animEvent.Reload();
             }
-            /*
-           if (Input.GetKeyDown(KeyCode.C))
-           {
-               animEvent.IdleCheck();
-           }
-
-           if (Input.GetKeyDown(KeyCode.H))
-           {
-               animEvent.HolsterWeapon();
-           }
-
-           if( Input.GetKeyDown(KeyCode.P))
-           {
-               CamSwap();
-           }*/
         }
 
 
@@ -299,15 +267,5 @@ namespace Player
             cam.localPosition = Vector3.Lerp(cam.localPosition, targetLeanPos, Time.deltaTime * leanSpeed);
 
         }
-
-       /* public void CamSwap()
-        {
-            cam2.gameObject.SetActive(false);
-            button1.SetActive(false);
-            button2.SetActive(false);
-            button3.SetActive(false);
-            inMenu = false;
-            cam.gameObject.SetActive(true);
-        }*/
     }
 }

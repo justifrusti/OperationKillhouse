@@ -219,7 +219,7 @@ namespace Player
 
             if (Input.GetButtonDown("Fire1"))
             {
-                if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
+                if (animEvent.gunManager.gunProperties.GetCurrentAmmo() > 0)
                 {
                     animEvent.Fire();
                 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+#pragma warning disable IDE0090
 namespace Gun
 {
     [Serializable]
@@ -41,6 +42,8 @@ namespace Gun
         Vector3 s_PositionRecoil;
         Vector3 s_Rot;
 
+        Quaternion localRotation;
+
         playerController s_Controller;
 
         private void Start()
@@ -54,7 +57,15 @@ namespace Gun
                 gunProperties.SetClipAmmo(gunProperties.clipSize);
             }
 
-            s_Controller = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+            if(GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>() != null)
+            {
+                s_Controller = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+            }else
+            {
+                Debug.LogError("Error: Player or Player Controller not present. Please make sure your player has the 'Player' tag and has a PlayerController"); 
+            }
+
+            localRotation = transform.localRotation;
         }
 
         private void Update()
@@ -133,10 +144,6 @@ namespace Gun
                 }
 
                 gunProperties.SetUsedClipAmmo(gunProperties.ammoConsumptionPerTick);
-            }
-            else
-            {
-                gunProperties.SetCurrentAmmo();
             }
         }
 
@@ -308,14 +315,28 @@ namespace Gun
 
         private void WeaponSwayUpdate()
         {
-            float x = Input.GetAxis("Mouse X");
-            float y = Input.GetAxis("Mouse Y");
+            float z = (Input.GetAxis("Mouse Y")) * gunProperties.drag;
+            float y = -(Input.GetAxis("Mouse X")) * gunProperties.drag;
 
-            Quaternion xRot = Quaternion.AngleAxis(-gunProperties.swayIntensity * x, Vector3.up);
-            Quaternion yRot = Quaternion.AngleAxis(gunProperties.swayIntensity * y, Vector3.right);
-            Quaternion targetRot = transform.localRotation * xRot * yRot;
+            if (gunProperties.drag >= 0) //weapon lags behind camera
+            {
+                y = (y > gunProperties.dragThreshold) ? gunProperties.dragThreshold : y;
+                y = (y < -gunProperties.dragThreshold) ? -gunProperties.dragThreshold : y;
 
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRot, Time.deltaTime * gunProperties.swaySmoothness);
+                z = (z > gunProperties.dragThreshold) ? gunProperties.dragThreshold : z;
+                z = (z < -gunProperties.dragThreshold) ? -gunProperties.dragThreshold : z;
+            }
+            else //camera lags behind weapon
+            {
+                y = (y < gunProperties.dragThreshold) ? gunProperties.dragThreshold : y;
+                y = (y > -gunProperties.dragThreshold) ? -gunProperties.dragThreshold : y;
+
+                z = (z < gunProperties.dragThreshold) ? gunProperties.dragThreshold : z;
+                z = (z > -gunProperties.dragThreshold) ? -gunProperties.dragThreshold : z;
+            }
+
+            Quaternion newRotation = Quaternion.Euler(localRotation.x, localRotation.y + y, localRotation.z + z);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, newRotation, (Time.deltaTime * gunProperties.smooth));
         }
 
         Ray GetRay()
@@ -419,8 +440,9 @@ namespace Gun
         [ConditionalHide("useRecoil")]public Vector3 recoilRotationAim;
         [ConditionalHide("useRecoil")]public Vector3 recoilAmountAim;
         [Space]
-        [ConditionalHide("useWeaponSway")]public float swayIntensity;
-        [ConditionalHide("useWeaponSway")] public float swaySmoothness;
+        [ConditionalHide("useWeaponSway")]public float drag = 2.5f;
+        [ConditionalHide("useWeaponSway")]public float dragThreshold = -5f;
+        [ConditionalHide("useWeaponSway")] public float smooth = 5;
         [Space]
         [ConditionalHide("hasAttatchments")]public Attatchements weaponAttatchments;
         public Ammocounter ammoCounter;
@@ -558,3 +580,4 @@ namespace Gun
         }
     }
 }
+#pragma warning restore IDE0090

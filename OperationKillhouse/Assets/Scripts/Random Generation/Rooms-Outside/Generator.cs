@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
 public class Generator : MonoBehaviour
 {
@@ -36,7 +38,13 @@ public class Generator : MonoBehaviour
     [HideInInspector]public bool dungeonGenerationComplete;
     [HideInInspector]public bool removeLastRoom;
 
-    // S4tart is called before the first frame update
+    [Header("Seed Value's")]
+    public int dungeonSeed;
+    public int fillInSeed;
+    public TMP_InputField seedInputField;
+
+    public bool useFillInSeed;
+
     void Start()
     {
         DifficultySelect(difficulty);
@@ -100,8 +108,12 @@ public class Generator : MonoBehaviour
 
     public void RemoveLastRoom()
     {
-        Destroy(dungeonRooms[dungeonRooms.Count -1]);
-        dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();
+        if(dungeonRooms.Count > 0)
+        {
+            Destroy(dungeonRooms[dungeonRooms.Count -1]);
+            dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();
+        }
+
         roomAmount++;
         currentRetryAmount--;
         removeLastRoom = false;
@@ -129,6 +141,22 @@ public class Generator : MonoBehaviour
 
     public void startGeneration()
     {
-        canGenarate = true;
+        
+        if(seedInputField.text.Length > 0)
+        {
+            useFillInSeed = true;
+
+            fillInSeed = int.Parse(seedInputField.text);
+            dungeonSeed = fillInSeed;
+
+            canGenarate = true;
+        }
+
+        if(seedInputField.text.Length == 0)
+        {
+            dungeonSeed = Random.Range(0, int.MaxValue);
+            canGenarate = true;
+        }
+            Random.InitState(dungeonSeed);
     }
 }

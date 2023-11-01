@@ -1,6 +1,5 @@
 using Gun;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Player
@@ -61,6 +60,13 @@ namespace Player
             }
         }
 
+        public enum GameState
+        {
+            Play, Pause
+        }
+
+        public GameState gameState = GameState.Play;
+
         public AnimatorEvents animEvent;
 
         public Inputmanager inputmanager;
@@ -115,125 +121,144 @@ namespace Player
         
         private void Update()
         {
-            float forwardBackward = inputmanager.inputMaster.Movement.ForwardBackward.ReadValue<float>();
-            float leftRight = inputmanager.inputMaster.Movement.RightLeft.ReadValue<float>();
-            Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
-
-            if(!inMenu)
-                Cursor.lockState = CursorLockMode.Locked;
-            else
-                Cursor.lockState = CursorLockMode.None;
-
-            if (speed <= walkSpeed && forwardBackward != 0 | leftRight != 0)
+            switch (gameState)
             {
-                speed += accel;
-                //walk.Play();
-            }
-            else if(speed >= 0)
-            {
-                speed -= accel;
-            }//else
-                //walk.Stop();
+                case GameState.Play:
 
-            if (currentRunspeed <= runspeed && inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 1 && forwardBackward != 0 | leftRight != 0)
-            {
-                currentRunspeed += accel * 2;
-            }
-            else if(currentRunspeed >= 0)
-            {
-                currentRunspeed -= accel;
-            }
+                    Cursor.lockState = CursorLockMode.Locked;
 
-            move *= inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 0 ? speed : currentRunspeed;
+                    float forwardBackward = inputmanager.inputMaster.Movement.ForwardBackward.ReadValue<float>();
+                    float leftRight = inputmanager.inputMaster.Movement.RightLeft.ReadValue<float>();
+                    Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
 
-            rb.velocity = new Vector3(move.x,rb.velocity.y, move.z);
-
-            Vector2 mouseV2 = inputmanager.inputMaster.CameraMovement.MouseX.ReadValue<Vector2>() * sensetivity * Time.deltaTime;
-
-            xRotation -= mouseV2.y;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-            cam.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            transform.Rotate(Vector3.up * mouseV2.x);
-
-            if (canLean && inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
-            {
-                if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
-                {
-                    if (hit.transform == null)
+                    if (speed <= walkSpeed && forwardBackward != 0 | leftRight != 0)
                     {
-                        targetLeanPos.x = leanDistance;
-                        targetLeanPos.y = leanHight;
-                        leanInput = 1f;
+                        speed += accel;
+                    }
+                    else if(speed >= 0)
+                    {
+                        speed -= accel;
+                    }
+
+                    if (currentRunspeed <= runspeed && inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 1 && forwardBackward != 0 | leftRight != 0)
+                    {
+                        currentRunspeed += accel * 2;
+                    }
+                    else if(currentRunspeed >= 0)
+                    {
+                        currentRunspeed -= accel;
+                    }
+
+                    move *= inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 0 ? speed : currentRunspeed;
+
+                    rb.velocity = new Vector3(move.x,rb.velocity.y, move.z);
+
+                    Vector2 mouseV2 = inputmanager.inputMaster.CameraMovement.MouseX.ReadValue<Vector2>() * sensetivity * Time.deltaTime;
+
+                    xRotation -= mouseV2.y;
+                    xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+                    cam.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+                    transform.Rotate(Vector3.up * mouseV2.x);
+
+                    if (canLean && inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
+                    {
+                        if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
+                        {
+                            if (hit.transform == null)
+                            {
+                                targetLeanPos.x = leanDistance;
+                                targetLeanPos.y = leanHight;
+                                leanInput = 1f;
+                                Leaning();
+                            }
+                        }
+                        else
+                        {
+                            targetLeanPos.x = 0;
+                            targetLeanPos.y = baseHight;
+                            leanInput = 0f;
+                            Leaning();
+                        }
+                    }
+                    else if (canLean && inputmanager.inputMaster.Leaning.LeanRight.ReadValue<float>() == 1)
+                    {
+                        if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
+                        {
+                            if(hit.transform == null)
+                            {
+                                targetLeanPos.x = leanDistance;
+                                targetLeanPos.y = leanHight;
+                                leanInput = -1f;
+                                Leaning();
+                            }
+                        }
+                        else
+                        {
+                            targetLeanPos.x = 0;
+                            targetLeanPos.y = baseHight;
+                            leanInput = 0f;
+                            Leaning();
+                        }
+                    }
+                    else
+                    {
+                        targetLeanPos.x = 0;
+                        targetLeanPos.y = baseHight;
+                        leanInput = 0f;
                         Leaning();
                     }
-                }
-                else
-                {
-                    targetLeanPos.x = 0;
-                    targetLeanPos.y = baseHight;
-                    leanInput = 0f;
-                    Leaning();
-                }
-            }
-            else if (canLean && inputmanager.inputMaster.Leaning.LeanRight.ReadValue<float>() == 1)
-            {
-                if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
-                {
-                    if(hit.transform == null)
+
+                    if (canCrouch && inputmanager.inputMaster.Movement.Crouch.ReadValue<float>() == 1)
                     {
-                        targetLeanPos.x = leanDistance;
-                        targetLeanPos.y = leanHight;
-                        leanInput = -1f;
-                        Leaning();
+                        float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, crouchHeight, Time.deltaTime * leanSpeed);
+                        GetComponent<CapsuleCollider>().height = newHeight;
                     }
-                }
-                else
-                {
-                    targetLeanPos.x = 0;
-                    targetLeanPos.y = baseHight;
-                    leanInput = 0f;
-                    Leaning();
-                }
-            }
-            else
-            {
-                targetLeanPos.x = 0;
-                targetLeanPos.y = baseHight;
-                leanInput = 0f;
-                Leaning();
+                    else
+                    {
+                        float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, normalHeight, Time.deltaTime * leanSpeed);
+                        GetComponent<CapsuleCollider>().height = newHeight;
+                    }
+
+                    animEvent.EmptyMag();
+
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        if (animEvent.gunManager.gunProperties.GetCurrentAmmo() > 0)
+                        {
+                            animEvent.Fire();
+                        }
+                    }else if(Input.GetButtonUp("Fire1"))
+                    {
+                        if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
+                        {
+                            animEvent.Fire();
+                        }
+                    }
+
+                    if(Input.GetKeyDown(KeyCode.R))
+                    {
+                        animEvent.Reload();
+                    }
+
+                    break;
+
+                case GameState.Pause:
+
+                    Cursor.lockState = CursorLockMode.None;
+
+
+                    break;
             }
 
-            if (canCrouch && inputmanager.inputMaster.Movement.Crouch.ReadValue<float>() == 1)
+            if(inputmanager.inputMaster.Pause.PauseKey.ReadValue<float>() == 1)
             {
-                float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, crouchHeight, Time.deltaTime * leanSpeed);
-                GetComponent<CapsuleCollider>().height = newHeight;
-            }
-            else
-            {
-                float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, normalHeight, Time.deltaTime * leanSpeed);
-                GetComponent<CapsuleCollider>().height = newHeight;
+                ChangeGameState(GameState.Pause);
             }
 
-            animEvent.EmptyMag();
-
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                if (animEvent.gunManager.gunProperties.GetCurrentAmmo() > 0)
-                {
-                    animEvent.Fire();
-                }
-            }else if(Input.GetButtonUp("Fire1"))
-            {
-                if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
-                {
-                    animEvent.Fire();
-                }
-            }
-
-            if(Input.GetKeyDown(KeyCode.R))
-            {
-                animEvent.Reload();
+                ChangeGameState(GameState.Play);
             }
         }
 
@@ -266,6 +291,11 @@ namespace Player
             cam.localRotation = Quaternion.Euler(xRotation, cam.localRotation.y, currentLeanAngle);
             cam.localPosition = Vector3.Lerp(cam.localPosition, targetLeanPos, Time.deltaTime * leanSpeed);
 
+        }
+
+        public void ChangeGameState(GameState newState)
+        {
+            gameState = newState;
         }
     }
 }

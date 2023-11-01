@@ -49,15 +49,16 @@ public class DoorPoint : MonoBehaviour
         if (otherDoorPoint != null)
             CheckRoom();
 
-        if (generator.roomAmount == 0 && generator.dungeonRooms[generator.dungeonRooms.Count - 1].GetComponent<RoomManager>().enabled == true)
+        if (generator.roomAmount == 0 && roomManager.enabled == true)
             SpawnLastRoom();
 
         if (roomSpawned && roomChecked && outSideChecked && roomManager.doorPoints.Count < 2)
         {
             roomManager.spawingDone = true;
+            generator.roomAmount--;
             gameObject.SetActive(false);
 
-            if(otherDoorPoint != null)
+            if (otherDoorPoint != null)
             {
                 otherDoorPoint.gameObject.SetActive(false);
             }
@@ -69,6 +70,7 @@ public class DoorPoint : MonoBehaviour
         if (roomManager.spawnedRoom == null)
         {
             int roomSelect = Random.Range(0, 3);
+
             if (roomSelect == 0 || roomSelect == 1)
             {
                 roomManager.spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
@@ -85,7 +87,6 @@ public class DoorPoint : MonoBehaviour
             roomManager.spawnedRoom = Instantiate<GameObject>(roomManager.spawnedRoom, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
 
             generator.dungeonRooms.Add(roomManager.spawnedRoom);
-            generator.roomAmount--;
             roomSpawned = true;
         }
     }
@@ -116,10 +117,11 @@ public class DoorPoint : MonoBehaviour
             Transform doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
 
             GameObject theLastRoom = Instantiate<GameObject>(generator.lastRoom, new Vector3(doorPoint.position.x, doorPoint.position.y, doorPoint.position.z), doorPoint.rotation);
-            
             generator.dungeonRooms.Add(theLastRoom);
+
             generator.dungeonGenerationComplete = true;
             roomSpawned = true; roomChecked = true; outSideChecked = true; enabled = false;
+            roomManager.enabled = false;
             gameObject.SetActive(false);
         }
         else

@@ -7,6 +7,7 @@ public class EventManager : MonoBehaviour {
 
     public Ammocounter ammoCounter;
     public GunManager gunManager;
+    public GlockFirstPick GlockFirstPick;
 
     // Start is called before the first frame update
     void Start()
@@ -34,5 +35,9 @@ public class EventManager : MonoBehaviour {
 
     public void Reload () {
         gunManager.Reload();
+    }
+
+    public void FirstPick () {
+        GlockFirstPick.pickt = true;
     }
 }

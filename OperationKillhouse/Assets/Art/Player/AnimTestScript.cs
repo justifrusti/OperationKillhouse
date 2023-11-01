@@ -22,7 +22,15 @@ public class AnimTestScript : MonoBehaviour {
             arm.SetBool ("Fire" , false);
         }
 
-        if (Input.GetKey (KeyCode.E)) {
+        if (Input.GetButton ("Fire2")) {
+            gun.SetBool ("Aim" , true);
+            arm.SetBool ("Aim" , true);
+        } else {
+            gun.SetBool ("Aim" , false);
+            arm.SetBool ("Aim" , false);
+        }
+
+        if (Input.GetKeyDown (KeyCode.E)) {
             gun.SetBool ("Empty" , true);
             arm.SetBool ("Empty" , true);
         } else {
@@ -31,15 +39,15 @@ public class AnimTestScript : MonoBehaviour {
         }
 
 
-        if (Input.GetKey (KeyCode.R)) {
+        if (Input.GetKeyDown (KeyCode.R)) {
             gun.SetTrigger ("Reload");
             arm.SetTrigger ("Reload");
         }
-        if (Input.GetKey (KeyCode.C)) {
+        if (Input.GetKeyDown (KeyCode.C)) {
             gun.SetTrigger ("Check");
             arm.SetTrigger ("Check");
         }
-        if (Input.GetKey (KeyCode.H)) {
+        if (Input.GetKeyDown (KeyCode.H)) {
             gun.SetTrigger ("Holster");
             arm.SetTrigger ("Holster");
         }

@@ -63,8 +63,9 @@ MonoBehaviour:
     rotReturnSpeed: 38
     recoilRotationAim: {x: 10, y: 5, z: 7}
     recoilAmountAim: {x: 0.015, y: -0.05, z: -0.2}
-    swayIntensity: 5
-    swaySmoothness: 1
+    drag: 2.5
+    dragThreshold: -5
+    smooth: 5
     weaponAttatchments:
       foreGrip: 0
       optic: 0
@@ -97,6 +98,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6902548378393222862}
     m_Modifications:
+    - target: {fileID: 770746067001881473, guid: 2c26e2258214a544c8d88465ece944ad,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8f27a2a440cb2554c824df546f640696, type: 2}
+    - target: {fileID: 2669134546386584885, guid: 2c26e2258214a544c8d88465ece944ad,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2669134546386584885, guid: 2c26e2258214a544c8d88465ece944ad,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 47b16cda0e2522143aadd43cd9333f50, type: 2}
+    - target: {fileID: 3124888227670223987, guid: 2c26e2258214a544c8d88465ece944ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7346985311438507156, guid: 2c26e2258214a544c8d88465ece944ad,
         type: 3}
       propertyPath: m_RootOrder
@@ -151,6 +172,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7773150530533261102, guid: 2c26e2258214a544c8d88465ece944ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7979935000055141934, guid: 2c26e2258214a544c8d88465ece944ad,
         type: 3}

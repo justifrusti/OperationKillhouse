@@ -21,7 +21,7 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
-
+        
         if (firstRoom)
         {
             spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
@@ -47,11 +47,9 @@ public class RoomManager : MonoBehaviour
                 spawnDoorPoint = doorPoints[0].transform;
             }
         }
-        if (spawnDoorPoint != null)
-        {
-            if(!spawnDoorPoint.GetComponent<DoorPoint>().outSideChecked && spawnedRoom != null)
-                checkColl();
-        }
+
+        if(!spawnDoorPoint.GetComponent<DoorPoint>().outSideChecked && spawnedRoom != null)
+            checkColl();
 
         if (spawingDone && doorPoints.Count < 3)
         {
@@ -98,6 +96,7 @@ public class RoomManager : MonoBehaviour
         if(checkColl.Length == 0 && doorPoints.Count > 0)
         {
             generator.currentRetryAmount = generator.retryAmount;
+            doorPoints[0].GetComponent<DoorPoint>().enabled = true;
             doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
         }
     }

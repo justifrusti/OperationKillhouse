@@ -12,16 +12,20 @@ public class DoorPoint : MonoBehaviour
     public bool roomChecked;
     public bool outSideChecked;
 
-    private void Start()
+    private void Awake()
     {
-        generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
+        //generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
         roomManager = GetComponentInParent<RoomManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (generator.canGenarate)
+        if (generator == null)
+        {
+            generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
+        }
+
+        if (generator != null && generator.canGenarate)
         {
             if(!roomSpawned && generator.roomAmount >= 1)
             {
@@ -44,13 +48,14 @@ public class DoorPoint : MonoBehaviour
             {
                 otherDoorPoint = null;
             }
+
+            if (otherDoorPoint != null)
+                CheckRoom();
+
+            if (generator.roomAmount == 0 && roomManager.enabled == true)
+                SpawnLastRoom();
         }
 
-        if (otherDoorPoint != null)
-            CheckRoom();
-
-        if (generator.roomAmount == 0 && roomManager.enabled == true)
-            SpawnLastRoom();
 
         if (roomSpawned && roomChecked && outSideChecked && roomManager.doorPoints.Count < 2)
         {

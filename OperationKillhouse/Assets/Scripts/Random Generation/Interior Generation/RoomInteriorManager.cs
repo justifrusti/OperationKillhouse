@@ -5,6 +5,7 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
+[ExecuteInEditMode]
 public class RoomInteriorManager : MonoBehaviour
 {
     [Serializable]
@@ -15,12 +16,10 @@ public class RoomInteriorManager : MonoBehaviour
         public enum GenerateDirection
         {
             Right,
-            Left,
-            Up,
-            Down
+            Left
         }
 
-        public GenerateDirection direction;
+        [Tooltip("The direction the walls need to generate towards")]public GenerateDirection direction;
     }
 
     public GameObject normalWall;
@@ -66,6 +65,20 @@ public class RoomInteriorManager : MonoBehaviour
             s_FirstWall = true;
             s_Turned = false;
             s_RotationalPos = new Quaternion();
+
+            GenerateWalls();
+        }
+
+        if (reSpawn)
+        {
+            reSpawn = false;
+
+            s_SpawnedDoor = false;
+            s_FirstWall = true;
+            s_Turned = false;
+            s_RotationalPos = new Quaternion();
+
+            s_StartPointIndex = 0;
 
             GenerateWalls();
         }
@@ -137,14 +150,6 @@ public class RoomInteriorManager : MonoBehaviour
                     s_RotationalPos = Quaternion.Euler(0, 0, 0);
                 }
                 break;
-
-            case SpawnPoint.GenerateDirection.Up:
-                Debug.Log("Up go die!");
-                break;
-
-            case SpawnPoint.GenerateDirection.Down:
-                Debug.Log("Down go die!");
-                break;
         }
     }
 
@@ -172,14 +177,6 @@ public class RoomInteriorManager : MonoBehaviour
                 {
                     s_SpawnPoint.x += offset;
                 }
-                break;
-
-            case SpawnPoint.GenerateDirection.Up:
-                Debug.Log("Up go die!");
-                break;
-
-            case SpawnPoint.GenerateDirection.Down:
-                Debug.Log("Down go die!");
                 break;
 
         }

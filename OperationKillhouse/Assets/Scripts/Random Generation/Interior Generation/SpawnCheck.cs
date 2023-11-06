@@ -4,11 +4,5 @@ using UnityEngine;
 
 public class SpawnCheck : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.gameObject.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-        }
-    }
+    
 }

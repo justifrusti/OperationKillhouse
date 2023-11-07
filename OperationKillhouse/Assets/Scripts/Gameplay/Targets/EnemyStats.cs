@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
     public int health = 1;
-    public Animation animationl;
+    public Animator Animator;
     bool death;
 
     public void Damage(int damage)
@@ -20,9 +18,13 @@ public class EnemyStats : MonoBehaviour
     {
         if (death)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-90, transform.eulerAngles.y, transform.eulerAngles.z), Time.deltaTime * 3);
+            Animator.SetTrigger("Dead");
         }
     }
 
+    public void PopUp()
+    {
+        Animator.SetTrigger("Activate");
+    }
 
 }

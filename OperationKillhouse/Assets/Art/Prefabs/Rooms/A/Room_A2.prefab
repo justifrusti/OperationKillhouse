@@ -2643,7 +2643,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3723129122555837591}
   - component: {fileID: 2745814950134243893}
-  - component: {fileID: 1838226357283697407}
   m_Layer: 0
   m_Name: Room_A2
   m_TagString: Untagged
@@ -2693,35 +2692,6 @@ MonoBehaviour:
   outSideCheck: {fileID: 7317743341776900030}
   spawingDone: 0
   spawnDoorPoint: {fileID: 0}
---- !u!114 &1838226357283697407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3723129122555837584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e6bf492b6dc5e04fb481ec15ac515a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalWall: {fileID: 3509105394486405336, guid: 9efdbe3eb67da54479c6d140e9553e2b,
-    type: 3}
-  doorWall:
-  - {fileID: 2401939057400017822, guid: 32fdfe92aabace247b2f5b9cb94d825a, type: 3}
-  - {fileID: 2778439626401347411, guid: 47c2aebf3673db74386322693577e714, type: 3}
-  - {fileID: 1912255189992343032, guid: 686375f7ddd4888449960dc12744515d, type: 3}
-  startPoint:
-  - spawnPoint: {fileID: 0}
-    direction: 0
-  - spawnPoint: {fileID: 0}
-    direction: 1
-  minWalls: 6
-  maxWalls: 8
-  offset: 5
-  reSpawn: 0
-  turnedChance: 0.95
-  doorChance: 0.65
 --- !u!1 &3728993283219453140
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Generator : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class Generator : MonoBehaviour
     public bool removeLastRoom;
     public SeedManager seedManager;
 
+    public Slider progressSlider;
+
     public void Start()
     {
         DifficultySelect(difficulty);
@@ -69,6 +72,8 @@ public class Generator : MonoBehaviour
         {
             canGenarate = false;
         }
+
+        progressSlider.value = roomAmount;
     }
 
     public void RemoveLastRoom()
@@ -92,14 +97,17 @@ public class Generator : MonoBehaviour
         {
             case Difficulty.Easy:
                 roomAmount = easyRooms;
+                progressSlider.maxValue = easyRooms;
                 break;
 
             case Difficulty.Medium:
                 roomAmount = normalRooms;
+                progressSlider.maxValue = normalRooms;
                 break;
 
             case Difficulty.Hard:
                 roomAmount = hardRooms;
+                progressSlider.maxValue = hardRooms;
                 break;
         }
     }

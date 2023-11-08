@@ -2347,6 +2347,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6837794785156269844}
+  - component: {fileID: 6643915314625539971}
+  - component: {fileID: 344217436860203392}
+  - component: {fileID: 8324560671842377597}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -2372,6 +2375,69 @@ Transform:
   m_Father: {fileID: 2561704230788370877}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6643915314625539971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4756373803205850266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 1
+  type: 2
+  useAlternateObj: 0
+  attatchmentObj:
+  - {fileID: 8683020899970794294}
+  - {fileID: 3964038105409849188}
+  - {fileID: 4366076442312034755}
+  - {fileID: 889969360335877133}
+  - {fileID: 4394976668142577523}
+  alternateObj: {fileID: 0}
+--- !u!114 &344217436860203392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4756373803205850266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 2
+  type: 2
+  useAlternateObj: 0
+  attatchmentObj:
+  - {fileID: 4606074371374299690}
+  - {fileID: 3938072858299863775}
+  alternateObj: {fileID: 0}
+--- !u!114 &8324560671842377597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4756373803205850266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 3
+  type: 2
+  useAlternateObj: 0
+  attatchmentObj:
+  - {fileID: 2678176390572117023}
+  - {fileID: 9119095580640923813}
+  alternateObj: {fileID: 0}
 --- !u!1 &4800558607850414333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,6 +2897,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2601079598211976313}
+  - component: {fileID: 5691612799900605139}
+  - component: {fileID: 170148485451683659}
   m_Layer: 0
   m_Name: Grips
   m_TagString: Untagged
@@ -2855,6 +2923,42 @@ Transform:
   m_Father: {fileID: 2561704230788370877}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5691612799900605139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076517476684751326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 1
+  type: 0
+  useAlternateObj: 1
+  attatchmentObj: []
+  alternateObj: {fileID: 1065798766271546799}
+--- !u!114 &170148485451683659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076517476684751326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 2
+  type: 0
+  useAlternateObj: 1
+  attatchmentObj: []
+  alternateObj: {fileID: 8904751228361455229}
 --- !u!1 &6131075536742490623
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,6 +3296,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 619419283222449529}
+  - component: {fileID: 31155185445786878}
+  - component: {fileID: 7607245482334435108}
   m_Layer: 0
   m_Name: BarrleExt
   m_TagString: Untagged
@@ -3216,6 +3322,42 @@ Transform:
   m_Father: {fileID: 2561704230788370877}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &31155185445786878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7343814486151531426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 1
+  type: 3
+  useAlternateObj: 1
+  attatchmentObj: []
+  alternateObj: {fileID: 770746067001881473}
+--- !u!114 &7607245482334435108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7343814486151531426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 2
+  type: 3
+  useAlternateObj: 1
+  attatchmentObj: []
+  alternateObj: {fileID: 5184263407751877443}
 --- !u!1 &7708305907818780810
 GameObject:
   m_ObjectHideFlags: 0
@@ -3322,6 +3464,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8492966332617296081}
+  - component: {fileID: 4341696031655030828}
+  - component: {fileID: 674424827644480690}
   m_Layer: 0
   m_Name: Extra
   m_TagString: Untagged
@@ -3346,6 +3490,42 @@ Transform:
   m_Father: {fileID: 2561704230788370877}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4341696031655030828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738163910551766999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 1
+  type: 5
+  useAlternateObj: 1
+  attatchmentObj: []
+  alternateObj: {fileID: 2669134546386584885}
+--- !u!114 &674424827644480690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7738163910551766999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8109f08cd25b97a46a3e957e5664b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
+  attatchementID: 2
+  type: 5
+  useAlternateObj: 1
+  attatchmentObj: []
+  alternateObj: {fileID: 8071076992218092379}
 --- !u!1 &7760476523935124732
 GameObject:
   m_ObjectHideFlags: 0

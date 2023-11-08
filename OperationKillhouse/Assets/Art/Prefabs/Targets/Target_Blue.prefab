@@ -126,20 +126,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &8534736702956279822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2108510162728396130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526ba26a91fb660489d74094958780b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
-  Animator: {fileID: 0}
 --- !u!95 &5463194316084094086
 Animator:
   serializedVersion: 5
@@ -160,9 +146,49 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &8534736702956279822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108510162728396130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526ba26a91fb660489d74094958780b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  Animator: {fileID: 4828258709419962146}
 --- !u!4 &8577375462392730167 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3d3911a7809aa8d4a929671756d7ddb1,
     type: 3}
   m_PrefabInstance: {fileID: 8107126893224883676}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8954041326591166605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d3911a7809aa8d4a929671756d7ddb1,
+    type: 3}
+  m_PrefabInstance: {fileID: 8107126893224883676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4828258709419962146
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954041326591166605}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9f0d8b9c62e762445a412523fef05b7b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

@@ -7,7 +7,6 @@ public class DoorPoint : MonoBehaviour
     public RoomManager roomManager;
     public Generator generator;
 
-    public Transform outSideCheck;
     public bool roomSpawned;
     public bool roomChecked;
     public bool outSideChecked;

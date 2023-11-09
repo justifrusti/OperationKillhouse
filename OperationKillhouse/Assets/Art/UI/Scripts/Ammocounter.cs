@@ -14,7 +14,7 @@ public class Ammocounter : MonoBehaviour {
 
     void Update() 
     {
-        ammo = manager.gunProperties.GetCurrentAmmo();
+        //ammo = manager.gunProperties.GetCurrentAmmo();
     }
     
     public void AnimPlay() {

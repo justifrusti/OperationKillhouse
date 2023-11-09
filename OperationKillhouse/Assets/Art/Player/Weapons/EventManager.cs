@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour {
 
-    public Ammocounter ammoCounter;
+    //public Ammocounter ammoCounter;
     public GunManager gunManager;
     public GlockFirstPick GlockFirstPick;
     public GameObject firePoint;
@@ -33,7 +33,7 @@ public class EventManager : MonoBehaviour {
     }
 
     public void MagBullet () {
-        ammoCounter.Mag();
+        //ammoCounter.Mag();
     }
 
     public void Casing () {

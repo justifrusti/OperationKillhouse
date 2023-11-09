@@ -103,6 +103,11 @@ namespace Gun
                 }
 
                 CheckAttatchments();
+
+                if(gunProperties.GetClipAmmo() < 0)
+                {
+                    gunProperties.ResetClipAmmo();
+                }
             }
         }
 
@@ -366,11 +371,13 @@ namespace Gun
             s_Rot = Vector3.Slerp(s_Rot, s_RotationRecoil, gunProperties.rotationRecoilSpeed * Time.deltaTime);
             gunProperties.recoilPos.localRotation = Quaternion.Euler(s_Rot);
 
-
-            if (Input.GetButtonDown("Fire2"))
+            if (Input.GetButton("Fire2"))
             {
                 aiming = true;
-            }else if(Input.GetButtonUp("Fire2"))
+            }else if(Input.anyKeyDown)
+            {
+                aiming = false;
+            }else
             {
                 aiming = false;
             }
@@ -476,14 +483,6 @@ namespace Gun
             public void SetLaserSights(LaserSights laserSight) { s_laserSights = laserSight; }
             public Buttstocks GetButtstocks() { return s_buttstocks; }
             public void SetButtstocks(Buttstocks buttstock) { s_buttstocks = buttstock; }
-
-            /*public void SetForeGripID(int setID) { s_foreGrip = (ForeGrips)setID; }
-            public void SetOpticsID(int setID) { s_optic = (Optics)setID; }
-            public void SetBackupOpticsID(int setID) { s_backupOptics = (BackupOptics)setID; }
-            public void SetMuzzleDevicesID(int setID) { s_muzzleDevices = (MuzzleDevices)setID; }
-            public void SetFlashlightsID(int setID) { s_flashlights = (Flashlights)setID; }
-            public void SetLasersightID(int setID) { s_laserSights = (LaserSights)setID; }
-            public void SetButtstocksID(int setID) { s_buttstocks = (Buttstocks)setID; }*/
         }
 
         public enum ShootingType { Raycast, Physics };
@@ -637,12 +636,17 @@ namespace Gun
             return s_ClipAmmo = s_ClipAmmo - ammountToRemove;
         }
 
+        public void ResetClipAmmo()
+        {
+            s_ClipAmmo = 0;
+        }
+
         /// <summary>
         /// Depletes ammo upon shooting!
         /// </summary>
         public int SetUsedClipAmmo(int ammoToSubtract)
         {
-            ammoCounter.AnimPlay();
+            //ammoCounter.AnimPlay();
             return s_currentAmmo = s_currentAmmo - ammoToSubtract;
         }
 

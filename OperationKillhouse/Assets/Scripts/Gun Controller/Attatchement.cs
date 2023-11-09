@@ -20,6 +20,8 @@ namespace Gun
 
         private void Start()
         {
+            gunManager.attatchementControllers.Add(this);
+
             CheckAttatcment();
         }
 
@@ -140,7 +142,7 @@ namespace Gun
                         break;
 
                     case AttatchmentType.Lasersight:
-                        gunManager.gunProperties.weaponAttatchments.SetFlashlights(gunManager.gunProperties.weaponAttatchments.flashlights);
+                        gunManager.gunProperties.weaponAttatchments.SetLaserSights(gunManager.gunProperties.weaponAttatchments.laserSights);
 
                         if (attatchementID == gunManager.gunProperties.weaponAttatchments.GetFlashlightsID())
                         {

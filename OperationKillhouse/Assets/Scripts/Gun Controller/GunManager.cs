@@ -14,7 +14,10 @@ namespace Gun
         public GunProperties gunProperties = new GunProperties();
         [Tooltip("List with attatchment controllers for this gun!")]public List<Attatchement> attatchementControllers;
 
+        [Tooltip("This property is for linking the Armory Gun with the Player Gun and the other way around")]public GunManager alternateGun;
+
         public bool aiming;
+        public bool playModel;
 
         [Header("Manager Properties")]
         [Tooltip("Set this to True if you want the player to start with X ammount of Clips")]public bool hasBaseClips = true;
@@ -48,52 +51,107 @@ namespace Gun
 
         private void Start()
         {
-            if(hasBaseClips)
+            if(playModel)
             {
-                gunProperties.SetClipAmmo(gunProperties.clipSize * ammountOfBaseClips);
-            }
-            else
-            {
-                gunProperties.SetClipAmmo(gunProperties.clipSize);
-            }
+                if (hasBaseClips)
+                {
+                    gunProperties.SetClipAmmo(gunProperties.clipSize * ammountOfBaseClips);
+                }
+                else
+                {
+                    gunProperties.SetClipAmmo(gunProperties.clipSize);
+                }
 
-            if(GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>() != null)
-            {
-                s_Controller = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
-            }else
-            {
-                Debug.LogError("Error: Player or Player Controller not present. Please make sure your player has the 'Player' tag and has a PlayerController"); 
-            }
+                if (GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>() != null)
+                {
+                    s_Controller = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+                }
+                else
+                {
+                    Debug.LogError("Error: Player or Player Controller not present. Please make sure your player has the 'Player' tag and has a PlayerController");
+                }
 
-            localRotation = transform.localRotation;
+                localRotation = transform.localRotation;
+            }
         }
 
         private void Update()
         {
-            if(testEarlyReload)
+            if(playModel)
             {
-                testEarlyReload = false;
+                if (testEarlyReload)
+                {
+                    testEarlyReload = false;
 
-                SwapClip();
-            }
+                    SwapClip();
+                }
 
-            if(fire)
-            {
-                fire = false;
-                Fire();
-            }
+                if (fire)
+                {
+                    fire = false;
+                    Fire();
+                }
 
-            if(useRecoil)
-            {
-                RecoilUpdate();
-            }
+                if (useRecoil)
+                {
+                    RecoilUpdate();
+                }
 
-            if (useWeaponSway)
-            {
-                WeaponSwayUpdate();
+                if (useWeaponSway)
+                {
+                    WeaponSwayUpdate();
+                }
+
+                CheckAttatchments();
             }
+        }
+
+        public void LinkAttatchments()
+        {
+            alternateGun.gunProperties.weaponAttatchments.SetBackupOptics(gunProperties.weaponAttatchments.GetBackupOptics());
+            alternateGun.gunProperties.weaponAttatchments.SetButtstocks(gunProperties.weaponAttatchments.GetButtstocks());
+            alternateGun.gunProperties.weaponAttatchments.SetFlashlights(gunProperties.weaponAttatchments.GetFlashlights());
+            alternateGun.gunProperties.weaponAttatchments.SetForeGrip(gunProperties.weaponAttatchments.GetForeGrip());
+            alternateGun.gunProperties.weaponAttatchments.SetLaserSights(gunProperties.weaponAttatchments.GetLaserSights());
+            alternateGun.gunProperties.weaponAttatchments.SetMuzzleDevices(gunProperties.weaponAttatchments.GetMuzzleDevices());
+            alternateGun.gunProperties.weaponAttatchments.SetOptic(gunProperties.weaponAttatchments.GetOptics());
 
             CheckAttatchments();
+        }
+
+        public void SetBackupOptics(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.backupOptics = (GunProperties.Attatchements.BackupOptics)id;
+        }
+
+        public void SetButtstocks(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.buttstocks = (GunProperties.Attatchements.Buttstocks)id;
+        }
+
+        public void SetFlashlights(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.flashlights = (GunProperties.Attatchements.Flashlights)id;
+        }
+
+        public void SetForegrips(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.foreGrip = (GunProperties.Attatchements.ForeGrips)id;
+        }
+
+        public void SetLasersights(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.laserSights = (GunProperties.Attatchements.LaserSights)id;
+        }
+
+        public void SetMuzzleDevices(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.muzzleDevices = (GunProperties.Attatchements.MuzzleDevices)id;
+        }
+
+        public void SetOptics(int id)
+        {
+            alternateGun.gunProperties.weaponAttatchments.optic = (GunProperties.Attatchements.Optics)id;
         }
 
         /// <summary>
@@ -101,7 +159,7 @@ namespace Gun
         /// </summary>
         public void Fire()
         {
-            if (gunProperties.GetCurrentAmmo() > 0)
+            if (gunProperties.GetCurrentAmmo() > 0 && s_Controller.gameState != playerController.GameState.Pause && playModel)
             {
                 if (aiming)
                 {
@@ -149,17 +207,20 @@ namespace Gun
 
         public void Reload()
         {
-            int tempReloadAmmo = gunProperties.GetClipAmmo();
-
-            SwapClip();
-
-            if(gunProperties.GetCurrentAmmo() <= 0)
+            if(playModel)
             {
-                gunProperties.SetCurrentClipAmmo();
+                int tempReloadAmmo = gunProperties.GetClipAmmo();
 
-                if(tempReloadAmmo >= gunProperties.GetClipAmmo())
+                SwapClip();
+
+                if (gunProperties.GetCurrentAmmo() <= 0)
                 {
-                    gunProperties.SubtractClipAmmo(gunProperties.clipSize);
+                    gunProperties.SetCurrentClipAmmo();
+
+                    if (tempReloadAmmo >= gunProperties.GetClipAmmo())
+                    {
+                        gunProperties.SubtractClipAmmo(gunProperties.clipSize);
+                    }
                 }
             }
         }
@@ -169,7 +230,10 @@ namespace Gun
         /// </summary>
         private void SwapClip()
         {
-            gunProperties.SetCurrentAmmo();
+            if(playModel)
+            {
+                gunProperties.SetCurrentAmmo();
+            }
         }
 
         private void CheckAttatchments()
@@ -412,6 +476,14 @@ namespace Gun
             public void SetLaserSights(LaserSights laserSight) { s_laserSights = laserSight; }
             public Buttstocks GetButtstocks() { return s_buttstocks; }
             public void SetButtstocks(Buttstocks buttstock) { s_buttstocks = buttstock; }
+
+            /*public void SetForeGripID(int setID) { s_foreGrip = (ForeGrips)setID; }
+            public void SetOpticsID(int setID) { s_optic = (Optics)setID; }
+            public void SetBackupOpticsID(int setID) { s_backupOptics = (BackupOptics)setID; }
+            public void SetMuzzleDevicesID(int setID) { s_muzzleDevices = (MuzzleDevices)setID; }
+            public void SetFlashlightsID(int setID) { s_flashlights = (Flashlights)setID; }
+            public void SetLasersightID(int setID) { s_laserSights = (LaserSights)setID; }
+            public void SetButtstocksID(int setID) { s_buttstocks = (Buttstocks)setID; }*/
         }
 
         public enum ShootingType { Raycast, Physics };

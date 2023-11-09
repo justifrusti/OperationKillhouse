@@ -4684,6 +4684,7 @@ GameObject:
   - component: {fileID: 278437765}
   - component: {fileID: 278437766}
   - component: {fileID: 278437767}
+  - component: {fileID: 278437768}
   m_Layer: 0
   m_Name: AR-15
   m_TagString: Untagged
@@ -4755,6 +4756,65 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &278437768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278437764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9f2310860e24142861743d9ed7fbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunProperties:
+    shootingType: 0
+    gunName: AR-15
+    gunDescription: Pew Pew
+    gunDamage: 1
+    clipSize: 30
+    ammoConsumptionPerTick: 1
+    hasPartialClips: 1
+    recoilPos: {fileID: 1420255714}
+    recoilRot: {x: 10, y: 5, z: 7}
+    ammountOfRecoil: {x: 0.015, y: -0.05, z: -0.5}
+    positionRecoilSpeed: 8
+    rotationRecoilSpeed: 8
+    posReturnSpeed: 18
+    rotReturnSpeed: 38
+    recoilRotationAim: {x: 10, y: 5, z: 7}
+    recoilAmountAim: {x: 0.015, y: -0.05, z: -0.2}
+    drag: 2.5
+    dragThreshold: -5
+    smooth: 5
+    weaponAttatchments:
+      foreGrip: 0
+      optic: 0
+      backupOptics: 0
+      muzzleDevices: 0
+      flashlights: 0
+      laserSights: 0
+      buttstocks: 0
+    ammoCounter: {fileID: 0}
+    s_currentAmmo: 30
+    s_ClipAmmo: 0
+    s_currentClips: []
+  attatchementControllers: []
+  alternateGun: {fileID: 1420255715}
+  aiming: 0
+  playModel: 0
+  hasBaseClips: 1
+  ammountOfBaseClips: 5
+  useRecoil: 1
+  useWeaponSway: 0
+  hasAttatchments: 1
+  manualAnimTrigger: 0
+  anim: {fileID: 0}
+  animTriggerName: 
+  testEarlyReload: 0
+  fire: 0
+  shootingDebugRayActive: 0
 --- !u!1001 &279834398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6775,8 +6835,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curentGunA: {fileID: 278437766}
   nextGunA: {fileID: 1637979757}
-  curentGun: {fileID: 0}
-  nextGun: {fileID: 0}
+  guns:
+  - {fileID: 278437764}
+  - {fileID: 1637979756}
   mp7: 0
   ar15: 0
 --- !u!65 &494672108
@@ -25487,24 +25548,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
-      propertyPath: aiming
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
-        type: 3}
-      propertyPath: useWeaponSway
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
-        type: 3}
-      propertyPath: gunProperties.ammoCounter
+      propertyPath: alternateGun
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
-        type: 3}
-      propertyPath: gunProperties.s_currentAmmo
-      value: 30
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 278437768}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
       propertyPath: gunProperties.swaySmoothness

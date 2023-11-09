@@ -32,6 +32,7 @@ public class SeedManager : MonoBehaviour
 
     public void ResetGenerator()
     {
+        setSeed();
         if (generator.dungeonRooms.Count > 0)
         {
             for (int i = 0; i < generator.dungeonRooms.Count; i++)
@@ -51,7 +52,6 @@ public class SeedManager : MonoBehaviour
             generator.dungeonGenerationComplete = false;
             generator.firstRoom.GetComponent<RoomManager>().spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
 
-            setSeed();
             generator.canGenarate = true;
             reset = false;
         }

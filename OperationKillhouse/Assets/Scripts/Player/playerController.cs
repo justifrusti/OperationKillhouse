@@ -110,6 +110,8 @@ namespace Player
         public GameObject hole;
         public RaycastHit hit;
 
+        public GameObject generationUI;
+
         private void Start()
         {
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
@@ -256,9 +258,16 @@ namespace Player
                 ChangeGameState(GameState.Pause);
             }
 
-            if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.G))
             {
-                ChangeGameState(GameState.Play);
+                if(generationUI.activeSelf == false)
+                {
+                    generationUI.SetActive(true);
+                }
+                else
+                {
+                    generationUI.SetActive(false);
+                }
             }
         }
 

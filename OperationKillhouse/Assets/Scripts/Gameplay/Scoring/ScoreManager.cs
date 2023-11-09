@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]int minutes;
     [SerializeField]int seconds;
     float fSeconds;
+
+    public TMP_Text timeDisplay;
 
     private void Start()
     {
@@ -30,6 +33,8 @@ public class ScoreManager : MonoBehaviour
             seconds -= 60;
             minutes++;
         }
+
+        timeDisplay.text = minutes.ToString() + ":" + seconds.ToString();
     }
 
     public string GetTime()

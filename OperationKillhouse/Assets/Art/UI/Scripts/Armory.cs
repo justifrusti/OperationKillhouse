@@ -9,13 +9,15 @@ public class Armory : MonoBehaviour {
     public Animation curentGunA;
     public Animation nextGunA;
 
-    public GameObject[] guns;
+    public int mp7Index;
+    public int ar15Index;
+
+    public GameObject[] switchButtons;
+    public GameObject[] armoryGuns;
+    public GameObject[] playerGuns;
     //|Guns|\\
     [HideInInspector]
     public bool mp7, ar15;
-
-    GameObject currentGun;
-    int index = 0;
 
 
     public void AnimationPlay ()
@@ -26,15 +28,19 @@ public class Armory : MonoBehaviour {
 
     public void GunSelect () 
     {
-        if(index <  guns.Length)
+        if(mp7 && !armoryGuns[mp7Index].activeInHierarchy)
         {
-            currentGun = guns[index + 1];
-        }else
-        {
-            index = 0;
-            currentGun = guns[index];
+            armoryGuns[mp7Index].SetActive(true);
+            armoryGuns[ar15Index].SetActive(false);
+            switchButtons[mp7Index].SetActive(true);
+            switchButtons[ar15Index].SetActive(false);
         }
-
-        index++;
+        else if(ar15 && !armoryGuns[ar15Index].activeInHierarchy)
+        {
+            armoryGuns[ar15Index].SetActive(true);
+            armoryGuns[mp7Index].SetActive(false);
+            switchButtons[ar15Index].SetActive(true);
+            switchButtons[mp7Index].SetActive(false);
+        }
     }
 }

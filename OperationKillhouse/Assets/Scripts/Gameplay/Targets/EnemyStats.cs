@@ -6,6 +6,11 @@ public class EnemyStats : MonoBehaviour
     public Animator Animator;
     bool death;
 
+    private void Awake()
+    {
+        PopUp();
+    }
+
     public void Damage(int damage)
     {
         if((health -= damage) <= 0)

@@ -233,15 +233,29 @@ namespace Player
                         {
                             animEvent.Fire();
                         }
-                    }else if(Input.GetButtonUp("Fire1"))
+                    }
+                    else if(Input.GetButtonUp("Fire1"))
                     {
                         if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
                         {
                             animEvent.Fire();
+                            print("test2");
                         }
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
+
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        animEvent.gunAnimator.SetBool("Aim", true);
+                        animEvent.armAnimator.SetBool("Aim", true);
+                    }
+                    else if(Input.GetButtonUp("Fire2"))
+                    {
+                        animEvent.gunAnimator.SetBool("Aim", false);
+                        animEvent.armAnimator.SetBool("Aim", true);
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Alpha1) && !primarygun.activeSelf || Input.GetKeyDown(KeyCode.Alpha2) && !secondarygun.activeSelf)
                     {
                         animEvent.armAnimator.SetTrigger("Holster");
                         animEvent.gunAnimator.SetTrigger("Holster");
@@ -263,10 +277,10 @@ namespace Player
                     break;
             }
 
-            if(inputmanager.inputMaster.Pause.PauseKey.ReadValue<float>() == 1)
+           /* if(inputmanager.inputMaster.Pause.PauseKey.ReadValue<float>() == 1)
             {
                 ChangeGameState(GameState.Pause);
-            }
+            }*/
 
             if (Input.GetKeyDown(KeyCode.G))
             {
@@ -322,8 +336,7 @@ namespace Player
                 animEvent.gunAnimator = GameObject.FindGameObjectWithTag("Gun").GetComponent<Animator>();
                 animEvent.gunManager = GetComponentInChildren<GunManager>();
             }
-
-            if (!secondarygun.activeSelf)
+            else if (!secondarygun.activeSelf)
             {
                 primarygun.SetActive(false);
                 secondarygun.SetActive(true);

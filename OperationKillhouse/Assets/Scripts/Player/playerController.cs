@@ -245,6 +245,12 @@ namespace Player
                         }
                     }
 
+                    if (animEvent.gunManager.gunProperties.GetClipAmmo() <= 0)
+                    {
+                        animEvent.armAnimator.SetBool("Fire", false);
+                        animEvent.gunAnimator.SetBool("Fire", false);
+                    }
+
 
                     if (Input.GetButtonDown("Fire2"))
                     {
@@ -254,7 +260,7 @@ namespace Player
                     else if(Input.GetButtonUp("Fire2"))
                     {
                         animEvent.gunAnimator.SetBool("Aim", false);
-                        animEvent.armAnimator.SetBool("Aim", true);
+                        animEvent.armAnimator.SetBool("Aim", false);
                     }
 
                     if (Input.GetKeyDown(KeyCode.Alpha1) && !primarygun.activeSelf || Input.GetKeyDown(KeyCode.Alpha2) && !secondarygun.activeSelf)

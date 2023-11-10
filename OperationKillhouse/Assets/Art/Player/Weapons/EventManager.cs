@@ -1,4 +1,5 @@
 using Gun;
+using Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class EventManager : MonoBehaviour {
 
     //public Ammocounter ammoCounter;
     public GunManager gunManager;
+    public playerController playerController;
     public GlockFirstPick GlockFirstPick;
     public GameObject firePoint;
 
@@ -54,6 +56,10 @@ public class EventManager : MonoBehaviour {
     public void Reload () {
         gunManager.Reload();
         Debug.Log ("FACK");
+    }
+
+    public void Holster () {
+        playerController.WeaponSwapping ();
     }
 
     public void FirstPick () {

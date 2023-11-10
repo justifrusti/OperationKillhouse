@@ -5099,6 +5099,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 221598652}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &227126350 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2441293498353040895, guid: 522e3120d2ec185438048ff0a460a67e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1502114324}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9f2310860e24142861743d9ed7fbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &230942269
 GameObject:
   m_ObjectHideFlags: 0
@@ -10570,6 +10582,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 267000062}
   m_CullTransparentMesh: 1
+--- !u!95 &274290910 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6279669708873853437, guid: 522e3120d2ec185438048ff0a460a67e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1502114324}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &275746076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38768,6 +38786,21 @@ PrefabInstance:
       propertyPath: alternateGun
       value: 
       objectReference: {fileID: 278437768}
+    - target: {fileID: 4890188838950847792, guid: 522e3120d2ec185438048ff0a460a67e,
+        type: 3}
+      propertyPath: animEvent.gunManager
+      value: 
+      objectReference: {fileID: 227126350}
+    - target: {fileID: 4890188838950847792, guid: 522e3120d2ec185438048ff0a460a67e,
+        type: 3}
+      propertyPath: animEvent.armAnimator
+      value: 
+      objectReference: {fileID: 1576185892}
+    - target: {fileID: 4890188838950847792, guid: 522e3120d2ec185438048ff0a460a67e,
+        type: 3}
+      propertyPath: animEvent.gunAnimator
+      value: 
+      objectReference: {fileID: 274290910}
     - target: {fileID: 4890188838950847803, guid: 522e3120d2ec185438048ff0a460a67e,
         type: 3}
       propertyPath: m_Name
@@ -41005,6 +41038,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1574793235}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1576185892 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5081880615360910428, guid: 522e3120d2ec185438048ff0a460a67e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1502114324}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1582636060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4890188838950847803, guid: 522e3120d2ec185438048ff0a460a67e,
@@ -42793,6 +42832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunManager: {fileID: 0}
+  playerController: {fileID: 0}
   GlockFirstPick: {fileID: 0}
   firePoint: {fileID: 0}
   fireS: {fileID: 0}

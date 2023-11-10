@@ -60,7 +60,15 @@ public class ScoreManager : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            startTimer = true;
+            if(!startTimer)
+            {
+                startTimer = true;
+            }
         }
+    }
+
+    public void stopTimer()
+    {
+        startTimer = false;
     }
 }

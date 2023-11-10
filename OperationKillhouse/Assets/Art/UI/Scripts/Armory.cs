@@ -8,6 +8,10 @@ public class Armory : MonoBehaviour {
 
     public Animation curentGunA;
     public Animation nextGunA;
+    public Animation temp;
+    public AnimationClip next;
+    public AnimationClip back;
+
 
     public int mp7Index;
     public int ar15Index;
@@ -16,31 +20,55 @@ public class Armory : MonoBehaviour {
     public GameObject[] armoryGuns;
     public GameObject[] playerGuns;
     //|Guns|\\
-    [HideInInspector]
-    public bool mp7, ar15;
+    [Header ("GUNS")]
+    public bool mp7;
+    public bool ar15;
 
 
     public void AnimationPlay ()
     {
         curentGunA.Play ();
         nextGunA.Play ();
+        
     }
 
     public void GunSelect () 
     {
-        if(mp7 && !armoryGuns[mp7Index].activeInHierarchy)
+        if(ar15)
         {
-            armoryGuns[mp7Index].SetActive(true);
-            armoryGuns[ar15Index].SetActive(false);
+            AnimationGunSelct ();
+
+            playerGuns[mp7Index].SetActive(true);
+            playerGuns[ar15Index].SetActive(false);
             switchButtons[mp7Index].SetActive(true);
             switchButtons[ar15Index].SetActive(false);
+            
+            mp7 = true;
+            ar15 = false;
         }
-        else if(ar15 && !armoryGuns[ar15Index].activeInHierarchy)
+        else if(mp7)
         {
-            armoryGuns[ar15Index].SetActive(true);
-            armoryGuns[mp7Index].SetActive(false);
+            AnimationGunSelct ();
+
+            playerGuns[ar15Index].SetActive(true);
+            playerGuns[mp7Index].SetActive(false);
             switchButtons[ar15Index].SetActive(true);
             switchButtons[mp7Index].SetActive(false);
+            
+            mp7 = false;
+            ar15 = true;
         }
+    }
+
+    public void AnimationGunSelct () {
+        curentGunA.clip = back;
+        nextGunA.clip = next;
+
+        AnimationPlay ();
+        temp = curentGunA;
+
+        curentGunA = nextGunA;
+        nextGunA = temp;
+        
     }
 }

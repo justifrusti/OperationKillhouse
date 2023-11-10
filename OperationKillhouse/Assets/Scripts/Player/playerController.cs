@@ -115,6 +115,8 @@ namespace Player
         public GameObject primarygun;
         public GameObject secondarygun;
 
+        public GameObject armory;
+
         private void Start()
         {
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
@@ -267,6 +269,18 @@ namespace Player
                         animEvent.Reload();
                     }
 
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        RaycastHit hit;
+                        if(Physics.Raycast(cam.transform.position, cam.forward, out hit, 500f))
+                        {
+                            if(hit.transform.gameObject.tag == "Armory")
+                            {
+                                armory.SetActive(true);
+                            }
+                        }
+                    }
+
                     break;
 
                 case GameState.Pause:
@@ -346,6 +360,10 @@ namespace Player
             }
         }
 
+        public void ReturnToPlay()
+        {
+            ChangeGameState(GameState.Play);
+        }
 
         public void ChangeGameState(GameState newState)
         {

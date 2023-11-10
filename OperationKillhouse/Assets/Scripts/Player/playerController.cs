@@ -112,6 +112,9 @@ namespace Player
 
         public GameObject generationUI;
 
+        public GameObject primarygun;
+        public GameObject secondarygun;
+
         private void Start()
         {
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
@@ -238,6 +241,13 @@ namespace Player
                         }
                     }
 
+                    if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
+                    {
+                        animEvent.armAnimator.SetTrigger("Holster");
+                        animEvent.gunAnimator.SetTrigger("Holster");
+                    }
+
+
                     if(Input.GetKeyDown(KeyCode.R))
                     {
                         animEvent.Reload();
@@ -301,6 +311,28 @@ namespace Player
             cam.localPosition = Vector3.Lerp(cam.localPosition, targetLeanPos, Time.deltaTime * leanSpeed);
 
         }
+
+        public void WeaponSwapping()
+        {
+            if (!primarygun.activeSelf)
+            {
+                secondarygun.SetActive(false);
+                primarygun.SetActive(true);
+                animEvent.armAnimator = GameObject.FindGameObjectWithTag("Arm").GetComponent<Animator>();
+                animEvent.gunAnimator = GameObject.FindGameObjectWithTag("Gun").GetComponent<Animator>();
+                animEvent.gunManager = GetComponentInChildren<GunManager>();
+            }
+
+            if (!secondarygun.activeSelf)
+            {
+                primarygun.SetActive(false);
+                secondarygun.SetActive(true);
+                animEvent.armAnimator = GameObject.FindGameObjectWithTag("Arm").GetComponent<Animator>();
+                animEvent.gunAnimator = GameObject.FindGameObjectWithTag("Gun").GetComponent<Animator>();
+                animEvent.gunManager = GetComponentInChildren<GunManager>();
+            }
+        }
+
 
         public void ChangeGameState(GameState newState)
         {

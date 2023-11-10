@@ -12,6 +12,7 @@ public class ScoreManager : MonoBehaviour
     float fSeconds;
 
     public TMP_Text timeDisplay;
+    bool startTimer;
 
     private void Start()
     {
@@ -20,7 +21,8 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        fSeconds += Time.deltaTime * 1;
+        if (startTimer)
+            fSeconds += Time.deltaTime * 1;
 
         if(fSeconds >= 1)
         {
@@ -52,5 +54,13 @@ public class ScoreManager : MonoBehaviour
     public void AddPenalty(int penaltyScore)
     {
         seconds = (seconds + penaltyScore);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            startTimer = true;
+        }
     }
 }

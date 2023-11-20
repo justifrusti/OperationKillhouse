@@ -20,13 +20,13 @@ public class GlockFirstPick : MonoBehaviour {
     
     void Update() {
         
-        if(gunManager.gunProperties.GetCurrentAmmo() <= 1) {
-            glock.SetBool ("LastBullet" , true);
-            arm.SetBool ("LastBullet" , true);
-        } else {
-            glock.SetBool ("LastBullet" , false);
-            arm.SetBool ("LastBullet" , false);
-        }
+     //  if(gunManager.gunProperties.GetCurrentAmmo() <= 1) {
+     //       glock.SetBool ("LastBullet" , true);
+     //       arm.SetBool ("LastBullet" , true);
+     //   } else {
+     //      glock.SetBool ("LastBullet" , false);
+     //       arm.SetBool ("LastBullet" , false);
+     //   }
 
 
         if(pickt == true) {

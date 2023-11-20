@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using Player;
 
 public class Armory : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class Armory : MonoBehaviour {
     public Animation temp;
     public AnimationClip next;
     public AnimationClip back;
+    public playerController playerController;
 
 
     public int mp7Index;
@@ -71,4 +73,7 @@ public class Armory : MonoBehaviour {
         nextGunA = temp;
         
     }
+
+    
+
 }

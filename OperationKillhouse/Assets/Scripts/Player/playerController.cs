@@ -251,6 +251,10 @@ namespace Player
                         animEvent.gunAnimator.SetBool("Fire", false);
                     }
 
+                if (Input.GetKeyDown (KeyCode.C)) {
+                    animEvent.armAnimator.SetTrigger ("Check");
+                    animEvent.gunAnimator.SetTrigger ("Check");
+                }
 
                     if (Input.GetButtonDown("Fire2"))
                     {
@@ -283,6 +287,9 @@ namespace Player
                             if(hit.transform.gameObject.tag == "Armory")
                             {
                                 armory.SetActive(true);
+                                ChangeGameState (GameState.Pause);
+                                primarygun.SetActive (false);
+                                
                             }
                         }
                     }
@@ -307,10 +314,12 @@ namespace Player
                 if(generationUI.activeSelf == false)
                 {
                     generationUI.SetActive(true);
+                    ChangeGameState (GameState.Pause);
                 }
                 else
                 {
                     generationUI.SetActive(false);
+                    ChangeGameState (GameState.Play);
                 }
             }
         }
@@ -348,8 +357,10 @@ namespace Player
 
         public void WeaponSwapping()
         {
+            Debug.Log ("Swap");
             if (!primarygun.activeSelf)
             {
+                Debug.Log ("SEC");
                 secondarygun.SetActive(false);
                 primarygun.SetActive(true);
                 animEvent.armAnimator = GameObject.FindGameObjectWithTag("Arm").GetComponent<Animator>();
@@ -358,6 +369,7 @@ namespace Player
             }
             else if (!secondarygun.activeSelf)
             {
+                Debug.Log ("PRIM");
                 primarygun.SetActive(false);
                 secondarygun.SetActive(true);
                 animEvent.armAnimator = GameObject.FindGameObjectWithTag("Arm").GetComponent<Animator>();

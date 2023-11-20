@@ -99,4 +99,9 @@ public class EventManager : MonoBehaviour {
         audioSourceMag.clip = soundMag2;
         audioSourceMag.Play();
     }
+    public void WeaponActif () {
+        playerController.animEvent.gunManager = GameObject.FindGameObjectWithTag ("Weapon").GetComponent<GunManager> ();
+        playerController.animEvent.armAnimator = GameObject.FindGameObjectWithTag ("Arm").GetComponent<Animator> ();
+        playerController.animEvent.gunAnimator = GameObject.FindGameObjectWithTag ("Gun").GetComponent<Animator> ();
+    }
 }

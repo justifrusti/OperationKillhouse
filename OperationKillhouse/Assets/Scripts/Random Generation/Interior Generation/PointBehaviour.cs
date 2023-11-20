@@ -15,12 +15,12 @@ public class PointBehaviour : MonoBehaviour
         {
             int index = Random.Range(0, possibleItems.Length);
 
-            Instantiate(possibleItems[index], transform.position, possibleItems[index].transform.rotation, transform);
+            Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
         }else
         {
             int index = Random.Range(0, possibleItems.Length);
 
-            Instantiate(possibleItems[index], transform.position, possibleItems[index].transform.rotation, transform);
+            Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
         }
     }
 }

@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     [Space(10)]
     public int easyRooms;
     public int normalRooms, hardRooms;
-    [HideInInspector] public int roomAmount = 0;
+    /*[HideInInspector]*/ public int roomAmount = 0;
 
     [Header("Info for the generator")]
     [Space]
@@ -78,10 +78,11 @@ public class Generator : MonoBehaviour
 
     public void RemoveLastRoom()
     {
-        if (dungeonRooms.Count > 0)
+        
+        if (dungeonRooms.Count > 1)
         {
-            Destroy(dungeonRooms[dungeonRooms.Count - 1]);
-            dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();
+            Destroy(dungeonRooms[dungeonRooms.Count -1]);
+            dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();   
         }
 
         roomAmount++;

@@ -117,6 +117,8 @@ namespace Player
 
         public GameObject armory;
 
+        Vector3 rot;
+
         private void Start()
         {
             inputmanager.inputMaster.Movement.Jump.started += _ => Jump();
@@ -174,7 +176,7 @@ namespace Player
                         {
                             if (hit.transform == null)
                             {
-                                targetLeanPos.x = leanDistance;
+                                targetLeanPos.x = -leanDistance;
                                 targetLeanPos.y = leanHight;
                                 leanInput = 1f;
                                 Leaning();
@@ -220,11 +222,19 @@ namespace Player
                     {
                         float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, crouchHeight, Time.deltaTime * leanSpeed);
                         GetComponent<CapsuleCollider>().height = newHeight;
+
+                        animEvent.gunManager.gunProperties.recoilPos.localPosition = Vector3.Slerp(animEvent.gunManager.gunProperties.recoilPos.localPosition, animEvent.gunManager.gunProperties.crouchPosOffset, leanSpeed * Time.deltaTime);
+                        rot = Vector3.Slerp(rot, animEvent.gunManager.gunProperties.crouchRotOffset, leanSpeed * Time.deltaTime);
+                        animEvent.gunManager.gunProperties.recoilPos.localRotation = Quaternion.Euler(rot);
                     }
                     else
                     {
                         float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, normalHeight, Time.deltaTime * leanSpeed);
                         GetComponent<CapsuleCollider>().height = newHeight;
+
+                        animEvent.gunManager.gunProperties.recoilPos.localPosition = Vector3.Slerp(animEvent.gunManager.gunProperties.recoilPos.localPosition, new Vector3(0,0,0), leanSpeed * Time.deltaTime);
+                        rot = Vector3.Slerp(rot, new Vector3(0, 0, 0), leanSpeed * Time.deltaTime);
+                        animEvent.gunManager.gunProperties.recoilPos.localRotation = Quaternion.Euler(rot);
                     }
 
                     animEvent.EmptyMag();
@@ -241,7 +251,6 @@ namespace Player
                         if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
                         {
                             animEvent.Fire();
-                            print("test2");
                         }
                     }
 
@@ -357,10 +366,8 @@ namespace Player
 
         public void WeaponSwapping()
         {
-            Debug.Log ("Swap");
             if (!primarygun.activeSelf)
             {
-                Debug.Log ("SEC");
                 secondarygun.SetActive(false);
                 primarygun.SetActive(true);
                 animEvent.armAnimator = GameObject.FindGameObjectWithTag("Arm").GetComponent<Animator>();
@@ -369,7 +376,6 @@ namespace Player
             }
             else if (!secondarygun.activeSelf)
             {
-                Debug.Log ("PRIM");
                 primarygun.SetActive(false);
                 secondarygun.SetActive(true);
                 animEvent.armAnimator = GameObject.FindGameObjectWithTag("Arm").GetComponent<Animator>();

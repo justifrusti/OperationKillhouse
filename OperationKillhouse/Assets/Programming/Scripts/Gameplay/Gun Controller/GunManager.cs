@@ -2,6 +2,7 @@ using Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -28,6 +29,8 @@ namespace Gun
         [Tooltip("Set this to True to enable weaponsway on the weapon")] public bool useWeaponSway = true;
         [Space]
         [Tooltip("Set this to True to enable weapon attatchments")]public bool hasAttatchments = true;
+        [Space]
+        [Tooltip("Set this to True to enable a rotation/posision of set when crouching")]public bool useCrouchOffset;
 
         [Header("Animation Properties")]
         [Tooltip("Set this to True if you don't use animation events to fire")] public bool manualAnimTrigger = false;
@@ -517,6 +520,9 @@ namespace Gun
         [Space]
         [ConditionalHide("hasAttatchments")]public Attatchements weaponAttatchments;
         public Ammocounter ammoCounter;
+        [Space]
+        [ConditionalHide("useCrouchOffset")]public Vector3 crouchPosOffset = Vector3.zero;
+        [ConditionalHide("useCrouchOffset")]public Vector3 crouchRotOffset;
 
         [Header("Private Info, DO NOT TOUCH!")]
         [SerializeField][Tooltip("The current gun ammo, DO NOT CHANGE THIS NUMBER DIRECTLY IN CODE!")]private int s_currentAmmo;

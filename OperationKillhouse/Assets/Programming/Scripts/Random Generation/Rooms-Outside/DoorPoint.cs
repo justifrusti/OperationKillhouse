@@ -1,3 +1,4 @@
+using System.Runtime.Serialization.Json;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,7 +14,6 @@ public class DoorPoint : MonoBehaviour
 
     private void Awake()
     {
-        //generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
         roomManager = GetComponentInParent<RoomManager>();
     }
 
@@ -26,40 +26,35 @@ public class DoorPoint : MonoBehaviour
 
         if (generator != null && generator.canGenarate)
         {
-            if(!roomSpawned && generator.roomAmount >= 1)
+            if (!roomSpawned && generator.roomAmount >= 1)
             {
                 SpawnRoom();
             }
             else
             {
                 Collider[] points = Physics.OverlapBox(transform.position, new Vector3(1, 1, 1), transform.rotation, roomManager.doorPointLayer, queryTriggerInteraction: QueryTriggerInteraction.UseGlobal);
-
                 for (int i = 0; i < points.Length; i++)
                 {
-                    if(otherDoorPoint == null && points[i].gameObject != this.gameObject)
+                    if (otherDoorPoint == null && points[i].gameObject != this.gameObject)
                     {
                         otherDoorPoint = points[i].transform;
                     }
                 }
             }
-
-            if(otherDoorPoint == this.transform)
+            if (otherDoorPoint == this.transform)
             {
                 otherDoorPoint = null;
             }
-
             if (otherDoorPoint != null)
                 CheckRoom();
 
-            if (generator.roomAmount == 0 && roomManager.enabled == true)
-                SpawnLastRoom();
+            /*if (generator.roomAmount == 0 && roomManager.enabled == true)
+                SpawnLastRoom();*/
         }
 
-
-        if (roomSpawned && roomChecked && outSideChecked && roomManager.doorPoints.Count < 2)
+        if (roomSpawned && roomChecked && roomManager.doorPoints.Count < 2)
         {
             roomManager.spawingDone = true;
-            generator.roomAmount--;
             gameObject.SetActive(false);
 
             if (otherDoorPoint != null)
@@ -78,29 +73,74 @@ public class DoorPoint : MonoBehaviour
             if (roomSelect == 0 || roomSelect == 1)
             {
                 roomManager.spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
+                roomManager.spawnedCollCheck = Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation);
+                roomManager.checkSpawned = true;
             }
 
             if (roomSelect == 2)
             {
                 roomManager.spawnedRoom = generator.cornerRooms[Random.Range(0, generator.cornerRooms.Length)].gameObject;
+                roomManager.spawnedCollCheck = Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation);
+                roomManager.checkSpawned = true;
             }
         }
 
-        if (outSideChecked)
-        {
-            roomManager.spawnedRoom = Instantiate<GameObject>(roomManager.spawnedRoom, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
 
-            generator.dungeonRooms.Add(roomManager.spawnedRoom);
-            roomSpawned = true;
+        if(roomManager.spawnedRoom != null)
+        {
+            if (outSideChecked)
+            {
+                roomManager.spawnedRoom = Instantiate<GameObject>(roomManager.spawnedRoom, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+                generator.roomAmount--;
+                generator.dungeonRooms.Add(roomManager.spawnedRoom);
+                roomSpawned = true;
+            }
         }
     }
 
     public void CheckRoom()
     {
         float dst = Vector3.Distance(transform.position, otherDoorPoint.transform.position);
-        if (dst < 0.1f)
+
+        if (dst < 0.11f)
         {
             roomChecked = true;
+        }
+    }
+
+    public void SpawnLastRoom()
+    {
+        print("last");
+        if (roomManager.spawnDoorPoint != null)
+        {
+            roomManager.spawnedRoom = roomManager.generator.lastRoom;
+            roomManager.spawnedCollCheck = Instantiate(roomManager.spawnedRoom.GetComponent<EndRoomInfo>().collisionCheckOBJ, roomManager.spawnDoorPoint.position, roomManager.spawnDoorPoint.rotation);
+        }
+
+        if (roomManager.spawnedCollCheck != null && roomManager.spawnedCollCheck.GetComponent<CollisionCheck>().GetCollEnabled() && roomManager.spawnedCollCheck.GetComponent<CollisionCheck>().GetCollClear())
+        {
+            print(roomManager.spawnedCollCheck);
+            Destroy(roomManager.spawnedCollCheck);
+
+            if (roomManager.spawnedRoom == null)
+            {
+                Transform doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
+
+                GameObject theLastRoom = Instantiate<GameObject>(generator.lastRoom, new Vector3(doorPoint.position.x, doorPoint.position.y, doorPoint.position.z), doorPoint.rotation);
+                generator.dungeonRooms.Add(theLastRoom);
+
+                generator.dungeonGenerationComplete = true;
+                roomSpawned = true; roomChecked = true; enabled = false;
+
+                roomManager.enabled = false;
+
+                gameObject.SetActive(false);
+            }
+
+        }
+        else
+        {
+            generator.RemoveLastRoom();
         }
     }
 
@@ -110,27 +150,5 @@ public class DoorPoint : MonoBehaviour
         roomChecked = false;
         roomSpawned = false;
         gameObject.SetActive(true);
-    }
-
-    public void SpawnLastRoom()
-    {
-        Collider[] collCheck = Physics.OverlapBox(generator.dungeonRooms[generator.dungeonRooms.Count - 1].GetComponent<RoomManager>().outSideCheck.position, new Vector3(6, 1, 9.8f), generator.dungeonRooms[generator.dungeonRooms.Count - 1].GetComponent<RoomManager>().outSideCheck.rotation);
-        
-        if (collCheck.Length == 0)
-        {
-            Transform doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;
-
-            GameObject theLastRoom = Instantiate<GameObject>(generator.lastRoom, new Vector3(doorPoint.position.x, doorPoint.position.y, doorPoint.position.z), doorPoint.rotation);
-            generator.dungeonRooms.Add(theLastRoom);
-
-            generator.dungeonGenerationComplete = true;
-            roomSpawned = true; roomChecked = true; outSideChecked = true; enabled = false;
-            roomManager.enabled = false;
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            generator.RemoveLastRoom();
-        }
     }
 }

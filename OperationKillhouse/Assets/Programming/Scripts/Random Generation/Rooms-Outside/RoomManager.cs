@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour  
@@ -9,13 +10,15 @@ public class RoomManager : MonoBehaviour
     [Tooltip("The centerpont of the room arount wich it can rotate")]public GameObject roomRotPoint;
                                             
     [HideInInspector]public Generator generator;
-    [HideInInspector]public GameObject spawnedRoom;                                      
+    /*[HideInInspector]*/public GameObject spawnedRoom;                                      
 
     [Header("misc info")]
-    [Tooltip("The centerpoint of the check if a room doesn't collide with annything when spawned")]public Transform outSideCheck;
     [HideInInspector]public bool spawingDone;
+    public GameObject collisionCheckOBJ;
+    public GameObject spawnedCollCheck;
 
-    
+    public bool checkSpawned;
+    bool collClear;
     public Transform spawnDoorPoint;
 
     private void Start()
@@ -25,14 +28,18 @@ public class RoomManager : MonoBehaviour
         if (firstRoom)
         {
             spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
+            spawnedCollCheck = Instantiate(spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, spawnDoorPoint.position, spawnDoorPoint.rotation);
+            checkSpawned = true;
+            doorPoints.Add(spawnDoorPoint);
         }
     }
 
     private void Update()
     {
-        if(spawnDoorPoint == null && !generator.dungeonGenerationComplete)
+        //print(spawnedRoom);
+        if (spawnDoorPoint == null && !generator.dungeonGenerationComplete)
         {
-            Collider[] points = Physics.OverlapBox(roomRotPoint.transform.position, new Vector3(20, 1, 20), roomRotPoint.transform.rotation, doorPointLayer, queryTriggerInteraction: QueryTriggerInteraction.UseGlobal);
+            Collider[] points = Physics.OverlapBox(roomRotPoint.transform.position, new Vector3(40, 1, 40), roomRotPoint.transform.rotation, doorPointLayer, queryTriggerInteraction: QueryTriggerInteraction.UseGlobal);
 
             for(int i = 0; i < points.Length; i++)
             {
@@ -48,8 +55,10 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        if(!spawnDoorPoint.GetComponent<DoorPoint>().outSideChecked && spawnedRoom != null)
+        if (!spawnDoorPoint.GetComponent<DoorPoint>().outSideChecked)
+        {
             checkColl();
+        }
 
         if (spawingDone && doorPoints.Count < 3)
         {
@@ -76,28 +85,46 @@ public class RoomManager : MonoBehaviour
                 }
             }
         }
+
         if (doorPoints.Count > 0 && doorPoints[0] == null)
         {
             doorPoints.RemoveAt(0);
         }
-
     }
 
     public void checkColl()
     {
-
-        Collider[] checkColl = Physics.OverlapBox(outSideCheck.position, new Vector3(18, 1, 9.8f),outSideCheck.rotation);
-
-        if (checkColl.Length > 0)
+        if (checkSpawned)
         {
-            generator.removeLastRoom = true;
+            if (spawnedCollCheck != null && spawnedCollCheck.GetComponent<CollisionCheck>().GetCollEnabled())
+            {
+                if(doorPoints.Count > 0 && spawnedCollCheck.GetComponent<CollisionCheck>().GetCollClear())
+                {
+               
+                    Destroy(spawnedCollCheck);
+                    collClear = true;
+                }
+                else if(spawnedCollCheck.GetComponent<CollisionCheck>().GetCollLenght() > 0)
+                {
+                    Destroy(spawnedCollCheck);
+                    generator.removeLastRoom = true;
+                }
+            }
         }
 
-        if(checkColl.Length == 0 && doorPoints.Count > 0)
+        if (spawnedCollCheck == null)
         {
-            generator.currentRetryAmount = generator.retryAmount;
-            doorPoints[0].GetComponent<DoorPoint>().enabled = true;
-            doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
+            print(collClear);
+            if (collClear)
+            {
+                generator.currentRetryAmount = generator.retryAmount;
+                doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
+                doorPoints[0].GetComponent<DoorPoint>().enabled = true;
+            }
+            /*else
+            {
+                //generator.removeLastRoom = true;
+            }*/
         }
     }
 
@@ -105,6 +132,8 @@ public class RoomManager : MonoBehaviour
     {
         spawnDoorPoint.GetComponent<DoorPoint>().ResetDoor();
         spawnedRoom = null;
+        checkSpawned = false;
+        spawingDone = false;
         enabled = true;
     }
 }

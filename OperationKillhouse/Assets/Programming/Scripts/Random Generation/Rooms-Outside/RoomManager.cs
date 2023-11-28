@@ -10,7 +10,7 @@ public class RoomManager : MonoBehaviour
     [Tooltip("The centerpont of the room arount wich it can rotate")]public GameObject roomRotPoint;
                                             
     [HideInInspector]public Generator generator;
-    /*[HideInInspector]*/public GameObject spawnedRoom;                                      
+    [HideInInspector] public GameObject spawnedRoom;                                      
 
     [Header("misc info")]
     [HideInInspector]public bool spawingDone;

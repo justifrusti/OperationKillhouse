@@ -1,5 +1,3 @@
-using System.Runtime.Serialization.Json;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorPoint : MonoBehaviour

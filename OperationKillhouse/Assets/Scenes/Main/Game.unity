@@ -3861,7 +3861,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 204770705}
-  - component: {fileID: 204770704}
   m_Layer: 0
   m_Name: Start_Area
   m_TagString: Untagged
@@ -3869,29 +3868,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &204770704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204770703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814acf46684f5a74ea033f381f594e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstRoom: 1
-  doorPointLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  doorPoints: []
-  roomRotPoint: {fileID: 1418810886}
-  generator: {fileID: 0}
-  spawnedRoom: {fileID: 0}
-  outSideCheck: {fileID: 846889603}
-  spawingDone: 0
-  spawnDoorPoint: {fileID: 0}
 --- !u!4 &204770705
 Transform:
   m_ObjectHideFlags: 0
@@ -3912,6 +3888,7 @@ Transform:
   - {fileID: 1053440661}
   - {fileID: 913304467}
   - {fileID: 445262264}
+  - {fileID: 849769179}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10422,6 +10399,8 @@ MonoBehaviour:
       laserSights: 0
       buttstocks: 0
     ammoCounter: {fileID: 0}
+    crouchPosOffset: {x: 0, y: 0, z: 0}
+    crouchRotOffset: {x: 0, y: 0, z: 0}
     s_currentAmmo: 30
     s_ClipAmmo: 0
     s_currentClips: []
@@ -10434,6 +10413,7 @@ MonoBehaviour:
   useRecoil: 1
   useWeaponSway: 0
   hasAttatchments: 1
+  useCrouchOffset: 0
   manualAnimTrigger: 0
   anim: {fileID: 0}
   animTriggerName: 
@@ -11455,6 +11435,8 @@ MonoBehaviour:
       laserSights: 0
       buttstocks: 0
     ammoCounter: {fileID: 0}
+    crouchPosOffset: {x: 0, y: 0, z: 0}
+    crouchRotOffset: {x: 0, y: 0, z: 0}
     s_currentAmmo: 0
     s_ClipAmmo: 0
     s_currentClips: []
@@ -11467,6 +11449,7 @@ MonoBehaviour:
   useRecoil: 1
   useWeaponSway: 1
   hasAttatchments: 1
+  useCrouchOffset: 0
   manualAnimTrigger: 0
   anim: {fileID: 0}
   animTriggerName: 
@@ -12116,7 +12099,12 @@ PrefabInstance:
         type: 3}
       propertyPath: firstRoom
       value: 
-      objectReference: {fileID: 204770703}
+      objectReference: {fileID: 849769178}
+    - target: {fileID: 102676913313151825, guid: 837112f42f38e0440811cc61a7ed9326,
+        type: 3}
+      propertyPath: roomAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 102676913313151825, guid: 837112f42f38e0440811cc61a7ed9326,
         type: 3}
       propertyPath: canGenarate
@@ -23757,6 +23745,64 @@ Transform:
   m_Father: {fileID: 1418810885}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &849769178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 849769179}
+  - component: {fileID: 849769180}
+  m_Layer: 0
+  m_Name: RoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &849769179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849769178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 204770705}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &849769180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849769178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814acf46684f5a74ea033f381f594e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstRoom: 1
+  doorPointLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  doorPoints: []
+  roomRotPoint: {fileID: 1418810886}
+  generator: {fileID: 0}
+  spawnedRoom: {fileID: 0}
+  spawingDone: 0
+  collisionCheckOBJ: {fileID: 7178367134116684976, guid: 0f1fc31dec65ec0489c9a62a587a7b32,
+    type: 3}
+  spawnedCollCheck: {fileID: 0}
+  checkSpawned: 0
+  spawnDoorPoint: {fileID: 1471482930}
 --- !u!1 &860290071
 GameObject:
   m_ObjectHideFlags: 0
@@ -34692,8 +34738,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherDoorPoint: {fileID: 0}
-  roomManager: {fileID: 204770704}
-  generator: {fileID: 1418500576}
+  roomManager: {fileID: 0}
+  generator: {fileID: 0}
   roomSpawned: 0
   roomChecked: 0
   outSideChecked: 0

@@ -18,6 +18,7 @@ public class RoomManager : MonoBehaviour
     public GameObject spawnedCollCheck;
 
     public bool checkSpawned;
+    bool lastRoom;
     bool collClear;
     public Transform spawnDoorPoint;
 
@@ -36,7 +37,6 @@ public class RoomManager : MonoBehaviour
 
     private void Update()
     {
-        //print(spawnedRoom);
         if (spawnDoorPoint == null && !generator.dungeonGenerationComplete)
         {
             Collider[] points = Physics.OverlapBox(roomRotPoint.transform.position, new Vector3(40, 1, 40), roomRotPoint.transform.rotation, doorPointLayer, queryTriggerInteraction: QueryTriggerInteraction.UseGlobal);
@@ -114,17 +114,12 @@ public class RoomManager : MonoBehaviour
 
         if (spawnedCollCheck == null)
         {
-            print(collClear);
             if (collClear)
             {
                 generator.currentRetryAmount = generator.retryAmount;
                 doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
                 doorPoints[0].GetComponent<DoorPoint>().enabled = true;
             }
-            /*else
-            {
-                //generator.removeLastRoom = true;
-            }*/
         }
     }
 
@@ -135,5 +130,15 @@ public class RoomManager : MonoBehaviour
         checkSpawned = false;
         spawingDone = false;
         enabled = true;
+    }
+
+    public bool getLastRoom()
+    {
+        return lastRoom;
+    }
+
+    public void SetLastRoom(bool lastroom)
+    {
+        lastRoom = lastroom;
     }
 }

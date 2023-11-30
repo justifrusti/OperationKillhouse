@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     [Space(10)]
     public int easyRooms;
     public int normalRooms, hardRooms;
-    /*[HideInInspector]*/ public int roomAmount = 0;
+    [HideInInspector] public int roomAmount = 0;
 
     [Header("Info for the generator")]
     [Space]

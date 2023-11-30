@@ -10,7 +10,7 @@ public class CollisionCheck : MonoBehaviour
 
     public Collider[] checkColliers;
 
-    float destroyTimer = 0.1f;
+    float destroyTimer = 1f;
 
     private void Awake()
     {
@@ -51,17 +51,14 @@ public class CollisionCheck : MonoBehaviour
             collEnabled = true;
         }
 
-        /*if (destroyTimer > 0)
+        if (destroyTimer > 0)
         {
             destroyTimer -= Time.deltaTime;
         }
         else
         {
             Destroy(this.gameObject);
-        }*/
-
-
-
+        }
     }
 
     private void enableColliders()

@@ -191,7 +191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194214672253627767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.125, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -845,8 +845,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
@@ -1827,6 +1825,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3032602163758426771}
+  - component: {fileID: 6034991310226086409}
+  - component: {fileID: 4951199673846562626}
   m_Layer: 0
   m_Name: Targets
   m_TagString: Untagged
@@ -1860,6 +1860,34 @@ Transform:
   m_Father: {fileID: 6729996366112213781}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6034991310226086409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2643369733694448838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: badf6c9909233dc469938d6e30cec920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets: []
+  redTargets: 0
+  blueTargets: 0
+--- !u!65 &4951199673846562626
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2643369733694448838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.1835854, z: 0.07501523}
+  m_Center: {x: 0, y: 1.0172518, z: -0.062963195}
 --- !u!1 &2918927770187591243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,8 +2101,6 @@ MonoBehaviour:
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
 --- !u!1 &3446396478733748165
@@ -2123,8 +2149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
@@ -2257,8 +2281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
@@ -3496,8 +3518,6 @@ MonoBehaviour:
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
 --- !u!1 &5491837080829649892
@@ -4616,8 +4636,6 @@ MonoBehaviour:
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
 --- !u!1 &6483752574157623167
@@ -4730,8 +4748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
@@ -5030,8 +5046,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
@@ -5699,8 +5713,6 @@ MonoBehaviour:
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
 --- !u!1 &8036210017112058964
@@ -5749,8 +5761,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
@@ -6358,8 +6368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleItems:
   - {fileID: 1872790248343345706, guid: bdd4eb0c413ce3d4eaaf75910ecee221, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
-  - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1

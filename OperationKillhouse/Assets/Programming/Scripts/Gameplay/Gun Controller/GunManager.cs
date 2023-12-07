@@ -198,8 +198,12 @@ namespace Gun
                             }
                             else if (hit.collider.CompareTag("Blue Target"))
                             {
-                                ScoreManager.instance.AddPenalty(10);
+                                ScoreManager.instance.targetManager.AddToBlueTargets();
                                 hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                            }
+                            else if (hit.collider.CompareTag("Range Target"))
+                            {
+                                Instantiate(hit.collider.GetComponent<GunRangeTarget>().bulletHole, hit.transform) ;
                             }
                         }
                         break;

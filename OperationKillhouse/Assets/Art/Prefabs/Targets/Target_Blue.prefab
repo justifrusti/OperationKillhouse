@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 593731445410272854}
   m_Layer: 0
   m_Name: Target_Blue
-  m_TagString: Blue Target
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 3361401545440729211}
   - component: {fileID: 6191923300997992677}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: EnemyStats(blue)
   m_TagString: Blue Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   Animator: {fileID: 4828258709419962146}
+  redTarget: 0
 --- !u!1001 &8107126893224883676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,7 +215,7 @@ PrefabInstance:
     - target: {fileID: -1314872803122130754, guid: 3d3911a7809aa8d4a929671756d7ddb1,
         type: 3}
       propertyPath: m_TagString
-      value: Blue Target
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3d3911a7809aa8d4a929671756d7ddb1,
         type: 3}

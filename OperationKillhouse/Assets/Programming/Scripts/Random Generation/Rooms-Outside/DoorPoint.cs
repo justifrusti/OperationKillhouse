@@ -70,21 +70,34 @@ public class DoorPoint : MonoBehaviour
     {
         if (roomManager.spawnedRoom == null)
         {
-            int roomSelect = Random.Range(0, 3);
+            int roomSelect = Random.Range(0, 11);
 
-            if (roomSelect == 0 || roomSelect == 1)
+            if (roomSelect <= 5)
             {
                 roomManager.spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
-                roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));
+                roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position + new Vector3(0,0.2f,0), transform.rotation));
                 roomManager.SetCheckSpawn(true);
             }
 
-            if (roomSelect == 2)
+            if (roomSelect <= 10 && roomSelect > 5)
             {
                 roomManager.spawnedRoom = generator.cornerRooms[Random.Range(0, generator.cornerRooms.Length)].gameObject;
+                roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position + new Vector3(0, 0.2f, 0), transform.rotation));
+                roomManager.SetCheckSpawn(true);
+            }
+/*
+            if(roomSelect == 11)
+            {
+                roomManager.spawnedRoom = generator.staircaseDown[Random.Range(0, generator.staircaseDown.Length)].gameObject;
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));
                 roomManager.SetCheckSpawn(true);
             }
+            if(roomSelect == 12)
+            {
+                roomManager.spawnedRoom = generator.staircaseUp[Random.Range(0, generator.staircaseUp.Length)].gameObject;
+                roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));
+                roomManager.SetCheckSpawn(true);
+            }*/
         }
 
         if(roomManager.spawnedRoom != null)
@@ -115,19 +128,10 @@ public class DoorPoint : MonoBehaviour
         {
             roomManager.spawnedRoom = roomManager.generator.lastRoom;
             roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<EndRoomInfo>().collisionCheckOBJ, transform.position, transform.rotation));
+            roomManager.SetCheckSpawn(true);
         }
-        if (roomManager.GetSpawnedCollCheck() != null && roomManager.GetSpawnedCollCheck().GetComponent<CollisionCheck>().GetCollEnabled())
-        {
-            Destroy(roomManager.GetSpawnedCollCheck());
-
-            if(roomManager.GetSpawnedCollCheck().GetComponent<CollisionCheck>().GetCollLenght() > 0)
-            {
-                generator.removeLastRoom = true;
-            }
-        }
-
         
-        if (roomManager.spawnedRoom != null && roomManager.spawnedRoom != null && roomManager.spawnedRoom == generator.lastRoom)
+        if (roomManager.spawnedRoom != null && roomManager.spawnedRoom == generator.lastRoom && outSideChecked)
         {
             Destroy(roomManager.GetSpawnedCollCheck());
             Transform doorPoint = GameObject.FindGameObjectWithTag("DoorPoint").transform;

@@ -14,9 +14,12 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text timeDisplay;
     bool startTimer;
 
+    public TargetManager targetManager;
+
     private void Start()
     {
         instance = this;
+        targetManager = GetComponent<TargetManager>();
     }
 
     private void Update()
@@ -62,7 +65,7 @@ public class ScoreManager : MonoBehaviour
         {
             if(!startTimer)
             {
-                startTimer = true;
+                StartTimer();
             }
         }
     }
@@ -70,5 +73,16 @@ public class ScoreManager : MonoBehaviour
     public void stopTimer()
     {
         startTimer = false;
+        ApplyPenalty();
+    }
+    public void StartTimer()
+    {
+        startTimer = true;
+    }
+
+    void ApplyPenalty()
+    {
+        print(targetManager.GetBlueTargets());
+        print(targetManager.redTargets.Count);
     }
 }

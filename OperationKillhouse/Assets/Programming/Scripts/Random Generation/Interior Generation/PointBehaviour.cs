@@ -9,18 +9,20 @@ public class PointBehaviour : MonoBehaviour
 
     public bool alwaysSpawn;
 
+    public GameObject spawnedTarget;
+
     void Start()
     {
         if (Random.value < spawnChance && !alwaysSpawn)
         {
             int index = Random.Range(0, possibleItems.Length);
 
-            Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
+            spawnedTarget = Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
         }else
         {
             int index = Random.Range(0, possibleItems.Length);
 
-            Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
+            spawnedTarget = Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
         }
     }
 }

@@ -718,6 +718,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1 &962338373169841991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,6 +1652,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1 &2429936054735512567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,14 +2826,12 @@ MonoBehaviour:
     m_Bits: 8
   doorPoints: []
   roomRotPoint: {fileID: 5861206073835231084}
+  useSetRoom: 0
+  setRoom: {fileID: 0}
   generator: {fileID: 0}
   spawnedRoom: {fileID: 0}
-  outSideCheck: {fileID: 7317743341776900030}
-  spawingDone: 0
   collisionCheckOBJ: {fileID: 7178367134116684976, guid: 0f1fc31dec65ec0489c9a62a587a7b32,
     type: 3}
-  spawnedCollCheck: {fileID: 0}
-  checkSpawned: 0
   spawnDoorPoint: {fileID: 0}
 --- !u!1 &3728993283219453140
 GameObject:
@@ -3133,6 +3133,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1 &4568082528776067471
 GameObject:
   m_ObjectHideFlags: 0
@@ -3688,6 +3689,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1 &5314778693796815436
 GameObject:
   m_ObjectHideFlags: 0
@@ -4475,6 +4477,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7893901052712158160}
+  - component: {fileID: 4828745507304380059}
+  - component: {fileID: 1519178423147974627}
   m_Layer: 0
   m_Name: Targets
   m_TagString: Untagged
@@ -4504,6 +4508,35 @@ Transform:
   m_Father: {fileID: 4088914069956225519}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4828745507304380059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086548728889831619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f77fe325a000cb439c48042aa970d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 5803936764694525087}
+  - {fileID: 3663269502705098065}
+  - {fileID: 4362093153196050718}
+--- !u!65 &1519178423147974627
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086548728889831619}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.1835854, z: 0.07501523}
+  m_Center: {x: 0, y: 1.0172518, z: -0.062963195}
 --- !u!1 &6471852523434387035
 GameObject:
   m_ObjectHideFlags: 0
@@ -5024,6 +5057,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1 &7553432228012546414
 GameObject:
   m_ObjectHideFlags: 0
@@ -5412,6 +5446,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1 &8032520633657418770
 GameObject:
   m_ObjectHideFlags: 0
@@ -6368,6 +6403,7 @@ MonoBehaviour:
   - {fileID: 8439379283278649982, guid: ce0866579c09cd24993d8cd69b543b5d, type: 3}
   spawnChance: 0.5
   alwaysSpawn: 1
+  spawnedTarget: {fileID: 0}
 --- !u!1001 &220840697027451926
 PrefabInstance:
   m_ObjectHideFlags: 0

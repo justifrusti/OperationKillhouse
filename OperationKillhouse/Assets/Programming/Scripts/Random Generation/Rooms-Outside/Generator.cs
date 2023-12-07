@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     [Space(10)]
     public int easyRooms;
     public int normalRooms, hardRooms;
-    [HideInInspector] public int roomAmount = 0;
+    [HideInInspector] public int roomAmount = 1;
 
     [Header("Info for the generator")]
     [Space]
@@ -30,6 +30,10 @@ public class Generator : MonoBehaviour
     [Space]
     [Tooltip("The straight rooms you want to be used for generation")] public GameObject[] cornerRooms;
     [Tooltip("The corner rooms you want to be used for generation")] public GameObject[] straightRooms;
+    public GameObject[] staircaseUp;
+    public GameObject[] staircaseDown;
+
+    [Header("Misc info")]
     public int currentRetryAmount;
     public List<GameObject> dungeonRooms;
     public bool dungeonGenerationComplete;

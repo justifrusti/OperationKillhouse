@@ -5,10 +5,12 @@ public class EnemyStats : MonoBehaviour
     public int health = 1;
     public Animator Animator;
     bool death;
+    TargetManager targetManager;
+    public bool redTarget;
 
     private void Awake()
     {
-        PopUp();
+        targetManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<TargetManager>();
     }
 
     public void Damage(int damage)
@@ -16,6 +18,11 @@ public class EnemyStats : MonoBehaviour
         if((health -= damage) <= 0)
         {
             death = true;
+
+            if (redTarget)
+            {
+                targetManager.redTargets.Remove(this.gameObject);
+            }
         }
     }
 
@@ -24,12 +31,13 @@ public class EnemyStats : MonoBehaviour
         if (death)
         {
             Animator.SetTrigger("Dead");
+            
         }
     }
 
     public void PopUp()
     {
         Animator.SetTrigger("Activate");
+        death = false;
     }
-
 }

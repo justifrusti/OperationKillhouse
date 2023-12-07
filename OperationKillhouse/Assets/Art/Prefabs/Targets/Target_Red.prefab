@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3536933569865144874}
   - component: {fileID: 8190202332529261289}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: EnemyStats(red)
   m_TagString: Red Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   Animator: {fileID: 158804390922012523}
+  redTarget: 1
 --- !u!1 &8439379283278649982
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +124,7 @@ GameObject:
   - component: {fileID: 2864725610335137110}
   m_Layer: 0
   m_Name: Target_Red
-  m_TagString: Red Target
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +215,7 @@ PrefabInstance:
     - target: {fileID: -1314872803122130754, guid: 3d3911a7809aa8d4a929671756d7ddb1,
         type: 3}
       propertyPath: m_TagString
-      value: Red Target
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3d3911a7809aa8d4a929671756d7ddb1,
         type: 3}

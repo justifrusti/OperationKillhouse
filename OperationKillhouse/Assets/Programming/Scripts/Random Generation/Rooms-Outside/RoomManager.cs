@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviour
     [Header("misc info")]
     public GameObject collisionCheckOBJ;
     public Transform spawnDoorPoint;
-    /*[HideInInspector]public*/ GameObject spawnedCollCheck;
+    GameObject spawnedCollCheck;
     bool checkSpawned;
     bool spawingDone;
     bool collIsClear;
@@ -117,9 +117,7 @@ public class RoomManager : MonoBehaviour
                 if(doorPoints.Count > 0 && spawnedCollCheck.GetComponent<CollisionCheck>().GetCollClear())
                 {
                     collIsClear = true;
-                    
-                    if(collIsClear)
-                        Destroy(spawnedCollCheck);
+                    Destroy(spawnedCollCheck);
                 }
                 else if(spawnedCollCheck.GetComponent<CollisionCheck>().GetCollLenght() > 0)
                 {
@@ -130,10 +128,8 @@ public class RoomManager : MonoBehaviour
 
             if (spawnedCollCheck == null)
             {
-                print(collIsClear);
                 if (collIsClear)
                 {
-                    print("2");
                     generator.currentRetryAmount = generator.retryAmount;
                     doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
                     doorPoints[0].GetComponent<DoorPoint>().enabled = true;

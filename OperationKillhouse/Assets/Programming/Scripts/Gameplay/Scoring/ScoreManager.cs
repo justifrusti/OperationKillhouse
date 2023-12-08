@@ -10,10 +10,15 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]int minutes;
     [SerializeField]int seconds;
     float fSeconds;
-
+    [Space]
+    public int wrongTargetPenalty;
+    [Space]
     public TMP_Text timeDisplay;
-    bool startTimer;
+    public TMP_Text blueTagetPenalty;
+    public TMP_Text redTargetsLeft;
 
+    bool startTimer;
+    [Space]
     public TargetManager targetManager;
 
     private void Start()
@@ -58,6 +63,18 @@ public class ScoreManager : MonoBehaviour
     {
         seconds = (seconds + penaltyScore);
     }
+    void ApplyPenalty()
+    {
+        blueTagetPenalty.gameObject.SetActive(true);
+        redTargetsLeft.gameObject.SetActive(true);
+
+        AddPenalty(targetManager.GetBlueTargets() * wrongTargetPenalty);
+        blueTagetPenalty.text = ("You shot " + targetManager.GetBlueTargets() + " and gained a " + targetManager.GetBlueTargets() * 10 + " time penalty. your final time is " + GetTime());
+
+
+        redTargetsLeft.text = ("There where " + targetManager.redTargets.Count + " red targets left");
+        
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -75,14 +92,9 @@ public class ScoreManager : MonoBehaviour
         startTimer = false;
         ApplyPenalty();
     }
+
     public void StartTimer()
     {
         startTimer = true;
-    }
-
-    void ApplyPenalty()
-    {
-        print(targetManager.GetBlueTargets());
-        print(targetManager.redTargets.Count);
     }
 }

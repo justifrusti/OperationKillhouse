@@ -1,5 +1,6 @@
 using Gun;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Player
@@ -172,7 +173,7 @@ namespace Player
 
                     if (canLean && inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
                     {
-                        if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
+                        if (!Physics.Raycast(cam.transform.position, -transform.right, out hit, 2))
                         {
                             if (hit.transform == null)
                             {
@@ -192,7 +193,7 @@ namespace Player
                     }
                     else if (canLean && inputmanager.inputMaster.Leaning.LeanRight.ReadValue<float>() == 1)
                     {
-                        if (!Physics.Raycast(transform.position, transform.right, out hit, 1))
+                        if (!Physics.Raycast(cam.transform.position, transform.right, out hit, 1))
                         {
                             if(hit.transform == null)
                             {
@@ -297,8 +298,12 @@ namespace Player
                             {
                                 armory.SetActive(true);
                                 ChangeGameState (GameState.Pause);
-                                primarygun.SetActive (false);
-                                
+                                primarygun.SetActive (false);   
+                            }
+
+                            if(hit.transform.gameObject.tag == "Range Target")
+                            {
+                                hit.transform.GetComponent<GunRangeTarget>().resetAnimation.Play();
                             }
                         }
                     }

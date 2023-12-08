@@ -203,7 +203,8 @@ namespace Gun
                             }
                             else if (hit.collider.CompareTag("Range Target"))
                             {
-                                Instantiate(hit.collider.GetComponent<GunRangeTarget>().bulletHole, hit.transform) ;
+                                GameObject bullethole = Instantiate(hit.collider.GetComponent<GunRangeTarget>().bulletHole, hit.transform);
+                                hit.collider.GetComponent<GunRangeTarget>().bulletHoles.Add(bullethole);
                             }
                         }
                         break;

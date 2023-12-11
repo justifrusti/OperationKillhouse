@@ -1,5 +1,7 @@
 using Gun;
 using System;
+using System.Threading;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -83,6 +85,7 @@ namespace Player
         [Tooltip("The force added to the player when jumping")]public int jumpforce;
         float currentRunspeed;
         bool isGrounded;
+        bool leaning;
         float speed;
 
         [Header("Crouching values")]
@@ -107,6 +110,7 @@ namespace Player
         public Transform cam;
 
         private float xRotation = 0;
+        private float yRotation = 0;
 
         public GameObject hole;
         public RaycastHit hit;
@@ -119,6 +123,10 @@ namespace Player
         public GameObject armory;
 
         Vector3 rot;
+
+        public Transform weaponRotPoint;
+        public float weaponRotLimit;
+        public float weaponRotSpeed;
 
         private void Start()
         {
@@ -169,6 +177,18 @@ namespace Player
                     xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
                     cam.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+                    if(!animEvent.gunManager.aiming && !leaning)
+                    {
+                        if(mouseV2.x < 0.5f || mouseV2.x < -0.5f)
+                        {
+                            yRotation += mouseV2.x * weaponRotSpeed;
+                            yRotation = Mathf.Clamp(yRotation, -weaponRotLimit, weaponRotLimit);
+
+                            weaponRotPoint.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+                        }
+                    }
+
                     transform.Rotate(Vector3.up * mouseV2.x);
 
                     if (canLean && inputmanager.inputMaster.Leaning.LeanLeft.ReadValue<float>() == 1)
@@ -177,6 +197,7 @@ namespace Player
                         {
                             if (hit.transform == null)
                             {
+                                leaning = true;
                                 targetLeanPos.x = -leanDistance;
                                 targetLeanPos.y = leanHight;
                                 leanInput = 1f;
@@ -185,6 +206,7 @@ namespace Player
                         }
                         else
                         {
+                            leaning = false;
                             targetLeanPos.x = 0;
                             targetLeanPos.y = baseHight;
                             leanInput = 0f;
@@ -197,6 +219,7 @@ namespace Player
                         {
                             if(hit.transform == null)
                             {
+                                leaning = true;
                                 targetLeanPos.x = leanDistance;
                                 targetLeanPos.y = leanHight;
                                 leanInput = -1f;
@@ -205,6 +228,7 @@ namespace Player
                         }
                         else
                         {
+                            leaning = false;
                             targetLeanPos.x = 0;
                             targetLeanPos.y = baseHight;
                             leanInput = 0f;
@@ -213,6 +237,7 @@ namespace Player
                     }
                     else
                     {
+                        leaning = false;
                         targetLeanPos.x = 0;
                         targetLeanPos.y = baseHight;
                         leanInput = 0f;
@@ -261,10 +286,11 @@ namespace Player
                         animEvent.gunAnimator.SetBool("Fire", false);
                     }
 
-                if (Input.GetKeyDown (KeyCode.C)) {
-                    animEvent.armAnimator.SetTrigger ("Check");
-                    animEvent.gunAnimator.SetTrigger ("Check");
-                }
+                    if (Input.GetKeyDown (KeyCode.C))
+                    {
+                        animEvent.armAnimator.SetTrigger ("Check");
+                        animEvent.gunAnimator.SetTrigger ("Check");
+                    }
 
                     if (Input.GetButtonDown("Fire2"))
                     {
@@ -313,8 +339,6 @@ namespace Player
                 case GameState.Pause:
 
                     Cursor.lockState = CursorLockMode.None;
-
-
                     break;
             }
 
@@ -387,6 +411,7 @@ namespace Player
                 animEvent.gunAnimator = GameObject.FindGameObjectWithTag("Gun").GetComponent<Animator>();
                 animEvent.gunManager = GetComponentInChildren<GunManager>();
             }
+
         }
 
         public void ReturnToPlay()
@@ -398,5 +423,6 @@ namespace Player
         {
             gameState = newState;
         }
+        
     }
 }

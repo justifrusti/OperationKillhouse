@@ -108,11 +108,21 @@ namespace Player
         [Header("Camera sensetivity")]
         [Tooltip("The sensetivity of the camera")]public float sensetivity;
         public Transform cam;
+        [Space]
+
+
+        public bool useCameraDelay;
+        [ConditionalHide("useCameraDelay")]public Transform weaponRotPoint;
+        [ConditionalHide("useCameraDelay")] public float yWeaponRotLimit;
+        [ConditionalHide("useCameraDelay")] public float xWeaponRotLimit;
+        [ConditionalHide("useCameraDelay")] public float weaponRotSpeed;
 
         private float xRotation = 0;
-        private float yRotation = 0;
+        private float yWeaponRotation = 0;
+        private float xWeaponRotation = 0;
 
-        public GameObject hole;
+        [Space]
+        //public GameObject hole;
         public RaycastHit hit;
 
         public GameObject generationUI;
@@ -123,10 +133,6 @@ namespace Player
         public GameObject armory;
 
         Vector3 rot;
-
-        public Transform weaponRotPoint;
-        public float weaponRotLimit;
-        public float weaponRotSpeed;
 
         private void Start()
         {
@@ -178,15 +184,21 @@ namespace Player
 
                     cam.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-                    if(!animEvent.gunManager.aiming && !leaning)
+                    if(!animEvent.gunManager.aiming && !leaning && useCameraDelay)
                     {
-                        if(mouseV2.x < 0.5f || mouseV2.x < -0.5f)
+                        if (mouseV2.y < 0.5f || mouseV2.y < -0.5f)
                         {
-                            yRotation += mouseV2.x * weaponRotSpeed;
-                            yRotation = Mathf.Clamp(yRotation, -weaponRotLimit, weaponRotLimit);
-
-                            weaponRotPoint.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+                            xWeaponRotation += mouseV2.y * weaponRotSpeed;
+                            xWeaponRotation = Mathf.Clamp(xWeaponRotation, -xWeaponRotLimit, xWeaponRotLimit);
                         }
+
+                        if (mouseV2.x < 0.5f || mouseV2.x < -0.5f)
+                        {
+                            yWeaponRotation += mouseV2.x * weaponRotSpeed;
+                            yWeaponRotation = Mathf.Clamp(yWeaponRotation, -yWeaponRotLimit, yWeaponRotLimit);
+                        }
+
+                        weaponRotPoint.localRotation = Quaternion.Euler(-xWeaponRotation, yWeaponRotation, 0f);
                     }
 
                     transform.Rotate(Vector3.up * mouseV2.x);

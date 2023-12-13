@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Generator : MonoBehaviour
 {
+    public static Generator Instance { get; private set; }
     public enum Difficulty
     {
         Easy, Medium, Hard
@@ -42,11 +43,25 @@ public class Generator : MonoBehaviour
 
     public Slider progressSlider;
 
-    public void Start()
+    private void Awake()
     {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         DifficultySelect(difficulty);
         seedManager.setSeed();
         currentRetryAmount = retryAmount;
+    }
+
+    public void Start()
+    {
+
     }
 
     public void Update()

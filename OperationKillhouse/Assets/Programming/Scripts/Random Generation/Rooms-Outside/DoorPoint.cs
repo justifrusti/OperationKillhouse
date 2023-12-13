@@ -12,14 +12,15 @@ public class DoorPoint : MonoBehaviour
 
     private void Awake()
     {
+        generator = Generator.Instance;
         roomManager = GetComponentInParent<RoomManager>();
     }
 
     void Update()
     {
-        if (generator == null)
+        if(generator == null)
         {
-            generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
+            generator = Generator.Instance;
         }
 
         if (generator != null && generator.canGenarate)
@@ -85,14 +86,14 @@ public class DoorPoint : MonoBehaviour
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position + new Vector3(0, 0.2f, 0), transform.rotation));
                 roomManager.SetCheckSpawn(true);
             }
-/*
-            if(roomSelect == 11)
+            /*
+            if (roomSelect == 11)
             {
                 roomManager.spawnedRoom = generator.staircaseDown[Random.Range(0, generator.staircaseDown.Length)].gameObject;
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));
                 roomManager.SetCheckSpawn(true);
             }
-            if(roomSelect == 12)
+            if (roomSelect == 12)
             {
                 roomManager.spawnedRoom = generator.staircaseUp[Random.Range(0, generator.staircaseUp.Length)].gameObject;
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));

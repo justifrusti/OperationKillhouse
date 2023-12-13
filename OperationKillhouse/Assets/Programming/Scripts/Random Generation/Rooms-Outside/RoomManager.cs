@@ -10,7 +10,7 @@ public class RoomManager : MonoBehaviour
     [Tooltip("Set to true if you want to spawn a specific room after this one everytime")]public bool useSetRoom;
     [ConditionalHide("useSetRoom"),Tooltip("this room will always spawn after this room")]public GameObject setRoom;
                                             
-    [HideInInspector]public Generator generator;
+    /*[HideInInspector]*/public Generator generator;
     [HideInInspector]public GameObject spawnedRoom;                                      
 
     [Header("misc info")]
@@ -24,7 +24,7 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
+        generator = Generator.Instance;
         spawnDoorPoint = GetComponentInChildren<DoorPoint>().transform;
         
         if (useSetRoom)

@@ -201,11 +201,11 @@ namespace Gun
                                 ScoreManager.instance.targetManager.AddToBlueTargets();
                                 hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
                             }
-                            else if (hit.collider.CompareTag("Range Target"))
+                            /*else if (hit.collider.CompareTag("Range Target"))
                             {
                                 GameObject bullethole = Instantiate(hit.collider.GetComponent<GunRangeTarget>().bulletHole, hit.transform);
                                 hit.collider.GetComponent<GunRangeTarget>().bulletHoles.Add(bullethole);
-                            }
+                            }*/
                         }
                         break;
 
@@ -498,6 +498,8 @@ namespace Gun
         [Tooltip("The way the bullets 'Fire' from the gun")]public ShootingType shootingType;
         [Tooltip("The Gun name, used for Stat displays")]public string gunName;
         [Tooltip("The Gun description, used for Stat displays")]public string gunDescription;
+        [Tooltip("The location to spawn the empty magazine when reloading")]public Transform enmptyMagSpawnPoint;
+        [Tooltip("The empty magazine of the gun to spawn when reloading")]public GameObject emptyMag;
         [Space]
         [Tooltip("The Gun damage, used for doing damage and Stat displays")]public int gunDamage;
         [Tooltip("The Gun clip size, used to determine how many bullets a gun can hold before reload")]public int clipSize;

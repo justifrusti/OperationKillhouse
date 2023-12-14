@@ -59,11 +59,6 @@ public class Generator : MonoBehaviour
         currentRetryAmount = retryAmount;
     }
 
-    public void Start()
-    {
-
-    }
-
     public void Update()
     {
         if (canGenarate)

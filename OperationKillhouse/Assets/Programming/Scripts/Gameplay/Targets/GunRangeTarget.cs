@@ -11,17 +11,15 @@ public class GunRangeTarget : MonoBehaviour
     public Transform frontLimit;
     public Transform backLimit;
     public float moveSpeed;
-
-
-    public bool callTarget;
-    public bool moveTargetBack;
+    public bool callTargetBool;
+    public bool moveTargetBackBool;
 
     void Update()
     {
-        if (callTarget)
+        if (callTargetBool)
             CallTarget();
         
-        if(moveTargetBack)
+        if(moveTargetBackBool)
             MoveTargetBack();
     }
 
@@ -34,13 +32,23 @@ public class GunRangeTarget : MonoBehaviour
         }
     }
 
-    public void CallTarget()
+    void CallTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, frontLimit.position, moveSpeed * Time.deltaTime);
     }
 
-    public void MoveTargetBack()
+    void MoveTargetBack()
     {
         transform.position = Vector3.MoveTowards(transform.position, backLimit.position, moveSpeed * Time.deltaTime);
+    }
+
+    public void SetCallTarget(bool call)
+    {
+        callTargetBool = call;
+    }
+
+    public void SetMoveBack(bool move)
+    {
+        moveTargetBackBool = move;
     }
 }

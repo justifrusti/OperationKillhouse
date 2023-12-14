@@ -42,6 +42,11 @@ public class EventManager : MonoBehaviour {
         print("yeet");
     }
 
+    public void MagDrop()
+    {
+        Instantiate(gunManager.gunProperties.emptyMag, gunManager.gunProperties.enmptyMagSpawnPoint);
+    }
+
     public void Fire () {
         if (isSuppresed == true) {
             firePoint.GetComponent<AudioSource>().clip = fireS;

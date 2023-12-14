@@ -110,7 +110,6 @@ namespace Player
         public Transform cam;
         [Space]
 
-
         public bool useCameraDelay;
         [ConditionalHide("useCameraDelay")]public Transform weaponRotPoint;
         [ConditionalHide("useCameraDelay")] public float yWeaponRotLimit;
@@ -341,7 +340,7 @@ namespace Player
 
                             if(hit.transform.gameObject.tag == "Range Target")
                             {
-                                hit.transform.GetComponent<GunRangeTarget>().resetAnimation.Play();
+                                hit.transform.GetComponentInParent<Animation>().Play();
                             }
                         }
                     }

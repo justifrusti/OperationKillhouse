@@ -132,6 +132,8 @@ namespace Player
         public GameObject armory;
 
         Vector3 rot;
+        public LineRenderer lineRenderer;
+        public Transform lazerFirePoint;
 
         private void Start()
         {
@@ -344,7 +346,6 @@ namespace Player
                             }
                         }
                     }
-
                     break;
 
                 case GameState.Pause:

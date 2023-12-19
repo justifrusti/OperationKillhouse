@@ -180,32 +180,55 @@ namespace Gun
                     s_RotationRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
                 }
 
+                RaycastHit hit;
                 switch (gunProperties.shootingType)
                 {
                     case GunProperties.ShootingType.Raycast:
                         if (shootingDebugRayActive)
                         {
-                            Debug.DrawRay(GetRay().origin, GetRay().direction * 500f, Color.red);
+                            Debug.DrawRay(gunProperties.reticlePoint.position, gunProperties.reticlePoint.forward * 500f, Color.red, 10f);
+                            Debug.DrawRay(gunProperties.firePoint.position, gunProperties.firePoint.forward * 500f, Color.green, 10f);
                         }
 
-                        RaycastHit hit;
-
-                        if (Physics.Raycast(GetRay(), out hit, 500f))
+                        if (aiming)
                         {
-                            if (hit.collider.CompareTag("Red Target"))
+                            if (Physics.Raycast(gunProperties.reticlePoint.position, gunProperties.reticlePoint.forward, out hit, 500f))
                             {
-                                hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                if (hit.collider.CompareTag("Red Target"))
+                                {
+                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                }
+                                else if (hit.collider.CompareTag("Blue Target"))
+                                {
+                                    ScoreManager.instance.targetManager.AddToBlueTargets();
+                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                }
+                                else if (hit.collider.CompareTag("Range Target"))
+                                {
+                                    GameObject bullethole = Instantiate(hit.collider.GetComponentInParent<GunRangeTarget>().bulletHole, hit.point, new quaternion(0,0,0,0), hit.collider.gameObject.transform);
+                                    hit.collider.GetComponentInParent<GunRangeTarget>().bulletHoles.Add(bullethole);
+                                }
                             }
-                            else if (hit.collider.CompareTag("Blue Target"))
+                        }
+                        else
+                        {
+                            if(Physics.Raycast(gunProperties.firePoint.position, gunProperties.firePoint.forward, out hit, 500f))
                             {
-                                ScoreManager.instance.targetManager.AddToBlueTargets();
-                                hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                if (hit.collider.CompareTag("Red Target"))
+                                {
+                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                }
+                                else if (hit.collider.CompareTag("Blue Target"))
+                                {
+                                    ScoreManager.instance.targetManager.AddToBlueTargets();
+                                    hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);
+                                }
+                                else if (hit.collider.CompareTag("Range Target"))
+                                {
+                                    GameObject bullethole = Instantiate(hit.collider.GetComponentInParent<GunRangeTarget>().bulletHole, hit.point, new quaternion(0, 0, 0, 0), hit.collider.gameObject.transform);
+                                    hit.collider.GetComponentInParent<GunRangeTarget>().bulletHoles.Add(bullethole);
+                                }
                             }
-                            /*else if (hit.collider.CompareTag("Range Target"))
-                            {
-                                GameObject bullethole = Instantiate(hit.collider.GetComponent<GunRangeTarget>().bulletHole, hit.transform);
-                                hit.collider.GetComponent<GunRangeTarget>().bulletHoles.Add(bullethole);
-                            }*/
                         }
                         break;
 
@@ -500,6 +523,8 @@ namespace Gun
         [Tooltip("The Gun description, used for Stat displays")]public string gunDescription;
         [Tooltip("The location to spawn the empty magazine when reloading")]public Transform enmptyMagSpawnPoint;
         [Tooltip("The empty magazine of the gun to spawn when reloading")]public GameObject emptyMag;
+        public Transform firePoint;
+        public Transform reticlePoint;
         [Space]
         [Tooltip("The Gun damage, used for doing damage and Stat displays")]public int gunDamage;
         [Tooltip("The Gun clip size, used to determine how many bullets a gun can hold before reload")]public int clipSize;

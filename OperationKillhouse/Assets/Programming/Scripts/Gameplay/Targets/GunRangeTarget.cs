@@ -13,6 +13,7 @@ public class GunRangeTarget : MonoBehaviour
     public float moveSpeed;
     public bool callTargetBool;
     public bool moveTargetBackBool;
+    bool removeholes;
 
     void Update()
     {
@@ -21,15 +22,25 @@ public class GunRangeTarget : MonoBehaviour
         
         if(moveTargetBackBool)
             MoveTargetBack();
+
+        if(removeholes && bulletHoles.Count > 0)
+        {
+            for (int i = 0; i < bulletHoles.Count; i++)
+            {
+                Destroy(bulletHoles[i]);
+                bulletHoles.RemoveAt(i);
+            }
+        }
+
+        if(removeholes && bulletHoles.Count <= 0)
+        {
+            removeholes = false;
+        }
     }
 
     void RemoveBulletHoles()
     {
-        for (int i = 0; i < bulletHoles.Count; i++)
-        {
-            Destroy(bulletHoles[i]);
-            bulletHoles.RemoveAt(i);
-        }
+        removeholes = true;
     }
 
     void CallTarget()

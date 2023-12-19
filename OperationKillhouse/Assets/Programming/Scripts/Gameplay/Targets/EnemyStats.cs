@@ -3,10 +3,13 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     public int health = 1;
-    public Animator Animator;
+    //public Animator Animator;
+    public Animation animation;
     bool death;
     TargetManager targetManager;
     public bool redTarget;
+
+    public AnimationClip deathAnim;
 
     private void Awake()
     {
@@ -30,14 +33,17 @@ public class EnemyStats : MonoBehaviour
     {
         if (death)
         {
-            Animator.SetTrigger("Dead");
+            //Animator.SetTrigger("Dead");
             
+            animation.clip = deathAnim;
+            animation.Play();
+            death = false;
         }
     }
 
     public void PopUp()
     {
-        Animator.SetTrigger("Activate");
+        animation.Play();
         death = false;
     }
 }

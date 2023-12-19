@@ -17,7 +17,7 @@ public class RoomManager : MonoBehaviour
     public GameObject collisionCheckOBJ;
     public Transform spawnDoorPoint;
     GameObject spawnedCollCheck;
-    bool checkSpawned;
+    public bool checkSpawned;
     bool spawingDone;
     bool collIsClear;
 

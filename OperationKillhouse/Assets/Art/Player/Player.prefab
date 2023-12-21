@@ -407,8 +407,6 @@ MonoBehaviour:
     gunAnimator: {fileID: 5876254116958591796}
   inputmanager: {fileID: 4890188838950847793}
   rb: {fileID: 4890188838950847805}
-  walk: {fileID: 0}
-  inMenu: 0
   walkSpeed: 7
   runspeed: 10
   accel: 0.1
@@ -424,15 +422,13 @@ MonoBehaviour:
   cam: {fileID: 8133089156681285105}
   useCameraDelay: 1
   weaponRotPoint: {fileID: 8729832782411177992}
-  yWeaponRotLimit: 3
-  xWeaponRotLimit: 3
+  yWeaponRotLimit: {x: -5, y: 3}
+  xWeaponRotLimit: {x: -5, y: 3}
   weaponRotSpeed: 1
   generationUI: {fileID: 0}
   primarygun: {fileID: 8133089156754409280}
   secondarygun: {fileID: 8133089156546286101}
   armory: {fileID: 0}
-  lineRenderer: {fileID: 0}
-  lazerFirePoint: {fileID: 0}
 --- !u!114 &4890188838950847793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2564,8 +2560,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
+      propertyPath: gunProperties.emptyMag
+      value: 
+      objectReference: {fileID: 4266561777294113558, guid: c26ba8438f88e1a42b39aac38cb33602,
+        type: 3}
+    - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
+        type: 3}
       propertyPath: shootingDebugRayActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6489805805741660116, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}

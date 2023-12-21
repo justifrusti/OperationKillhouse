@@ -74,8 +74,7 @@ namespace Player
 
         public Inputmanager inputmanager;
         public Rigidbody rb;
-        public Animation walk;
-        public bool inMenu;
+        bool inMenu;
 
 
         [Header("Movement Values")]
@@ -99,11 +98,11 @@ namespace Player
         [ConditionalHide("canLean")][Tooltip("The distance you lean to the side")]public float leanDistance;
         [ConditionalHide("canLean")][Tooltip("The height of the camera when you lean")]public float leanHight;
         [ConditionalHide("canLean")][Tooltip("The amount the camera rotates leave 0 if you dont want to rotate the camera when leaning")]public float leanAngle;
-        private Vector3 targetLeanPos;
-        private float currentLeanAngle;
-        private float targetLeanAngle;
-        private float leanInput;
-        private float baseHight;
+        Vector3 targetLeanPos;
+        float currentLeanAngle;
+        float targetLeanAngle;
+        float leanInput;
+        float baseHight;
 
         [Header("Camera sensetivity")]
         [Tooltip("The sensetivity of the camera")]public float sensetivity;
@@ -112,28 +111,25 @@ namespace Player
 
         public bool useCameraDelay;
         [ConditionalHide("useCameraDelay")]public Transform weaponRotPoint;
-        [ConditionalHide("useCameraDelay")] public float yWeaponRotLimit;
-        [ConditionalHide("useCameraDelay")] public float xWeaponRotLimit;
+        [ConditionalHide("useCameraDelay")][Tooltip("Limits for camera delay angle x = Left Y = right")] public Vector2 yWeaponRotLimit;
+        [ConditionalHide("useCameraDelay")][Tooltip("Limits for camera delay angle x = down Y = up")] public Vector2 xWeaponRotLimit;
         [ConditionalHide("useCameraDelay")] public float weaponRotSpeed;
 
-        private float xRotation = 0;
-        private float yWeaponRotation = 0;
-        private float xWeaponRotation = 0;
+        float xRotation = 0;
+        float yWeaponRotation = 0;
+        float xWeaponRotation = 0;
 
         [Space]
-        //public GameObject hole;
-        public RaycastHit hit;
-
         public GameObject generationUI;
-
         public GameObject primarygun;
         public GameObject secondarygun;
-
         public GameObject armory;
-
+        RaycastHit hit;
         Vector3 rot;
-        public LineRenderer lineRenderer;
-        public Transform lazerFirePoint;
+
+        [Space]
+        [Header("Keybinds")]
+        public KeyCode fireSelect;
 
         private void Start()
         {
@@ -156,7 +152,7 @@ namespace Player
                     float leftRight = inputmanager.inputMaster.Movement.RightLeft.ReadValue<float>();
                     Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
 
-                    if (speed <= walkSpeed && forwardBackward != 0 | leftRight != 0)
+                    if (speed <= walkSpeed && forwardBackward != 0 || speed <= walkSpeed && leftRight != 0)
                     {
                         speed += accel;
                     }
@@ -188,12 +184,12 @@ namespace Player
                     if(!animEvent.gunManager.aiming && !leaning && useCameraDelay)
                     {
                         xWeaponRotation += mouseV2.y * weaponRotSpeed;
-                        xWeaponRotation = Mathf.Clamp (xWeaponRotation , -xWeaponRotLimit , xWeaponRotLimit);
+                        xWeaponRotation = Mathf.Clamp(xWeaponRotation, -xWeaponRotLimit.x, xWeaponRotLimit.y);
 
                         yWeaponRotation += mouseV2.x * weaponRotSpeed;
-                        yWeaponRotation = Mathf.Clamp (yWeaponRotation , -yWeaponRotLimit , yWeaponRotLimit);
+                        yWeaponRotation = Mathf.Clamp(yWeaponRotation, -yWeaponRotLimit.x, yWeaponRotLimit.y);
 
-                       
+
 
                         weaponRotPoint.localRotation = Quaternion.Euler(-xWeaponRotation, yWeaponRotation, 0f);
                     }
@@ -278,14 +274,17 @@ namespace Player
                     {
                         if (animEvent.gunManager.gunProperties.GetCurrentAmmo() > 0)
                         {
-                            animEvent.Fire();
+                            animEvent.armAnimator.SetBool("Fire", true);
+                            animEvent.gunAnimator.SetBool("Fire", true);
                         }
                     }
-                    else if(Input.GetButtonUp("Fire1"))
+                    
+                    if(!Input.GetButton("Fire1"))
                     {
                         if (animEvent.gunManager.gunProperties.GetClipAmmo() > 0)
                         {
-                            animEvent.Fire();
+                            animEvent.armAnimator.SetBool("Fire", false);
+                            animEvent.gunAnimator.SetBool("Fire", false);
                         }
                     }
 
@@ -367,6 +366,11 @@ namespace Player
                     generationUI.SetActive(false);
                     ChangeGameState (GameState.Play);
                 }
+            }
+
+            if (Input.GetKeyDown(fireSelect))
+            {
+                //fire select thing here
             }
         }
 

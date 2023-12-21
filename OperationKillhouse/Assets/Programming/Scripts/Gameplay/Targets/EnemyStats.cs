@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
-    public int health = 1;
-    //public Animator Animator;
-    public Animation animation;
-    bool death;
     TargetManager targetManager;
-    public bool redTarget;
 
+    public int health = 1;
+    public Animation animation;
+    bool death = false;
+    public bool redTarget;
+    bool targetActive;
     public AnimationClip deathAnim;
 
     private void Awake()
@@ -32,9 +32,7 @@ public class EnemyStats : MonoBehaviour
     public void Update()
     {
         if (death)
-        {
-            //Animator.SetTrigger("Dead");
-            
+        {   
             animation.clip = deathAnim;
             animation.Play();
             death = false;
@@ -44,6 +42,17 @@ public class EnemyStats : MonoBehaviour
     public void PopUp()
     {
         animation.Play();
+        targetActive = true;
         death = false;
+    }
+
+    public bool GetActivateTaget()
+    {
+        return targetActive;
+    }
+
+    public void SetTargetActive(bool active)
+    {
+        targetActive = active;
     }
 }

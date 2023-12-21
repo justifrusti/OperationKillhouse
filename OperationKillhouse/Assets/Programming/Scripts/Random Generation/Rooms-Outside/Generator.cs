@@ -35,13 +35,13 @@ public class Generator : MonoBehaviour
     public GameObject[] staircaseDown;
 
     [Header("Misc info")]
-    public int currentRetryAmount;
     public List<GameObject> dungeonRooms;
     public bool dungeonGenerationComplete;
     public bool removeLastRoom;
     public SeedManager seedManager;
 
     public Slider progressSlider;
+    int currentRetryAmount;
 
     private void Awake()
     {
@@ -127,4 +127,12 @@ public class Generator : MonoBehaviour
         }
     }
 
+    //getters\\
+
+    //setters
+
+    public void SetRetryAmount(int amount)
+    {
+        retryAmount = amount;
+    }
 }  

@@ -10,9 +10,9 @@ public class TargetManager : MonoBehaviour
     int s_BlueTargetsHit;
     bool targetsFound;
 
-    void Start()
+    private void Awake()
     {
-        generator = GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>();
+        generator = Generator.Instance;
     }
 
     void Update()

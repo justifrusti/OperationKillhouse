@@ -105,6 +105,7 @@ public class RoomManager : MonoBehaviour
         {
             doorPoints.Add(spawnDoorPoint);
         }
+
     }
 
     public void checkColl()
@@ -130,7 +131,7 @@ public class RoomManager : MonoBehaviour
             {
                 if (collIsClear)
                 {
-                    generator.currentRetryAmount = generator.retryAmount;
+                    generator.SetRetryAmount(generator.retryAmount);
                     doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
                     doorPoints[0].GetComponent<DoorPoint>().enabled = true;
                 }

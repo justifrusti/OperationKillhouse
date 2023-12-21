@@ -30,7 +30,10 @@ public class ActivateArea : MonoBehaviour
         {
             if (spawnPoints[i].spawnedTarget != null)
             {
-                spawnPoints[i].spawnedTarget.GetComponentInChildren<EnemyStats>().PopUp();
+                if (!spawnPoints[i].spawnedTarget.GetComponentInChildren<EnemyStats>().GetActivateTaget())
+                {
+                    spawnPoints[i].spawnedTarget.GetComponentInChildren<EnemyStats>().PopUp();
+                }
             }
         }
     }

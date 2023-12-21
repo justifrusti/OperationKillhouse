@@ -49,7 +49,7 @@ public class SeedManager : MonoBehaviour
 
             generator.DifficultySelect(generator.difficulty);
 
-            generator.currentRetryAmount = generator.retryAmount;
+            generator.SetRetryAmount(generator.retryAmount);
             generator.dungeonGenerationComplete = false;
             generator.firstRoom.GetComponent<RoomManager>().spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
 

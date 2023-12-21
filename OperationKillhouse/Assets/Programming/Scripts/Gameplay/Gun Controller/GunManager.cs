@@ -177,7 +177,7 @@ namespace Gun
                 else
                 {
                     s_RotationRecoil += new Vector3(-gunProperties.recoilRot.x, Random.Range(-gunProperties.recoilRot.y, gunProperties.recoilRot.y), Random.Range(-gunProperties.recoilRot.z, gunProperties.recoilRot.z));
-                    s_RotationRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
+                    s_PositionRecoil += new Vector3(Random.Range(-gunProperties.ammountOfRecoil.x, gunProperties.ammountOfRecoil.x), Random.Range(-gunProperties.ammountOfRecoil.y, gunProperties.ammountOfRecoil.y), gunProperties.ammountOfRecoil.z);
                 }
 
                 RaycastHit hit;

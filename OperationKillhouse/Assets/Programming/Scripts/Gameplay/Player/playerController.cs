@@ -187,17 +187,13 @@ namespace Player
 
                     if(!animEvent.gunManager.aiming && !leaning && useCameraDelay)
                     {
-                        if (mouseV2.y < 0.5f || mouseV2.y < -0.5f)
-                        {
-                            xWeaponRotation += mouseV2.y * weaponRotSpeed;
-                            xWeaponRotation = Mathf.Clamp(xWeaponRotation, -xWeaponRotLimit, xWeaponRotLimit);
-                        }
+                        xWeaponRotation += mouseV2.y * weaponRotSpeed;
+                        xWeaponRotation = Mathf.Clamp (xWeaponRotation , -xWeaponRotLimit , xWeaponRotLimit);
 
-                        if (mouseV2.x < 0.5f || mouseV2.x < -0.5f)
-                        {
-                            yWeaponRotation += mouseV2.x * weaponRotSpeed;
-                            yWeaponRotation = Mathf.Clamp(yWeaponRotation, -yWeaponRotLimit, yWeaponRotLimit);
-                        }
+                        yWeaponRotation += mouseV2.x * weaponRotSpeed;
+                        yWeaponRotation = Mathf.Clamp (yWeaponRotation , -yWeaponRotLimit , yWeaponRotLimit);
+
+                       
 
                         weaponRotPoint.localRotation = Quaternion.Euler(-xWeaponRotation, yWeaponRotation, 0f);
                     }

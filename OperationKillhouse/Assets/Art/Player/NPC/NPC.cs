@@ -22,7 +22,7 @@ public class NPC : MonoBehaviour {
 
     void Update() {
 
-        timer -= Time.deltaTime;
+       // timer -= Time.deltaTime;
 
         if (timer <= 0) {
             nPC.SetTrigger ("GO");
@@ -36,10 +36,16 @@ public class NPC : MonoBehaviour {
             pistol.SetTrigger ("GO");
             test = false;
         }
+
+        if ( Input.GetKey (KeyCode.N)) {
+            nPC.SetTrigger ("GO");
+            aR.SetTrigger ("GO");
+            pistol.SetTrigger ("GO");
+        }
     }
 
     public void AinimationDone () {
-        timer = 60f;
+       // timer = 60f;
     }
 
     public void Piew () {

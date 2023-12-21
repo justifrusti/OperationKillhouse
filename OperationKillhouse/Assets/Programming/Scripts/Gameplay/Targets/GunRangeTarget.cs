@@ -15,6 +15,8 @@ public class GunRangeTarget : MonoBehaviour
     public bool moveTargetBackBool;
     bool removeholes;
 
+    public bool presentatieTarget;
+
     void Update()
     {
         if (callTargetBool)
@@ -35,6 +37,28 @@ public class GunRangeTarget : MonoBehaviour
         if(removeholes && bulletHoles.Count <= 0)
         {
             removeholes = false;
+        }
+
+        if ( presentatieTarget )
+        {
+            if(Input.GetKey(KeyCode.V))
+            {
+                callTargetBool= true;
+            }
+            else 
+            {
+                callTargetBool = false;
+            }
+
+
+            if(Input.GetKey(KeyCode.B)) 
+            {
+                moveTargetBackBool= true;
+            }
+            else 
+            {
+                moveTargetBackBool= false;
+            }
         }
     }
 

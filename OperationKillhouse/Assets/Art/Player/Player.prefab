@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 819087002}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Lazer light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819087001}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5176134, y: 2.6596832, z: 1.3850003}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -119,7 +119,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -422,13 +422,14 @@ MonoBehaviour:
   cam: {fileID: 8133089156681285105}
   useCameraDelay: 1
   weaponRotPoint: {fileID: 8729832782411177992}
-  yWeaponRotLimit: {x: -5, y: 3}
-  xWeaponRotLimit: {x: -5, y: 3}
+  yWeaponRotLimit: {x: 5, y: 3}
+  xWeaponRotLimit: {x: 5, y: 3}
   weaponRotSpeed: 1
   generationUI: {fileID: 0}
   primarygun: {fileID: 8133089156754409280}
   secondarygun: {fileID: 8133089156546286101}
   armory: {fileID: 0}
+  fireSelect: 325
 --- !u!114 &4890188838950847793
 MonoBehaviour:
   m_ObjectHideFlags: 0

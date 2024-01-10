@@ -85,7 +85,7 @@ namespace Player
         float currentRunspeed;
         bool isGrounded;
         bool leaning;
-        float speed;
+        float speed = 1;
 
         [Header("Crouching values")]
         [Tooltip("Allows the player to crouch")]public bool canCrouch;
@@ -152,11 +152,16 @@ namespace Player
                     float leftRight = inputmanager.inputMaster.Movement.RightLeft.ReadValue<float>();
                     Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
 
+                    if (speed <= walkSpeed && forwardBackward != 0 && speed <= walkSpeed && leftRight != 0)
+                    {
+                        accel *= .5f;
+                    }
+
                     if (speed <= walkSpeed && forwardBackward != 0 || speed <= walkSpeed && leftRight != 0)
                     {
                         speed += accel;
                     }
-                    else if(speed >= 0)
+                    else if(speed >= 1)
                     {
                         speed -= accel;
                     }

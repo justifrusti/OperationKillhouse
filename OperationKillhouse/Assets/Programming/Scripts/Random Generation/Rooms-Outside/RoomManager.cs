@@ -105,7 +105,6 @@ public class RoomManager : MonoBehaviour
         {
             doorPoints.Add(spawnDoorPoint);
         }
-
     }
 
     public void checkColl()
@@ -114,16 +113,15 @@ public class RoomManager : MonoBehaviour
         {
             if (spawnedCollCheck != null && spawnedCollCheck.GetComponent<CollisionCheck>().GetCollEnabled())
             {
-
                 if(doorPoints.Count > 0 && spawnedCollCheck.GetComponent<CollisionCheck>().GetCollClear())
                 {
-                    collIsClear = true;
                     Destroy(spawnedCollCheck);
+                    collIsClear = true;
                 }
                 else if(spawnedCollCheck.GetComponent<CollisionCheck>().GetCollLenght() > 0)
                 {
-                    generator.removeLastRoom = true;
                     Destroy(spawnedCollCheck);
+                    generator.removeLastRoom = true;
                 }
             }
 

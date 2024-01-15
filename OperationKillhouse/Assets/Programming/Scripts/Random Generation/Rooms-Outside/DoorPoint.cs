@@ -71,7 +71,7 @@ public class DoorPoint : MonoBehaviour
     {
         if (roomManager.spawnedRoom == null)
         {
-            int roomSelect = Random.Range(0, 11);
+            int roomSelect = Random.Range(0, 13);
 
             if (roomSelect <= 5)
             {
@@ -86,6 +86,7 @@ public class DoorPoint : MonoBehaviour
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position + new Vector3(0, 0.2f, 0), transform.rotation));
                 roomManager.SetCheckSpawn(true);
             }
+
             /*
             if (roomSelect == 11)
             {
@@ -93,12 +94,13 @@ public class DoorPoint : MonoBehaviour
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));
                 roomManager.SetCheckSpawn(true);
             }
+            */
             if (roomSelect == 12)
             {
                 roomManager.spawnedRoom = generator.staircaseUp[Random.Range(0, generator.staircaseUp.Length)].gameObject;
                 roomManager.SetSpawnedCollCheck(Instantiate(roomManager.spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, transform.position, transform.rotation));
                 roomManager.SetCheckSpawn(true);
-            }*/
+            }
         }
 
         if(roomManager.spawnedRoom != null)

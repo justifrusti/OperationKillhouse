@@ -10,7 +10,7 @@ public class CollisionCheck : MonoBehaviour
 
     public Collider[] checkColliers;
 
-    float destroyTimer = 1f;
+    float destroyTimer = .1f;
 
     private void Awake()
     {

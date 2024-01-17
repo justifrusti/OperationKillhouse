@@ -83,7 +83,7 @@ namespace Player
         [Tooltip("The acceleration of the player when moving")] public float accel;
         [Tooltip("The force added to the player when jumping")]public int jumpforce;
         float currentRunspeed;
-        bool isGrounded;
+        public bool isGrounded;
         bool leaning;
         float currentWalkSpeed = 1;
         float currentAccel;
@@ -144,7 +144,6 @@ namespace Player
         
         private void Update()
         {
-            print(currentAccel);
             switch (gameState)
             {
                 case GameState.Play:
@@ -335,7 +334,7 @@ namespace Player
                         animEvent.Reload();
                     }
 
-                    if (Input.GetKeyDown(KeyCode.F))
+                    if (Input.GetKey(KeyCode.F))
                     {
                         RaycastHit hit;
                         if(Physics.Raycast(cam.transform.position, cam.forward, out hit, 500f))
@@ -347,9 +346,9 @@ namespace Player
                                 primarygun.SetActive (false);   
                             }
 
-                            if(hit.transform.gameObject.tag == "Range Target")
+                            if(hit.transform.gameObject.TryGetComponent<TargetButton>(out TargetButton target))
                             {
-                                hit.transform.GetComponentInParent<Animation>().Play();
+                                target.TargetLogic();
                             }
                         }
                     }

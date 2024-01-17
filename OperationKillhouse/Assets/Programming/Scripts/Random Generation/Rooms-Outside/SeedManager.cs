@@ -32,6 +32,7 @@ public class SeedManager : MonoBehaviour
 
     public void ResetGenerator()
     {
+        generator.SetCurrentRetryAmount(generator.retryAmount);
         setSeed();
 
         if (generator.dungeonRooms.Count > 0)

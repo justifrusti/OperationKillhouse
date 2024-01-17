@@ -65,6 +65,10 @@ public class DoorPoint : MonoBehaviour
                 otherDoorPoint.gameObject.SetActive(false);
             }
         }
+        else
+        {
+            roomManager.SetSpawningDone(false);
+        }
     }
 
     public void SpawnRoom()

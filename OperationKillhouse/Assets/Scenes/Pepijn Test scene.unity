@@ -1588,7 +1588,7 @@ PrefabInstance:
     - target: {fileID: 1914543440595160533, guid: fd693fe6c41bbef4dacb247e11678ce0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1914543440595160533, guid: fd693fe6c41bbef4dacb247e11678ce0,
         type: 3}
@@ -1849,6 +1849,12 @@ MonoBehaviour:
   sphereCastRadius: 0.125
   bodyOrientation: 0
   raycastRange: 2
+--- !u!4 &1087105432 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 815569826275812081, guid: 4261327d54bd1074cb382bd920407487,
+    type: 3}
+  m_PrefabInstance: {fileID: 815569826302151296}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1151443996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3346,11 +3352,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 815569826275812080, guid: 4261327d54bd1074cb382bd920407487,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 815569826275812081, guid: 4261327d54bd1074cb382bd920407487,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.49
+      objectReference: {fileID: 0}
     - target: {fileID: 815569826592283753, guid: 4261327d54bd1074cb382bd920407487,
         type: 3}
       propertyPath: m_Name
       value: Start
       objectReference: {fileID: 0}
+    - target: {fileID: 815569826592283754, guid: 4261327d54bd1074cb382bd920407487,
+        type: 3}
+      propertyPath: checkdoorPoint
+      value: 
+      objectReference: {fileID: 1087105432}
     - target: {fileID: 815569826592283755, guid: 4261327d54bd1074cb382bd920407487,
         type: 3}
       propertyPath: m_RootOrder
@@ -3438,6 +3459,7 @@ MonoBehaviour:
   spawnedRoom: {fileID: 0}
   collisionCheckOBJ: {fileID: 0}
   spawnDoorPoint: {fileID: 0}
+  checkdoorPoint: {fileID: 0}
   checkSpawned: 0
 --- !u!1001 &2183068029522731472
 PrefabInstance:

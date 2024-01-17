@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -92,9 +93,9 @@ public class Generator : MonoBehaviour
 
     public void RemoveLastRoom()
     {
-        
         if (dungeonRooms.Count > 1)
         {
+            Destroy(dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().GetSpawnedCollCheck());
             Destroy(dungeonRooms[dungeonRooms.Count -1]);
             dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();   
         }
@@ -134,5 +135,10 @@ public class Generator : MonoBehaviour
     public void SetRetryAmount(int amount)
     {
         retryAmount = amount;
+    }
+
+    public void SetCurrentRetryAmount(int amount)
+    {
+        currentRetryAmount = amount;
     }
 }  

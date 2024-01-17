@@ -11,15 +11,16 @@ public class RoomManager : MonoBehaviour
     [ConditionalHide("useSetRoom"),Tooltip("this room will always spawn after this room")]public GameObject setRoom;
                                             
     /*[HideInInspector]*/public Generator generator;
-    [HideInInspector]public GameObject spawnedRoom;                                      
+    /*[HideInInspector]*/public GameObject spawnedRoom;                                      
 
     [Header("misc info")]
     public GameObject collisionCheckOBJ;
     public Transform spawnDoorPoint;
-    GameObject spawnedCollCheck;
+    public Transform checkdoorPoint;
+    public GameObject spawnedCollCheck;
     public bool checkSpawned;
     bool spawingDone;
-    bool collIsClear;
+    public bool collIsClear;
 
 
     private void Start()
@@ -65,7 +66,7 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        if (!spawnDoorPoint.GetComponent<DoorPoint>().outSideChecked)
+        if (!spawnDoorPoint.GetComponent<DoorPoint>().outSideChecked && checkdoorPoint.gameObject.activeSelf == false)
         {
             checkColl();
         }
@@ -115,13 +116,13 @@ public class RoomManager : MonoBehaviour
             {
                 if(doorPoints.Count > 0 && spawnedCollCheck.GetComponent<CollisionCheck>().GetCollClear())
                 {
-                    Destroy(spawnedCollCheck);
                     collIsClear = true;
+                    Destroy(spawnedCollCheck);
                 }
                 else if(spawnedCollCheck.GetComponent<CollisionCheck>().GetCollLenght() > 0)
                 {
-                    Destroy(spawnedCollCheck);
                     generator.removeLastRoom = true;
+                    Destroy(spawnedCollCheck);
                 }
             }
 
@@ -133,14 +134,18 @@ public class RoomManager : MonoBehaviour
                     doorPoints[0].GetComponent<DoorPoint>().outSideChecked = true;
                     doorPoints[0].GetComponent<DoorPoint>().enabled = true;
                 }
+                else
+                {
+                    generator.removeLastRoom = true;
+                }
             }
         }
-
     }
 
     public void RoomReset()
     {
         spawnDoorPoint.GetComponent<DoorPoint>().ResetDoor();
+        spawnedCollCheck = null;
         spawnedRoom = null;
         checkSpawned = false;
         spawingDone = false;

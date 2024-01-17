@@ -85,7 +85,8 @@ namespace Player
         float currentRunspeed;
         bool isGrounded;
         bool leaning;
-        float speed = 1;
+        float currentWalkSpeed = 1;
+        float currentAccel;
 
         [Header("Crouching values")]
         [Tooltip("Allows the player to crouch")]public bool canCrouch;
@@ -138,10 +139,12 @@ namespace Player
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
             baseHight = cam.transform.localPosition.y;
             normalHeight = GetComponent<CapsuleCollider>().height;
+            currentAccel = accel;
         }
         
         private void Update()
         {
+            print(currentAccel);
             switch (gameState)
             {
                 case GameState.Play:
@@ -152,30 +155,34 @@ namespace Player
                     float leftRight = inputmanager.inputMaster.Movement.RightLeft.ReadValue<float>();
                     Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
 
-                    if (speed <= walkSpeed && forwardBackward != 0 && speed <= walkSpeed && leftRight != 0)
+                    if (currentWalkSpeed <= walkSpeed && forwardBackward != 0 && currentWalkSpeed <= walkSpeed && leftRight != 0)
                     {
-                        accel *= .5f;
+                        currentAccel = (accel * .5f);
+                    }
+                    else
+                    {
+                        currentAccel = accel;
                     }
 
-                    if (speed <= walkSpeed && forwardBackward != 0 || speed <= walkSpeed && leftRight != 0)
+                    if (currentWalkSpeed <= walkSpeed && forwardBackward != 0 || currentWalkSpeed <= walkSpeed && leftRight != 0)
                     {
-                        speed += accel;
+                        currentWalkSpeed += currentAccel;
                     }
-                    else if(speed >= 1)
+                    else if(currentWalkSpeed >= 1)
                     {
-                        speed -= accel;
+                        currentWalkSpeed -= currentAccel;
                     }
 
                     if (currentRunspeed <= runspeed && inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 1 && forwardBackward != 0 | leftRight != 0)
                     {
-                        currentRunspeed += accel * 2;
+                        currentRunspeed += currentAccel * 2;
                     }
                     else if(currentRunspeed >= 0)
                     {
-                        currentRunspeed -= accel;
+                        currentRunspeed -= currentAccel;
                     }
 
-                    move *= inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 0 ? speed : currentRunspeed;
+                    move *= inputmanager.inputMaster.Movement.Sprint.ReadValue<float>() == 0 ? currentWalkSpeed : currentRunspeed;
 
                     rb.velocity = new Vector3(move.x,rb.velocity.y, move.z);
 

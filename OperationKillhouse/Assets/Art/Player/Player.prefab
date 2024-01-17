@@ -368,8 +368,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1.5
+  m_Radius: 0.2
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &4890188838950847805
@@ -407,8 +407,8 @@ MonoBehaviour:
     gunAnimator: {fileID: 5876254116958591796}
   inputmanager: {fileID: 4890188838950847793}
   rb: {fileID: 4890188838950847805}
-  walkSpeed: 7
-  runspeed: 10
+  walkSpeed: 5
+  runspeed: 7
   accel: 0.1
   jumpforce: 200
   canCrouch: 1
@@ -813,7 +813,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -838,7 +838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8133089156754409287
 Transform:
   m_ObjectHideFlags: 0
@@ -982,6 +982,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1594790630252095714, guid: 05e887fcbe719734f92a0f80e2774fa6,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1594790630252095714, guid: 05e887fcbe719734f92a0f80e2774fa6,
         type: 3}
@@ -1322,6 +1327,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5355261534651913652, guid: 05e887fcbe719734f92a0f80e2774fa6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 5355261534651913655, guid: 05e887fcbe719734f92a0f80e2774fa6,
         type: 3}
@@ -2127,7 +2137,7 @@ PrefabInstance:
     - target: {fileID: 3076879804474077339, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3076879804474077339, guid: 2c95960610f05974ca469dbf351cb540,
         type: 3}
@@ -2968,7 +2978,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4387,7 +4397,7 @@ PrefabInstance:
         type: 3}
       propertyPath: alternateGun
       value: 
-      objectReference: {fileID: 1060732903395192729}
+      objectReference: {fileID: 0}
     - target: {fileID: 9108235078670327352, guid: 0d0fedf10e9735e428b438a6c0580add,
         type: 3}
       propertyPath: useWeaponSway
@@ -4641,7 +4651,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

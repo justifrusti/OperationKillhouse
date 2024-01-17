@@ -30,6 +30,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2735776500336730676}
+  - {fileID: 2735776499831785382}
+  - {fileID: 2735776499784762990}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,9 +59,11 @@ MonoBehaviour:
   spawnedRoom: {fileID: 0}
   collisionCheckOBJ: {fileID: 2183068028715641988, guid: d4bbc9833a4f6e943a016aee84faa083,
     type: 3}
-  spawnDoorPoint: {fileID: 0}
+  spawnDoorPoint: {fileID: 2735776499784762990}
   checkdoorPoint: {fileID: 2735776499831785382}
+  spawnedCollCheck: {fileID: 0}
   checkSpawned: 0
+  collIsClear: 0
 --- !u!1 &2735776499784762991
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,13 +89,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2735776499784762991}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.5}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0}
+  m_LocalPosition: {x: 0, y: 4.175733, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2735776500336730676}
-  m_RootOrder: 1
+  m_Father: {fileID: 2735776499331563522}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &2735776499784762989
 MonoBehaviour:
@@ -148,13 +152,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2735776499831785383}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2735776500336730676}
-  m_RootOrder: 0
+  m_Father: {fileID: 2735776499331563522}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4038512764725511634
 BoxCollider:
@@ -196,12 +200,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2735776500336730677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -2.5}
-  m_LocalScale: {x: 5, y: 10, z: 5}
+  m_LocalPosition: {x: 0, y: 2.0879, z: -2.5}
+  m_LocalScale: {x: 5, y: 4.175733, z: 5}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2735776499831785382}
-  - {fileID: 2735776499784762990}
+  m_Children: []
   m_Father: {fileID: 2735776499331563522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

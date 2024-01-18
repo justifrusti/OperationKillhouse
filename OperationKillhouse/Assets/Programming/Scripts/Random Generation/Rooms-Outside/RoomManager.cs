@@ -28,7 +28,7 @@ public class RoomManager : MonoBehaviour
         generator = Generator.Instance;
         spawnDoorPoint = GetComponentInChildren<DoorPoint>().transform;
         
-        if (useSetRoom)
+        if (useSetRoom && generator.roomAmount > 0)
         {
             spawnedRoom = setRoom;
             spawnedCollCheck = Instantiate(spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, spawnDoorPoint.position, spawnDoorPoint.rotation);
@@ -36,7 +36,7 @@ public class RoomManager : MonoBehaviour
             doorPoints.Add(spawnDoorPoint);
         }
 
-        if (firstRoom)
+        if (firstRoom && !useSetRoom)
         {
             spawnedRoom = generator.straightRooms[Random.Range(0, generator.straightRooms.Length)].gameObject;
             spawnedCollCheck = Instantiate(spawnedRoom.GetComponent<RoomManager>().collisionCheckOBJ, spawnDoorPoint.position, spawnDoorPoint.rotation);
@@ -145,8 +145,11 @@ public class RoomManager : MonoBehaviour
     public void RoomReset()
     {
         spawnDoorPoint.GetComponent<DoorPoint>().ResetDoor();
-        spawnedCollCheck = null;
-        spawnedRoom = null;
+        if (!setRoom)
+        {
+            spawnedCollCheck = null;
+            spawnedRoom = null;
+        }
         checkSpawned = false;
         spawingDone = false;
         enabled = true;

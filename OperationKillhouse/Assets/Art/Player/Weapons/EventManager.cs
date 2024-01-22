@@ -60,7 +60,6 @@ public class EventManager : MonoBehaviour {
 
     public void Reload () {
         gunManager.Reload();
-        Debug.Log ("FACK");
     }
 
     public void Holster () {

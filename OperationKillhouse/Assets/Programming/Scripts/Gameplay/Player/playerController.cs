@@ -4,6 +4,7 @@ using System.Threading;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 namespace Player
 {
@@ -125,6 +126,9 @@ namespace Player
         public GameObject primarygun;
         public GameObject secondarygun;
         public GameObject armory;
+        public GameObject interactText;
+
+
         RaycastHit hit;
         Vector3 rot;
 
@@ -350,8 +354,26 @@ namespace Player
                             {
                                 target.TargetLogic();
                             }
+
+                            if (hit.transform.gameObject.TryGetComponent<ReSpawnPlayer>(out ReSpawnPlayer player))
+                            {
+                                player.ReSpawn();
+                            }
                         }
                     }
+
+                    if(Physics.Raycast(cam.transform.position, cam.forward, out hit, 500f))
+                    {
+                        if (hit.transform.gameObject.layer == 11)
+                        {
+                            interactText.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            interactText.gameObject.SetActive(false);
+                        }
+                    }
+
                     break;
 
                 case GameState.Pause:

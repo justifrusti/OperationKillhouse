@@ -97,4 +97,10 @@ public class ScoreManager : MonoBehaviour
     {
         startTimer = true;
     }
+
+    public void ResetTimer()
+    {
+        minutes = 0;
+        seconds = 0;
+    }
 }

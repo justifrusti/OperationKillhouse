@@ -214,6 +214,8 @@ namespace Gun
                         {
                             if(Physics.Raycast(gunProperties.firePoint.position, gunProperties.firePoint.forward, out hit, 500f))
                             {
+                                print(hit.transform.gameObject.name);
+
                                 if (hit.collider.CompareTag("Red Target"))
                                 {
                                     hit.collider.GetComponent<EnemyStats>().Damage(gunProperties.gunDamage);

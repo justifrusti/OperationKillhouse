@@ -5,22 +5,30 @@ public class EnemyStats : MonoBehaviour
     TargetManager targetManager;
 
     public int health = 1;
-    public Animation animation;
     bool death = false;
     public bool redTarget;
     bool targetActive;
-    public AnimationClip deathAnim;
+
+    public bool popUp;
+    public Animator animator;
 
     private void Awake()
     {
         targetManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<TargetManager>();
+        if(popUp)
+        {
+           PopUp();
+        }
     }
 
     public void Damage(int damage)
     {
         if((health -= damage) <= 0)
         {
-            death = true;
+            if(!death)
+            {
+               Death();
+            }
 
             if (redTarget)
             {
@@ -29,21 +37,19 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void Death()
     {
-        if (death)
-        {   
-            animation.clip = deathAnim;
-            animation.Play();
-            death = false;
-        }
+        print("dad");
+        animator.SetTrigger("Dead");
+        death = true;
     }
 
     public void PopUp()
     {
-        animation.Play();
+        animator.SetTrigger("Activate");
         targetActive = true;
         death = false;
+        popUp = false;
     }
 
     public bool GetActivateTaget()

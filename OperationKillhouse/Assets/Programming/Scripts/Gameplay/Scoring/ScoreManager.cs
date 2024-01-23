@@ -69,7 +69,7 @@ public class ScoreManager : MonoBehaviour
         redTargetsLeft.gameObject.SetActive(true);
 
         AddPenalty(targetManager.GetBlueTargets() * wrongTargetPenalty);
-        blueTagetPenalty.text = ("You shot " + targetManager.GetBlueTargets() + " and gained a " + targetManager.GetBlueTargets() * 10 + " time penalty. your final time is " + GetTime());
+        blueTagetPenalty.text = ("You shot " + targetManager.GetBlueTargets() + "Blue targets and gained a " + targetManager.GetBlueTargets() * wrongTargetPenalty + " time penalty. your final time is " + GetTime());
 
 
         redTargetsLeft.text = ("There where " + targetManager.redTargets.Count + " red targets left");

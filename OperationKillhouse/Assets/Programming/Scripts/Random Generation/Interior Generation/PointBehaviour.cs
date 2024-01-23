@@ -13,16 +13,16 @@ public class PointBehaviour : MonoBehaviour
 
     void Start()
     {
-        if (Random.value < spawnChance && !alwaysSpawn)
+        if (Random.value < spawnChance)
         {
-            int index = Random.Range(0, possibleItems.Length);
+            /*int index = Random.Range(0, possibleItems.Length);*/
 
-            spawnedTarget = Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
+            spawnedTarget = Instantiate(possibleItems[0], transform.position, transform.rotation, transform);
         }else
         {
-            int index = Random.Range(0, possibleItems.Length);
+            /*int index = Random.Range(0, possibleItems.Length);*/
 
-            spawnedTarget = Instantiate(possibleItems[index], transform.position, transform.rotation, transform);
+            spawnedTarget = Instantiate(possibleItems[1], transform.position, transform.rotation, transform);
         }
     }
 }

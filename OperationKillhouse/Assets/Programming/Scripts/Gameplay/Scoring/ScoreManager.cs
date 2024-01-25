@@ -64,10 +64,7 @@ public class ScoreManager : MonoBehaviour
         seconds = (seconds + penaltyScore);
     }
     void ApplyPenalty()
-    {
-        blueTagetPenalty.gameObject.SetActive(true);
-        redTargetsLeft.gameObject.SetActive(true);
-
+    { 
         AddPenalty(targetManager.GetBlueTargets() * wrongTargetPenalty);
         blueTagetPenalty.text = ("You shot " + targetManager.GetBlueTargets() + "Blue targets and gained a " + targetManager.GetBlueTargets() * wrongTargetPenalty + " time penalty. your final time is " + GetTime());
 
@@ -102,5 +99,11 @@ public class ScoreManager : MonoBehaviour
     {
         minutes = 0;
         seconds = 0;
+    }
+
+    public void TurnOnText()
+    {
+        blueTagetPenalty.gameObject.SetActive(true);
+        redTargetsLeft.gameObject.SetActive(true);
     }
 }

@@ -18,6 +18,7 @@ public class EndRoomInfo : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             scoreManager.stopTimer();
+            scoreManager.TurnOnText();
         }
     }
 }

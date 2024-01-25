@@ -11,7 +11,7 @@ public class ReSpawnPlayer : MonoBehaviour
     {
         spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        scoreManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>();
+        scoreManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<ScoreManager>();
     }
 
     public void ReSpawn()

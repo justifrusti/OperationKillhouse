@@ -108,4 +108,18 @@ public class EventManager : MonoBehaviour {
         playerController.animEvent.armAnimator = GameObject.FindGameObjectWithTag ("Arm").GetComponent<Animator> ();
         playerController.animEvent.gunAnimator = GameObject.FindGameObjectWithTag ("Gun").GetComponent<Animator> ();
     }
+
+    public void FireSelect()
+    {
+        if (playerController.animEvent.gunAnimator.GetBool("FullAuto"))
+        {
+            playerController.animEvent.gunAnimator.SetBool("Semi", true);
+            playerController.animEvent.gunAnimator.SetBool("FullAuto", false);
+        }
+        else if (playerController.animEvent.gunAnimator.GetBool("Semi"))
+        {
+            playerController.animEvent.gunAnimator.SetBool("FullAuto", true);
+            playerController.animEvent.gunAnimator.SetBool("Semi", false);
+        }
+    }
 }

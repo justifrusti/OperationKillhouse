@@ -1,10 +1,6 @@
 using Gun;
 using System;
-using System.Threading;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 namespace Player
 {
@@ -128,9 +124,11 @@ namespace Player
         public GameObject armory;
         public GameObject interactText;
 
+        public AudioSource AudioSource;
 
         RaycastHit hit;
         Vector3 rot;
+        
 
         [Space]
         [Header("Keybinds")]
@@ -366,10 +364,12 @@ namespace Player
                     {
                         if (hit.transform.gameObject.layer == 11)
                         {
+                            hit.transform.GetComponent<TargetButton>().LightUp();
                             interactText.gameObject.SetActive(true);
                         }
                         else
                         {
+                            hit.transform.GetComponent<TargetButton>().LightOff();
                             interactText.gameObject.SetActive(false);
                         }
                     }
@@ -403,7 +403,7 @@ namespace Player
 
             if (Input.GetKeyDown(fireSelect))
             {
-                //fire select thing here
+                animEvent.gunAnimator.SetTrigger("FireSelect");
             }
         }
 
@@ -412,6 +412,11 @@ namespace Player
         {
             if(collision.transform.CompareTag("Ground"))
                 isGrounded = true;
+
+            //if(kijken al je een deur raakt ^ zoals dat)
+            //{
+            //  hier audio laaten afspeelen
+            //}
         }
 
         private void OnCollisionExit(Collision collision)

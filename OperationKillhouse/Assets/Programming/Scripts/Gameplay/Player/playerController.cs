@@ -2,6 +2,7 @@ using Gun;
 using System;
 using UnityEngine;
 
+
 namespace Player
 {
     [Serializable]
@@ -124,7 +125,7 @@ namespace Player
         public GameObject armory;
         public GameObject interactText;
 
-        public AudioSource AudioSource;
+        public GameObject aimPoint;
 
         RaycastHit hit;
         Vector3 rot;
@@ -333,7 +334,24 @@ namespace Player
 
                     if(Input.GetKeyDown(KeyCode.R))
                     {
-                        animEvent.Reload();
+                        int reload = UnityEngine.Random.Range(0, 11);
+                        print(reload);
+                        if(reload <= 3)
+                        {
+                            animEvent.gunAnimator.SetBool("R2", true);
+                            animEvent.armAnimator.SetBool("R2", true);
+                            animEvent.gunAnimator.SetBool("R1", false);
+                            animEvent.armAnimator.SetBool("R1", false);
+
+                        }
+                        else if(reload > 3)
+                        {
+                            animEvent.gunAnimator.SetBool("R1", true);
+                            animEvent.armAnimator.SetBool("R1", true);
+                            animEvent.gunAnimator.SetBool("R2", false);
+                            animEvent.armAnimator.SetBool("R2", false);
+                        }
+                            animEvent.Reload();
                     }
 
                     if (Input.GetKey(KeyCode.F))
@@ -364,13 +382,17 @@ namespace Player
                     {
                         if (hit.transform.gameObject.layer == 11)
                         {
-                            hit.transform.GetComponent<TargetButton>().LightUp();
                             interactText.gameObject.SetActive(true);
+                            if (hit.transform.TryGetComponent<TargetButton>(out TargetButton target))
+                            {
+                                target.LightUp();
+                            }
+
                         }
                         else
                         {
-                            hit.transform.GetComponent<TargetButton>().LightOff();
                             interactText.gameObject.SetActive(false);
+
                         }
                     }
 
@@ -404,6 +426,7 @@ namespace Player
             if (Input.GetKeyDown(fireSelect))
             {
                 animEvent.gunAnimator.SetTrigger("FireSelect");
+                animEvent.armAnimator.SetTrigger("FireSelect");
             }
         }
 

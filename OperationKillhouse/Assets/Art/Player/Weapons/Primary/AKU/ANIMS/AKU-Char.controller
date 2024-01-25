@@ -118,6 +118,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Reload
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: R1
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: R2
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4553219843592433294}
   m_Solo: 0
@@ -315,7 +321,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -5256093057253039304, guid: b7a3675f30b1770499ee1bd3b2ae0269, type: 3}
+  m_Motion: {fileID: 426734354195963630, guid: 354044c0b5bc44d419bed285264a9728, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -659,6 +665,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Reload
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: R1
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: R2
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6009310289059848904}
   m_Solo: 0
@@ -784,6 +796,18 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Save
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: R1
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 1
+    m_Controller: {fileID: 0}
+  - m_Name: R2
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -996,6 +1020,12 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: Empty
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: R1
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: R2
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -836193627564465122}
@@ -1471,6 +1501,12 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: Empty
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: R1
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: R2
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6711235565713163838}

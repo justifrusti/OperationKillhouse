@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text blueTagetPenalty;
     public TMP_Text redTargetsLeft;
 
-    bool startTimer;
+    public bool startTimer;
     [Space]
     public TargetManager targetManager;
 

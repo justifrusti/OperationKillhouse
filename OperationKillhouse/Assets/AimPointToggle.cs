@@ -6,15 +6,20 @@ public class AimPointToggle : MonoBehaviour
 {
     public GameObject aimPoint;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if(aimPoint.activeSelf == false)
+        if(other.tag == "Player")
         {
             aimPoint.SetActive(true);
         }
-        else
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
         {
             aimPoint.SetActive(false);
         }
     }
+
 }

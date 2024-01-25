@@ -39,7 +39,7 @@ public class EventManager : MonoBehaviour {
     }
 
     public void Casing () {
-        print("yeet");
+        
     }
 
     public void MagDrop()
@@ -52,6 +52,7 @@ public class EventManager : MonoBehaviour {
             firePoint.GetComponent<AudioSource>().clip = fireS;
         }
         else {
+            eFXFire.Play();
             firePoint.GetComponent<AudioSource> ().clip = fire;
         }
         gunManager.Fire();
@@ -120,6 +121,15 @@ public class EventManager : MonoBehaviour {
         {
             playerController.animEvent.gunAnimator.SetBool("FullAuto", true);
             playerController.animEvent.gunAnimator.SetBool("Semi", false);
+        }
+    }
+
+    public void Click()
+    {
+        if(gunManager.gunProperties.GetCurrentAmmo() == 0)
+        {
+            audioSource.clip = sound6;
+            audioSource.Play();
         }
     }
 }

@@ -116,11 +116,15 @@ public class EventManager : MonoBehaviour {
         {
             playerController.animEvent.gunAnimator.SetBool("Semi", true);
             playerController.animEvent.gunAnimator.SetBool("FullAuto", false);
+            playerController.animEvent.armAnimator.SetBool ("Semi" , true);
+            playerController.animEvent.armAnimator.SetBool ("FullAuto" , false);
         }
         else if (playerController.animEvent.gunAnimator.GetBool("Semi"))
         {
             playerController.animEvent.gunAnimator.SetBool("FullAuto", true);
             playerController.animEvent.gunAnimator.SetBool("Semi", false);
+            playerController.animEvent.armAnimator.SetBool ("FullAuto" , true);
+            playerController.animEvent.armAnimator.SetBool ("Semi" , false);
         }
     }
 

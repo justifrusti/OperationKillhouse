@@ -145,11 +145,13 @@ public class RoomManager : MonoBehaviour
     public void RoomReset()
     {
         spawnDoorPoint.GetComponent<DoorPoint>().ResetDoor();
-        if (!setRoom)
+        if (setRoom)
         {
-            spawnedCollCheck = null;
-            spawnedRoom = null;
+            generator.dungeonRooms[generator.dungeonRooms.Count - 1].GetComponent<RoomManager>().RoomReset();
+            generator.dungeonRooms[generator.dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();
         }
+        spawnedCollCheck = null;
+        spawnedRoom = null;
         checkSpawned = false;
         spawingDone = false;
         enabled = true;

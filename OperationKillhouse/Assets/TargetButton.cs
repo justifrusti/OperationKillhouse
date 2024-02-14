@@ -38,11 +38,17 @@ public class TargetButton : MonoBehaviour
 
     public void LightUp()
     {
-        this.GetComponent<Renderer>().material = LitUpMat;
+        if(LitUpMat != null)
+        {
+            this.GetComponent<Renderer>().material = LitUpMat;
+        }
     }
 
     public void LightOff()
     {
-        this.GetComponent<Renderer>().material = litOffMat;
+        if(litOffMat != null)
+        {
+            this.GetComponent<Renderer>().material = litOffMat;
+        }
     }
 }
